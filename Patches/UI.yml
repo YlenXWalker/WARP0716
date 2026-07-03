@@ -395,6 +395,12 @@ CustomFont:
             author : Neo-Mind
             desc : Overrides the character set (charset) used for all fonts to a custom value. Use to force a specific encoding like ANSI (0), Baltic (186), or UTF-8 when the default charset causes display issues.
 
+        - CustomCodePage:
+            title : Override client codepage
+            recommend : no
+            author : Ylen X Walker
+            desc : Forces the 2025-07-16 client's multibyte codepage with a QJS-only static patch. Use 65001 for UTF-8; this patch does not add DLL imports or runtime hooks.
+
 IgnoreErrors:
     title : IGNORE ERRORS
     mutex : false

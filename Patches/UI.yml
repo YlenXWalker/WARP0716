@@ -398,7 +398,7 @@ CustomFont:
         - CustomCodePage:
             title : Override client codepage
             recommend : no
-            author : Ylen X Walker
+            author : Louis T Steinhil
             desc : Forces the 2025-07-16 client's multibyte codepage with a QJS-only static patch. Use 65001 for UTF-8; this patch does not add DLL imports or runtime hooks.
 
 IgnoreErrors:

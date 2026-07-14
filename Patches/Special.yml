@@ -67,6 +67,12 @@ CustomSpecials:
             recommend : no
             author : 4144
             desc : Removes the cap on displayed damage, healing, and other floating numbers. Without this, very large numbers get clamped to a maximum display value. Required for high-rate servers with large damage output.
+            
+        - AllHatEffectsWorldDepthOracle:
+            title : All HatEffects Screen-Size World Depth [QJS]
+            recommend : no
+            author : Louis T Steinhil
+            desc : "2025-07-16 build-specific global HatEffect depth patch, live validated on 2026-07-14. It preserves every original HatEffect STR resource, animation, actor attachment, metadata, teardown, screen-space position, apparent scale, and RHW. During only the two generic HatEffect render methods, vertices at/below actor-anchor Y retain a floor-safe four-quantum contact-biased depth; upper vertices reconstruct Y-up reciprocal depth using projection-matrix +0x10/+0x14 and convert it through 0x00554040. Native world STR NPCs remain unchanged."
 
 CustomSkills:
     title : SKILL CUSTOMIZATIONS

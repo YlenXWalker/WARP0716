@@ -68,6 +68,12 @@ CustomSpecials:
             author : 4144
             desc : Removes the cap on displayed damage, healing, and other floating numbers. Without this, very large numbers get clamped to a maximum display value. Required for high-rate servers with large damage output.
 
+        - AllowDualWeaponSprites:
+            title : Dual-Wield Original Weapon Sprites [QJS]
+            recommend : no
+            author : Louis T Steinhil
+            desc : "Self-contained QJS/EXE patch; no weapon DLL is required. The D403A0 equipment hook drives the stock single-item loader for each equipped item and installs the original parallel SPR/ACT resources in native weapon slots 5 and 6 instead of generic combined types 25..30. A live-slot renderer bridge direction-preservingly maps blank item ACT actions 88..95 to populated actions 80..87. Off-hand-only equipment also receives its real item pair in slot 6. Applies to every valid item resource without an item-ID allowlist."
+
 CustomSkills:
     title : SKILL CUSTOMIZATIONS
     mutex : false

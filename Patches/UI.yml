@@ -121,7 +121,13 @@ CustomUI:
             recommend : no
             author : 4144,Skylove
             desc : Raises the maximum number of items that can be added through cash inventory expansion from the default 100 up to 999,999. Server-side adjustment may be required to match.
-            
+
+        - BiggerInventoryWindow:
+            title : Bigger inventory window
+            recommend : no
+            author : Stingor
+            desc : Raises the maximum size the inventory window can be resized to. The stock client clamps the drag-resize to 320x240; this lets you set a larger maximum (default 1280x1024) so you can drag the inventory much bigger and see many more item slots at once. The window background is tiled, so it renders correctly at any size. This changes only the window SIZE, not the item CAPACITY (use 'Custom inventory limit' for that).
+
         - DeleteCharWithEmail:
             title : Always use email for Char Deletion
             recommend : no
@@ -194,17 +200,23 @@ CustomUI:
             author : Andrei Karas (4144)
             desc : Restores keyboard input focus to the chat box after clicking with the left mouse button. Fixes the issue where clicking in the game world causes the chat input to lose focus.
 
-        - OpaqueChatBg:
-            title : Make chat window background opaque
+        - ChatBgMainPanel:
+            title : Customize main chat panel background color and opacity
             recommend : no
             author : Stingor
-            desc : Removes the semi-transparency from the chat window background. By default the background is drawn at 40% alpha (0x66), letting the game world show through. This patch forces it to 100% opaque (0xFF), producing a solid black background.
+            desc : Sets the color and opacity of the MAIN chat panel - its background and its active tab. Opens an RGB color picker and an opacity value (0 = transparent, 255 = opaque). Default is black at 40% opacity (0x66).
 
-        - CustomChatBgOpacity:
-            title : Customize chat window background color and opacity
+        - ChatBgDetached:
+            title : Customize detached chat windows background color and opacity
             recommend : no
             author : Stingor
-            desc : Changes the color and transparency of the chat window background. Opens a color picker (RGB) and a separate opacity slider (0 = fully transparent, 255 = fully opaque). The default background is pure black at 40% opacity (0x66).
+            desc : Sets the color and opacity of the DETACHED chat windows - their outer border/frame and background. Opens an RGB color picker and an opacity value (0 = transparent, 255 = opaque). Default is black at 40% opacity (0x66).
+
+        - ChatBgWhisper:
+            title : Customize whisper (1:1) chat window background color and opacity
+            recommend : no
+            author : Stingor
+            desc : "Sets the color and opacity of the 1:1 whisper (private message) chat window background. Opens an RGB color picker and an opacity value (0 = transparent, 255 = opaque). Leave a field unchanged to keep its default. Default is black at 40% opacity (0x66)."
 
         - NoEquipPreview:
             title : Disable equipment preview

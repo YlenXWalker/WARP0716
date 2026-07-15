@@ -1,3 +1,39 @@
+# CrazyBebop - 2025-07-16 build (July 15, 2026)
+
+> **Patch update - re-WARP to apply.** This adds four community patches and fixes the mob/boss bar resize crash; re-apply WARP with the updated patches to use them.
+
+## July 15 Update
+
+### Resize Mob & Boss Bars no longer crash ([#22](https://github.com/CrazyBebop/WARP0716/issues/22))
+
+The **ResizeNormalBar**, **ResizeMiniBossBar**, and **ResizeBossBar** patches now work on the 2025-07-16 client. This was actually two separate bugs stacked on top of each other:
+
+1. **Patcher crash when enabling more than one.** Each Resize\*Bar patch reopened the shared `MobHP` code tag, so applying a second one re-ran the tag setup and crashed the WARP patcher (access violation, `0xC0000005`). Fixed with a guard: the shared hook is built once and each bar only writes its own width/height.
+
+2. **Client crash on mob-bar render.** The patcher crash was hiding a second problem. WARP's automatic mob-bar hook detection mis-reads the 07-16 client and builds a malformed hook, which crashed the *client* the moment a monster HP bar was drawn (for example, clicking a mob). The hook location itself was correct; only the auto-generated code was wrong. Replaced with a hardcoded, verified 07-16 hook that reads the monster type from the correct field.
+
+Confirmed in-game: Boss, Mini-boss, and Normal bars each render at their configured size with no crash.
+
+Thanks to Gardosen for reporting it, and to themidgargospel for the extra detail in the thread.
+
+### New patch: HatEffect world-depth occlusion ([#43](https://github.com/CrazyBebop/WARP0716/pull/43))
+
+Makes hat effects behave like special effects: they are now correctly occluded by buildings, walls, and other world geometry instead of drawing on top of everything. Thanks to YlenXWalker.
+
+### New patch: Dual weapon and off-hand sprites ([#42](https://github.com/CrazyBebop/WARP0716/pull/42))
+
+Adds an option to render dual-wield and off-hand weapons with their original weapon sprites. Thanks to YlenXWalker.
+
+### New patch: Custom client codepage ([#37](https://github.com/CrazyBebop/WARP0716/pull/37))
+
+A QJS-only patch that forces the client's text codepage, so text renders correctly regardless of the OS locale. Thanks to YlenXWalker.
+
+### Chat background patches split, plus Bigger Inventory ([#35](https://github.com/CrazyBebop/WARP0716/pull/35))
+
+The main chat-background patch was split out and detached/whisper chat-background patches were added, which also fixes a red/blue color swap in the old opacity patch (the color value was being read as BGR). Also adds a **BiggerInventoryWindow** patch. Thanks to Stingor.
+
+---
+
 # CrazyBebop — 2025-07-16 build (May 15, 2026)
 
 > **Binary patch — re-WARP required.** Unlike the May 6 / Apr 21 hotfixes, this one changes the `CustomJobs` patch itself, not just Lua data. You must re-apply the WARP patch with the updated `CustomJobs.qjs` for it to take effect — dropping new Lua files alone will **not** enable it.

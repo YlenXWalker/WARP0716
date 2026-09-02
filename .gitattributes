@@ -1,0 +1,2 @@
+# Unified diff artifacts contain required single-space context markers.
+dist/*.patch -whitespace

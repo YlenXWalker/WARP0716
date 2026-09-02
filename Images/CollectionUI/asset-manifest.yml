@@ -1,0 +1,107 @@
+Version: 1
+RuntimeRoot: 'data\texture\À¯ÀúÀÎÅÍÆäÀÌ½º\item_collection'
+MenuButtonRuntimeRoot: 'data\texture\À¯ÀúÀÎÅÍÆäÀÌ½º\uirenewal\menuicon'
+Format:
+  Container: Windows BMP
+  PixelFormat: 24-bpp BGR
+  Compression: BI_RGB
+  Alpha: false
+  ColorKey: '#FF00FF'
+
+Owned:
+  Title:
+    File: chrome/title_bar_760.bmp
+    Width: 760
+    Height: 17
+    Opaque: true
+    DerivedFrom: source/title_bar_470.bmp
+    Rule: Preserve x=0..59 and x=385..469; repeat only x=60..384.
+  Body:
+    File: chrome/bg_collection.bmp
+    Width: 760
+    Height: 523
+    Opaque: true
+  Loading:
+    File: chrome/loading.bmp
+    Width: 166
+    Height: 124
+    Opaque: true
+    AnimationSource: 'chrome/nowloading.act + chrome/nowloading.spr'
+    Runtime: Static safety frame shown while awaiting an authoritative snapshot.
+  CollectionIcon:
+    File: icons/icon_collection.bmp
+    Width: 16
+    Height: 16
+    ColorKeyed: true
+  LockedBadge:
+    File: icons/badge_locked.bmp
+    Width: 16
+    Height: 16
+    ColorKeyed: true
+  CompleteBadge:
+    File: icons/badge_complete.bmp
+    Width: 16
+    Height: 16
+    ColorKeyed: true
+
+Reused:
+  CategoryIcons:
+    Root: icons
+    Files: 'category_{all,card,weapon,armor,shield,headgear,garment,shoes,accessory,consumable,etc,ammo,pet,shadow,cash}.bmp'
+    Size: { All: '16x16', ItemTypes: '24x24' }
+    Source: Native collection icon plus representative client item icons.
+  MenuButtons:
+    Root: menuicon
+    NewUIRuntime: 'bt_itemcollection_{normal,mouseon,pressed}.bmp'
+    ClassicRuntime: 'bt_itemcollection_old_{normal,mouseon,pressed}.bmp'
+    Compatibility: 'bt_itemcollection.bmp, bt_itemcollection_disabled.bmp, bt_itemcollection_press.bmp, bt_itemcollection_old_disabled.bmp'
+    Size: { NewUI: '45x41', Classic: '32x34' }
+    Source: User-supplied approved Item Collection button set; pixels copied unchanged.
+  GenericButton:
+    Root: reused/buttons/generic
+    Files: 'btn_{out,over,press,disable}_{left,mid,right}.bmp'
+    Slice: { Left: 6, Middle: 6, Right: 6, Height: 20 }
+    Text: Runtime
+  Close:
+    Root: reused/close
+    Files: 'btn_close_{normal,mouseon,pressed,disabled}.bmp'
+    Size: { Width: 16, Height: 16 }
+  Search:
+    Root: reused/search
+    Field: searchbar_bg.bmp
+    Button: 'btn_searchbar_{normal,__mouseon,pressed,disabled}.bmp'
+  Scrollbar:
+    Root: reused/scrollbar
+    Width: 9
+    MiddleSliceRepeatsVertically: true
+  Steppers:
+    Root: reused/steppers
+    Files: 'btn_{plus,minus}_{normal,over,press}.bmp'
+  Currency:
+    File: reused/currency/icon_zeny.bmp
+  NativeCompletedRibbon:
+    File: reused/status/badge_complete.bmp
+    Optional: true
+  MissingArtwork:
+    File: reused/artwork/fallback_question_mark.bmp
+    RuntimeOriginal: 'collection\»ç°ú.bmp'
+    Size: { Width: 75, Height: 100 }
+
+DynamicArtwork:
+  PathFormat: 'collection\<identified-resource-stem>.bmp'
+  ItemFallbackPathFormat: 'item\<identified-resource-stem>.bmp'
+  Width: 75
+  Height: 100
+  Opaque: true
+  ManualItemIdMap: false
+
+RuntimeDrawn:
+  - Window title
+  - Tab, item-category dropdown, filter, button, and status labels
+  - Search query
+  - Item and combo names
+  - IDs, counts, fees, Zeny, and bonus strings
+  - Progress rails and fills
+  - Selection, panel, card, and group borders
+  - Quantity field and hit rectangles
+  - Missing-state grayscale effect

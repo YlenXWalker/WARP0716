@@ -1,0 +1,11 @@
+from: "./Inputs/2025-07-16_Ragexe_unpacked.exe"
+to: "./Outputs/item_collection_standalone_test.exe"
+inputs:
+    $copyItemCollectionAssets:
+        data: ''
+        display: ""
+        type: 10
+
+patches:
+    - ItemCollectionUI
+    - ItemCollectionStockMenuButton

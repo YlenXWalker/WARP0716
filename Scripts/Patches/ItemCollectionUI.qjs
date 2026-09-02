@@ -1,0 +1,3425 @@
+/**************************************************************************\
+*                                                                          *
+*   Copyright (C) 2026 Louis T Steinhil                                    *
+*                                                                          *
+*   This file is a part of WARP project (specific to RO clients)           *
+*                                                                          *
+*   WARP is free software: you can redistribute it and/or modify           *
+*   it under the terms of the GNU General Public License as published by   *
+*   the Free Software Foundation, either version 3 of the License, or      *
+*   (at your option) any later version.                                    *
+*                                                                          *
+|**************************************************************************|
+*                                                                          *
+*   Author(s)     : Louis T Steinhil                                       *
+*   Created Date  : 2026-08-31                                             *
+*                                                                          *
+*   Description   : Adds a server-authoritative account-wide Item          *
+*                   Collection as a pure-QJS 760x540 native UIFrameWnd.    *
+*                   Fixed chrome is deployed under item_collection while   *
+*                   item artwork is resolved at runtime from ItemId through*
+*                   CItemInfoMgr's identified-resource stem, collection or *
+*                   stock item BMPs, and a 15-family dropdown. A native    *
+*                   draggable scrollbar and flicker-free selection        *
+*                   complete the core client UI. The optional stock-menu  *
+*                   launcher consumes the published button bridge.        *
+*                   Requests use 0x0BF8/COUI v1 and snapshots use shared  *
+*                   post-reader 0x0BEF dispatcher boundary. The COUI       *
+*                   wrapper preserves AHUI, PINC, and stock fallbacks and  *
+*                   installs no recv hook, API detour, or DLL. Target:     *
+*                   2025-07-16 Ragexe.                                     *
+*                                                                          *
+\**************************************************************************/
+
+var ItemCollectionUIStatic = {
+	BuildDate: 20250716,
+	WindowManager: 0x0131F4E8,
+	Renderer: 0x012515F8,
+	OperatorNew: 0x00DBBC4F,
+	FrameConstructor: 0x0086B950,
+	FrameDeletingDestructor: 0x0086E240,
+	FrameMouseDown: 0x00880AD0,
+	FrameMouseMove: 0x00880CB0,
+	FrameMouseUp: 0x00880BB0,
+	FrameMouseWheel: 0x005A8AF0,
+	WindowCaptureGet: 0x00A32E00,
+	WindowCaptureRelease: 0x00A482E0,
+	WindowSetSize: 0x00A245C0,
+	WindowChildSetSize: 0x00A1CB70,
+	WindowAddChild: 0x00A1B780,
+	WindowAddTopLevelFront: 0x00A2D240,
+	WindowManagerSetFocusEdit: 0x00A4B760,
+	WindowManagerGetFocusEdit: 0x00A33100,
+	UIEditCtrlConstructor: 0x00817DA0,
+	UIEditCtrlGetText: 0x008210A0,
+	UIEditCtrlObjectSize: 0x11C,
+	UIEditCtrlMaximumOffset: 0x88,
+	UIEditCtrlStyleOffset: 0x8C,
+	WindowClearSurface: 0x00A1CB30,
+	FrameVtable: 0x0102FE08,
+	FrameVtableEntries: 53,
+	FrameVtableDraw: 0x005DD270,
+	FrameObjectSize: 0xB4,
+	WindowHeightOffset: 0x18,
+	WindowXOffset: 0x1C,
+	WindowYOffset: 0x20,
+	WindowSurfaceOffset: 0x24,
+	WindowVisibleOffset: 0x28,
+	WindowIdOffset: 0x2C,
+	WindowDragStateOffset: 0x38,
+	WindowDragIdle: 0xFF,
+	WindowDirtyOffset: 0x58,
+	SurfaceWidthOffset: 0x04,
+	SurfacePixelsOffset: 0x18,
+	RendererWidthOffset: 0x28,
+	RendererHeightOffset: 0x2C,
+	TextureWidthOffset: 0x114,
+	TextureHeightOffset: 0x118,
+	TexturePixelsOffset: 0x11C,
+	GetTexMgr: 0x00A90350,
+	ConvPath: 0x00A9F030,
+	LoadSurface: 0x00A8D4A0,
+	ImageDraw: 0x00A1D260,
+	ImageDrawRect: 0x00A1D2B0,
+	TextDraw: 0x00A25A70,
+	TextWidth: 0x00A21C90,
+	StringFormat: 0x00529850,
+	TextFontSelector: 0,
+	TextHeight: 11,
+	MoneyBufferSize: 16,
+	ItemInfoManager: 0x0159C088,
+	ItemInfoLookup: 0x00A7E780,
+	ItemInfoIdentifiedResourceOffset: 0x58,
+	ItemInfoStringCapacityOffset: 0x14,
+	TabItmFormat: 0x0102AC48,
+	PacketBuffer: 0x015E8198,
+	PacketSwitchTable: 0x00CAA2E0,
+	PacketDefaultHandler: 0x00CAA2B7,
+	PacketMainLoopReturn: 0x00C9E1DD,
+	ClientPacketId: 0x0BF8,
+	ServerPacketId: 0x0BEF,
+	PacketMagic: 0x49554F43, // 'COUI'
+	AhuiMagic: 0x49554841,
+	PincodeMagic: 0x434E4950,
+	ProtocolVersion: 1,
+	MessageOpen: 1,
+	MessageSnapshot: 2,
+	MessageNavigate: 3,
+	MessageMutate: 4,
+	ActionNone: 0,
+	ActionSelect: 1,
+	ActionDeposit: 2,
+	ActionDepositAll: 3,
+	ActionWithdraw: 4,
+	ActionActivate: 5,
+	ActionDeactivate: 6,
+	RequestSize: 64,
+	SnapshotHeaderSize: 56,
+	SnapshotMaximumSize: 1556,
+	PayloadSize: 1500,
+	CardRowSize: 100,
+	CardRows: 15,
+	ComboRowSize: 400,
+	ComboRows: 2,
+	ComboMemberOffset: 112,
+	ComboMemberSize: 48,
+	ComboMembers: 6,
+	TotalRowSize: 64,
+	TotalRows: 20,
+	CardComplete: 1 << 0,
+	ComboReady: 1 << 0,
+	ComboActive: 1 << 1,
+	ItemCategoryShift: 8,
+	CategoryCount: 15,
+	SnapshotFlagTruncated: 1 << 6,
+	CapabilityStorageReady: 1 << 4,
+	WindowWidth: 760,
+	WindowHeight: 540,
+	TitleHeight: 17,
+	WindowId: 0x3F3,
+	StateWindow: 0,
+	StateTab: 4,
+	StateFilter: 8,
+	StatePage: 12,
+	StateReady: 16,
+	StateRevision: 20,
+	StateRequest: 24,
+	StateSelectedId: 28,
+	StateSelectedIndex: 32,
+	StateZeny: 36,
+	StateCurrentCount: 40,
+	StateTotalCount: 44,
+	StatePageCount: 48,
+	StateRowCount: 52,
+	StateSnapshotFlags: 56,
+	StateMutationResult: 60,
+	StateQuantity: 64,
+	StatePressedControl: 68,
+	StateHoverControl: 72,
+	StateThumbY: 76,
+	StateAcceptedRequest: 80,
+	StateSearchFocused: 84,
+	StateSearchLength: 88,
+	StateSearchSubmitDue: 92,
+	StateSearchSubmitPending: 96,
+	StateComboId: 100,
+	StateComboMemberIndex: 104,
+	StateComboMemberId: 108,
+	StateMutationPending: 112,
+	StateSearchEdit: 116,
+	StateCategory: 120,
+	StateCategoryDropdown: 124,
+	StateScrollbarDragOffset: 128,
+	StateSize: 132,
+	SearchTextSize: 28,
+	SearchMaximumChars: 27,
+	SearchDebounceMs: 250,
+	ControlClose: 1,
+	ControlSearchField: 2,
+	ControlSearchButton: 3,
+	ControlTabBase: 10,
+	ControlFilterBase: 20,
+	ControlCategoryDropdown: 30,
+	ControlCategoryBase: 300,
+	ControlPrevious: 40,
+	ControlNext: 41,
+	ControlScrollbarThumb: 42,
+	ControlScrollbarTrack: 43,
+	ControlMinus: 50,
+	ControlPlus: 51,
+	ControlDeposit: 60,
+	ControlDepositAll: 61,
+	ControlWithdraw: 62,
+	ControlComboAction: 63,
+	ControlCardBase: 100,
+	ControlComboBase: 120,
+	ControlComboMemberBase: 200,
+	ScrollbarTrackTop: 128,
+	ScrollbarTrackBottom: 480,
+	ScrollbarThumbHeight: 24,
+	ScrollbarThumbTravel: 328,
+	AssetPath: "Images/CollectionUI",
+	TargetLeaf: "item_collection"
+};
+
+ItemCollectionUIStatic.bytesToHex = function(bytes)
+{
+	return bytes.map(value =>
+		(value & 0xFF).toString(16).padStart(2, "0")
+	).join(" ");
+};
+
+ItemCollectionUIStatic.asm = function()
+{
+	const bytes = [];
+	const labels = {};
+	const fixups = [];
+	const put32 = function(out, pos, value)
+	{
+		const v = value >>> 0;
+		out[pos] = v & 0xFF;
+		out[pos + 1] = (v >>> 8) & 0xFF;
+		out[pos + 2] = (v >>> 16) & 0xFF;
+		out[pos + 3] = (v >>> 24) & 0xFF;
+	};
+	return {
+		bytes,
+		emit: function(...values)
+		{
+			for (const value of values)
+				bytes.push(value & 0xFF);
+		},
+		dword: function(value)
+		{
+			const pos = bytes.length;
+			bytes.push(0, 0, 0, 0);
+			put32(bytes, pos, value);
+		},
+		word: function(value)
+		{
+			bytes.push(value & 0xFF, (value >>> 8) & 0xFF);
+		},
+		label: function(name)
+		{
+			if (Object.prototype.hasOwnProperty.call(labels, name))
+				throw Error(`ItemCollectionUI: duplicate label ${name}`);
+			labels[name] = bytes.length;
+		},
+		rel32: function(opcode, target)
+		{
+			bytes.push(opcode);
+			const pos = bytes.length;
+			bytes.push(0, 0, 0, 0);
+			fixups.push({pos, target});
+		},
+		call: function(target) { this.rel32(0xE8, target); },
+		jmp: function(target) { this.rel32(0xE9, target); },
+		jcc: function(opcode, target)
+		{
+			bytes.push(0x0F, opcode);
+			const pos = bytes.length;
+			bytes.push(0, 0, 0, 0);
+			fixups.push({pos, target});
+		},
+		finish: function(baseVir)
+		{
+			const out = bytes.slice();
+			for (const fixup of fixups)
+			{
+				if (typeof fixup.target === "string" &&
+					!Object.prototype.hasOwnProperty.call(labels, fixup.target))
+					throw Error(`ItemCollectionUI: unresolved label ${fixup.target}`);
+				const targetVir = typeof fixup.target === "string"
+					? baseVir + labels[fixup.target]
+					: fixup.target;
+				put32(out, fixup.pos, targetVir - (baseVir + fixup.pos + 4));
+			}
+			return ItemCollectionUIStatic.bytesToHex(out);
+		}
+	};
+};
+
+ItemCollectionUIStatic.allocateBytes = function(bytes, alignment = 1)
+{
+	const [phy, vir] = Exe.Allocate(bytes.length, alignment);
+	Exe.SetHex(phy, ItemCollectionUIStatic.bytesToHex(bytes));
+	return {phy, vir, size: bytes.length};
+};
+
+ItemCollectionUIStatic.allocateCode = function(assembler)
+{
+	const [phy, vir] = Exe.Allocate(assembler.bytes.length, 0x10);
+	Exe.SetHex(phy, assembler.finish(vir));
+	return {phy, vir, size: assembler.bytes.length};
+};
+
+ItemCollectionUIStatic.asciiBytes = function(text, nulTerminate = true)
+{
+	const bytes = [];
+	for (let index = 0; index < text.length; ++index)
+		bytes.push(text.charCodeAt(index) & 0xFF);
+	if (nulTerminate)
+		bytes.push(0);
+	return bytes;
+};
+
+ItemCollectionUIStatic.findBytes = function(bytes, needle)
+{
+	for (let index = 0; index <= bytes.length - needle.length; ++index)
+	{
+		let matches = true;
+		for (let offset = 0; offset < needle.length; ++offset)
+		{
+			if (bytes[index + offset] !== needle[offset])
+			{
+				matches = false;
+				break;
+			}
+		}
+		if (matches)
+			return index;
+	}
+	return -1;
+};
+
+ItemCollectionUIStatic.readCString = function(virAddr, maximum)
+{
+	const phy = Exe.Vir2Phy(virAddr);
+	if (phy < 0)
+		throw Error(`ItemCollectionUI: string ${virAddr.toHex(true)} is not mapped`);
+	const bytes = [];
+	for (let index = 0; index < maximum; ++index)
+	{
+		const value = Exe.GetUint8(phy + index);
+		bytes.push(value);
+		if (value === 0)
+			return bytes;
+	}
+	throw Error(`ItemCollectionUI: unterminated string at ${virAddr.toHex(true)}`);
+};
+
+ItemCollectionUIStatic.buildResourcePath = function(relativePath)
+{
+	const source = ItemCollectionUIStatic.readCString(
+		ItemCollectionUIStatic.TabItmFormat, 192
+	);
+	const needle = ItemCollectionUIStatic.asciiBytes("basic_interface\\", false);
+	const position = ItemCollectionUIStatic.findBytes(source, needle);
+	if (position < 0)
+		throw Error("ItemCollectionUI: UI texture prefix was not found");
+	return ItemCollectionUIStatic.allocateBytes(
+		source.slice(0, position).concat(
+			ItemCollectionUIStatic.asciiBytes(relativePath)
+		)
+	);
+};
+
+ItemCollectionUIStatic.allocateString = function(text)
+{
+	return ItemCollectionUIStatic.allocateBytes(
+		ItemCollectionUIStatic.asciiBytes(text)
+	);
+};
+
+ItemCollectionUIStatic.pushImm = function(a, value)
+{
+	if (value >= -128 && value <= 127)
+		a.emit(0x6A, value);
+	else
+	{
+		a.emit(0x68);
+		a.dword(value);
+	}
+};
+
+ItemCollectionUIStatic.packetTableEntryVir = function(packetId)
+{
+	return ItemCollectionUIStatic.PacketSwitchTable + (packetId - 0x73) * 4;
+};
+
+ItemCollectionUIStatic.SharedPacketRouteGlobalKey =
+	"AutoHuntPincode.Packet0BEF.Router.Global.v1";
+
+ItemCollectionUIStatic.beginSharedPacketRoute = function(patchName)
+{
+	CACHE.addUser(ItemCollectionUIStatic.SharedPacketRouteGlobalKey, patchName);
+	Exe.ActivateGlobal();
+	Exe.BeginTag(CACHE.getTag(ItemCollectionUIStatic.SharedPacketRouteGlobalKey));
+};
+
+ItemCollectionUIStatic.endSharedPacketRoute = function(patchName)
+{
+	Exe.EndTag();
+	Exe.ActivePatch = patchName;
+};
+
+ItemCollectionUIStatic.SharedPacketRouteCanonicalKey =
+	"SharedPacket0BEF.Router.v3";
+ItemCollectionUIStatic.SharedPacketRouteLegacyKeys = [
+	"AutoCombatUI.Packet0BEF.Router.v2",
+	"InGamePincodeUI.Packet0BEF.Router.v2"
+];
+
+ItemCollectionUIStatic.buildSharedPacketRouter = function(route)
+{
+	const a = ItemCollectionUIStatic.asm();
+	a.emit(0x9C, 0x60);
+	a.emit(0xBE); a.dword(ItemCollectionUIStatic.PacketBuffer);
+	a.emit(0x66, 0x81, 0x3E); a.word(ItemCollectionUIStatic.ServerPacketId);
+	a.jcc(0x85, "fallback");
+	a.emit(0x66, 0x83, 0x7E, 0x02, 0x08);
+	a.jcc(0x82, "fallback");
+	a.emit(0x81, 0x7E, 0x04); a.dword(ItemCollectionUIStatic.AhuiMagic);
+	a.jcc(0x84, "route_ahui");
+	a.emit(0x81, 0x7E, 0x04); a.dword(ItemCollectionUIStatic.PincodeMagic);
+	a.jcc(0x84, "route_pincode");
+	a.emit(0x81, 0x7E, 0x04); a.dword(ItemCollectionUIStatic.PacketMagic);
+	a.jcc(0x84, "route_coui");
+	a.jmp("fallback");
+	a.label("route_ahui");
+	a.emit(0xA1); a.dword(route.ahuiHandlerCellVir);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "fallback");
+	a.emit(0x61, 0x9D);
+	a.emit(0xA1); a.dword(route.ahuiHandlerCellVir);
+	a.emit(0xFF, 0xE0);
+	a.label("route_pincode");
+	a.emit(0xA1); a.dword(route.pincodeHandlerCellVir);
+	a.emit(0x85, 0xC0);
+	a.jcc(0x84, "fallback");
+	a.emit(0x61, 0x9D);
+	a.emit(0xA1); a.dword(route.pincodeHandlerCellVir);
+	a.emit(0xFF, 0xE0);
+	a.label("route_coui");
+	a.emit(0xA1); a.dword(route.couiHandlerCellVir);
+	a.emit(0x85, 0xC0);
+	a.jcc(0x84, "fallback");
+	a.emit(0x61, 0x9D);
+	a.emit(0xA1); a.dword(route.couiHandlerCellVir);
+	a.emit(0xFF, 0xE0);
+	a.label("fallback");
+	a.emit(0x61, 0x9D);
+	a.emit(0xA1); a.dword(route.fallbackCellVir);
+	a.emit(0xFF, 0xE0);
+	return a;
+};
+
+ItemCollectionUIStatic.isSharedPacketRouteV3 = function(route, entryVir)
+{
+	return !!route && route.entryVir === entryVir &&
+		Number.isInteger(route.ahuiHandlerCellPhy) &&
+		Number.isInteger(route.ahuiHandlerCellVir) &&
+		Number.isInteger(route.pincodeHandlerCellPhy) &&
+		Number.isInteger(route.pincodeHandlerCellVir) &&
+		Number.isInteger(route.couiHandlerCellPhy) &&
+		Number.isInteger(route.couiHandlerCellVir) &&
+		Number.isInteger(route.fallbackCellPhy) &&
+		Number.isInteger(route.fallbackCellVir) &&
+		Number.isInteger(route.routerVir);
+};
+
+ItemCollectionUIStatic.sharedPacketRouteCellValue = function(route, name)
+{
+	if (!route)
+		return 0;
+	const phyName = `${name}HandlerCellPhy`;
+	const virName = `${name}HandlerCellVir`;
+	if (Number.isInteger(route[phyName]))
+		return Exe.GetUint32(route[phyName]);
+	if (Number.isInteger(route[virName]))
+	{
+		const phy = Exe.Vir2Phy(route[virName]);
+		if (phy >= 0)
+			return Exe.GetUint32(phy);
+	}
+	return 0;
+};
+
+ItemCollectionUIStatic.publishSharedPacketRoute = function(route)
+{
+	CACHE.put(ItemCollectionUIStatic.SharedPacketRouteCanonicalKey, route);
+	for (const key of ItemCollectionUIStatic.SharedPacketRouteLegacyKeys)
+		CACHE.put(key, route);
+};
+
+ItemCollectionUIStatic.ensureSharedPacketRoute = function(_, handlerVir)
+{
+	const c = ItemCollectionUIStatic;
+	const entryVir = c.packetTableEntryVir(c.ServerPacketId);
+	const entryPhy = Exe.Vir2Phy(entryVir, CODE);
+	if (entryPhy < 0)
+		throw Error("ItemCollectionUI: 0x0BEF dispatcher entry is not mapped");
+	c.beginSharedPacketRoute(_);
+	const cachedRoute = CACHE.get(c.SharedPacketRouteCanonicalKey);
+	if (c.isSharedPacketRouteV3(cachedRoute, entryVir))
+	{
+		Exe.SetUint32(cachedRoute.couiHandlerCellPhy, handlerVir);
+		if (Exe.GetUint32(entryPhy) !== cachedRoute.routerVir)
+			Exe.SetUint32(entryPhy, cachedRoute.routerVir);
+		c.publishSharedPacketRoute(cachedRoute);
+		c.endSharedPacketRoute(_);
+		return cachedRoute;
+	}
+
+	let legacy = cachedRoute && cachedRoute.entryVir === entryVir
+		? cachedRoute : null;
+	for (const key of c.SharedPacketRouteLegacyKeys)
+	{
+		if (legacy)
+			break;
+		const candidate = CACHE.get(key);
+		if (candidate && candidate.entryVir === entryVir)
+			legacy = candidate;
+	}
+	if (c.isSharedPacketRouteV3(legacy, entryVir))
+	{
+		Exe.SetUint32(legacy.couiHandlerCellPhy, handlerVir);
+		if (Exe.GetUint32(entryPhy) !== legacy.routerVir)
+			Exe.SetUint32(entryPhy, legacy.routerVir);
+		c.publishSharedPacketRoute(legacy);
+		c.endSharedPacketRoute(_);
+		return legacy;
+	}
+
+	const current = Exe.GetUint32(entryPhy);
+	let fallbackVir = current;
+	let ahuiHandlerVir = 0;
+	let pincodeHandlerVir = 0;
+	if (legacy)
+	{
+		ahuiHandlerVir = c.sharedPacketRouteCellValue(legacy, "ahui");
+		pincodeHandlerVir = c.sharedPacketRouteCellValue(legacy, "pincode");
+		if (Number.isInteger(legacy.fallbackCellPhy))
+			fallbackVir = Exe.GetUint32(legacy.fallbackCellPhy);
+		else if (Number.isInteger(legacy.fallbackVir))
+			fallbackVir = legacy.fallbackVir;
+	}
+	else if (current === c.PacketDefaultHandler)
+		fallbackVir = c.PacketMainLoopReturn;
+	else if (Exe.Vir2Phy(current, CODE) < 0)
+		throw Error(
+			`ItemCollectionUI: 0x0BEF fallback ${current.toHex(true)} is not executable`
+		);
+	if (Exe.Vir2Phy(fallbackVir, CODE) < 0)
+		throw Error("ItemCollectionUI: migrated 0x0BEF fallback is not executable");
+	for (const handler of [ahuiHandlerVir, pincodeHandlerVir])
+	{
+		if (handler !== 0 && Exe.Vir2Phy(handler, CODE) < 0)
+			throw Error("ItemCollectionUI: migrated peer handler is not executable");
+	}
+
+	const [cellsPhy, cellsVir] = Exe.Allocate(16, 4);
+	const route = {
+		version: 3,
+		entryVir,
+		entryPhy,
+		ahuiHandlerCellPhy: cellsPhy,
+		ahuiHandlerCellVir: cellsVir,
+		pincodeHandlerCellPhy: cellsPhy + 4,
+		pincodeHandlerCellVir: cellsVir + 4,
+		couiHandlerCellPhy: cellsPhy + 8,
+		couiHandlerCellVir: cellsVir + 8,
+		fallbackCellPhy: cellsPhy + 12,
+		fallbackCellVir: cellsVir + 12,
+		fallbackVir
+	};
+	Exe.SetUint32(route.ahuiHandlerCellPhy, ahuiHandlerVir);
+	Exe.SetUint32(route.pincodeHandlerCellPhy, pincodeHandlerVir);
+	Exe.SetUint32(route.couiHandlerCellPhy, handlerVir);
+	Exe.SetUint32(route.fallbackCellPhy, fallbackVir);
+	const router = ItemCollectionUIStatic.allocateCode(
+		ItemCollectionUIStatic.buildSharedPacketRouter(route)
+	);
+	route.routerPhy = router.phy;
+	route.routerVir = router.vir;
+	if (Exe.GetUint32(entryPhy) !== current)
+		throw Error("ItemCollectionUI: 0x0BEF entry changed during installation");
+	Exe.SetUint32(entryPhy, route.routerVir);
+
+	c.publishSharedPacketRoute(route);
+	c.endSharedPacketRoute(_);
+	return route;
+};
+
+ItemCollectionUIStatic.resolvePacketRefs = function()
+{
+	const cacheKey = "ItemCollectionUI.PacketRefs.v1";
+	if (CACHE.has(cacheKey))
+		return CACHE.get(cacheKey);
+	const template = MOV(EAX, 0x0844) + PUSH(ESI) + MOV([EBP, 0x8], AX);
+	const matches = Exe.FindHexN(template, 0, Exe.FileSize);
+	if (matches.isEmpty())
+		throw Error("ItemCollectionUI: packet sender template not found");
+	const candidates = matches.filter(address =>
+		Exe.FindLastHex(PUSH(0x13E), address, Math.max(0, address - 0x80)) > 0
+	);
+	if (candidates.length !== 1)
+		throw Error(`ItemCollectionUI: expected one packet sender, found ${candidates.length}`);
+	const sender = candidates[0];
+	const refs = {
+		packetCtorA: Exe.GetTgtAddr(sender + 0x0A + 1),
+		packetSend: Exe.GetTgtAddr(sender + 0x29 + 1)
+	};
+	CACHE.put(cacheKey, refs);
+	return refs;
+};
+
+ItemCollectionUIStatic.buildRequestSender = function(stateVir, refs, searchTextVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x83, 0xEC, c.RequestSize, 0x53, 0x56, 0x57);
+	// Navigation changes the requested schema immediately, so hide the old
+	// payload until the matching snapshot arrives. Mutations keep the current
+	// payload visible but become single-flight.
+	a.emit(0x8B, 0x45, 0x08);
+	a.emit(0x83, 0xF8, c.MessageMutate); a.jcc(0x85, "sender_navigation");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateMutationPending); a.dword(1);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateMutationResult); a.dword(0);
+	a.jmp("sender_state_done");
+	a.label("sender_navigation");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateMutationPending); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateMutationResult); a.dword(0);
+	a.emit(0x83, 0x7D, 0x0C, c.ActionSelect);
+	a.jcc(0x84, "sender_state_done");                 // same schema/page: no flicker
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateReady); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateRowCount); a.dword(0);
+	a.label("sender_state_done");
+	// Zero the complete fixed request, including the reserved search query.
+	a.emit(0x8D, 0x7D, 0xC0, 0x33, 0xC0, 0xB9); a.dword(c.RequestSize / 4);
+	a.emit(0xF3, 0xAB);
+	a.emit(0x66, 0xC7, 0x45, 0xC0); a.word(c.ClientPacketId);
+	a.emit(0x66, 0xC7, 0x45, 0xC2); a.word(c.RequestSize);
+	a.emit(0xC7, 0x45, 0xC4); a.dword(c.PacketMagic);
+	a.emit(0x66, 0xC7, 0x45, 0xC8); a.word(c.ProtocolVersion);
+	a.emit(0x8B, 0x45, 0x08, 0x66, 0x89, 0x45, 0xCA);
+	a.emit(0xA1); a.dword(stateVir + c.StateRequest);
+	a.emit(0x40, 0xA3); a.dword(stateVir + c.StateRequest);
+	a.emit(0x89, 0x45, 0xCC);
+	a.emit(0xA1); a.dword(stateVir + c.StateRevision);
+	a.emit(0x89, 0x45, 0xD0);
+	a.emit(0xA1); a.dword(stateVir + c.StateTab);
+	a.emit(0x66, 0x89, 0x45, 0xD4);
+	a.emit(0xA1); a.dword(stateVir + c.StateCategory);
+	a.emit(0xC1, 0xE0, c.ItemCategoryShift);
+	a.emit(0x0B, 0x05); a.dword(stateVir + c.StateFilter);
+	a.emit(0x66, 0x89, 0x45, 0xD6);
+	a.emit(0xA1); a.dword(stateVir + c.StatePage);
+	a.emit(0x66, 0x89, 0x45, 0xD8);
+	a.emit(0x8B, 0x45, 0x0C, 0x66, 0x89, 0x45, 0xDA);
+	a.emit(0x8B, 0x45, 0x10, 0x89, 0x45, 0xDC);
+	a.emit(0x8B, 0x45, 0x14, 0x89, 0x45, 0xE0);
+	// Copy the complete bounded ASCII query into request.query[28].
+	a.emit(0x8D, 0x7D, 0xE4, 0xBE); a.dword(searchTextVir);
+	a.emit(0xB9); a.dword(c.SearchTextSize / 4);
+	a.emit(0xFC, 0xF3, 0xA5);
+	a.call(refs.packetCtorA);
+	a.emit(0x8B, 0xF0, 0x85, 0xF6);
+	a.jcc(0x84, "done");
+	a.emit(0x8D, 0x45, 0xC0, 0x50);
+	c.pushImm(a, c.RequestSize);
+	a.emit(0x8B, 0xCE);
+	a.call(refs.packetSend);
+	a.label("done");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 0x10, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.buildSearchNativeInput = function(
+	stateVir, searchTextVir, senderVir, timeGetTimeIat
+)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57);
+	a.emit(0x8B, 0x35); a.dword(stateVir + c.StateSearchEdit);
+	a.emit(0x85, 0xF6); a.jcc(0x84, "sync_focus_clear");
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowManagerGetFocusEdit);
+	a.emit(0x3B, 0xC6, 0x0F, 0x94, 0xC0, 0x0F, 0xB6, 0xC0);
+	a.emit(0xA3); a.dword(stateVir + c.StateSearchFocused);
+	a.emit(0x8B, 0xCE);
+	a.call(c.UIEditCtrlGetText);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "debounce");
+	a.emit(0x8B, 0xD8, 0xBF); a.dword(searchTextVir);
+	a.emit(0x33, 0xC9);
+	a.label("sync_compare");
+	a.emit(0x83, 0xF9, c.SearchMaximumChars); a.jcc(0x8D, "debounce");
+	a.emit(0x8A, 0x14, 0x0B, 0x3A, 0x14, 0x0F);
+	a.jcc(0x85, "sync_changed");
+	a.emit(0x84, 0xD2); a.jcc(0x84, "debounce");
+	a.emit(0x41); a.jmp("sync_compare");
+	a.label("sync_changed");
+	a.emit(0x33, 0xC9);
+	a.label("sync_copy");
+	a.emit(0x83, 0xF9, c.SearchMaximumChars); a.jcc(0x8D, "sync_terminate");
+	a.emit(0x8A, 0x14, 0x0B, 0x88, 0x14, 0x0F);
+	a.emit(0x84, 0xD2); a.jcc(0x84, "sync_copied");
+	a.emit(0x41); a.jmp("sync_copy");
+	a.label("sync_terminate");
+	a.emit(0xC6, 0x47, c.SearchMaximumChars, 0);
+	a.label("sync_copied");
+	a.emit(0x89, 0x0D); a.dword(stateVir + c.StateSearchLength);
+	a.emit(0xFF, 0x15); a.dword(timeGetTimeIat);
+	a.emit(0x05); a.dword(c.SearchDebounceMs);
+	a.emit(0xA3); a.dword(stateVir + c.StateSearchSubmitDue);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchSubmitPending); a.dword(1);
+	a.emit(0xA1); a.dword(stateVir + c.StateWindow);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "debounce");
+	a.emit(0xC7, 0x40, c.WindowDirtyOffset); a.dword(1);
+	a.jmp("debounce");
+	a.label("sync_focus_clear");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchFocused); a.dword(0);
+	a.label("debounce");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateMutationPending); a.emit(1);
+	a.jcc(0x84, "done");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSearchSubmitPending); a.emit(1);
+	a.jcc(0x85, "done");
+	a.emit(0xFF, 0x15); a.dword(timeGetTimeIat);
+	a.emit(0x2B, 0x05); a.dword(stateVir + c.StateSearchSubmitDue);
+	a.jcc(0x88, "done");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchSubmitPending); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePage); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(0);
+	c.pushImm(a, 0); c.pushImm(a, 0); c.pushImm(a, c.ActionNone);
+	c.pushImm(a, c.MessageNavigate); a.call(senderVir);
+	a.emit(0xA1); a.dword(stateVir + c.StateWindow);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "done");
+	a.emit(0xC7, 0x40, c.WindowDirtyOffset); a.dword(1);
+	a.label("done");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC3);
+	return a;
+};
+
+ItemCollectionUIStatic.buildSnapshotReceiver = function(stateVir, payloadVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x9C, 0x60);
+	a.emit(0xBE); a.dword(c.PacketBuffer);
+	a.emit(0x66, 0x81, 0x3E); a.word(c.ServerPacketId);
+	a.jcc(0x85, "handled");
+	a.emit(0x0F, 0xB7, 0x4E, 0x02);
+	a.emit(0x81, 0xF9); a.dword(c.SnapshotHeaderSize);
+	a.jcc(0x82, "handled");
+	a.emit(0x81, 0xF9); a.dword(c.SnapshotMaximumSize);
+	a.jcc(0x87, "handled");
+	a.emit(0x81, 0x7E, 0x04); a.dword(c.PacketMagic);
+	a.jcc(0x85, "handled");
+	a.emit(0x66, 0x83, 0x7E, 0x08, c.ProtocolVersion);
+	a.jcc(0x85, "handled");
+	a.emit(0x66, 0x83, 0x7E, 0x0A, c.MessageSnapshot);
+	a.jcc(0x85, "handled");
+
+	// COUI is request/response scoped. Accept only the currently outstanding
+	// request and never move backward from an already accepted request or
+	// revision. This prevents a late silent-storage resume from restoring an
+	// older tab, page, payload, or selection after a newer navigation.
+	a.emit(0x8B, 0x46, 0x0C);
+	a.emit(0x3B, 0x05); a.dword(stateVir + c.StateRequest);
+	a.jcc(0x82, "handled");
+	a.jcc(0x87, "handled");
+	a.emit(0x3B, 0x05); a.dword(stateVir + c.StateAcceptedRequest);
+	a.jcc(0x82, "handled");
+	a.emit(0x8B, 0x56, 0x10);
+	a.emit(0x3B, 0x15); a.dword(stateVir + c.StateRevision);
+	a.jcc(0x82, "snapshot_regressed");
+	a.emit(0xA3); a.dword(stateVir + c.StateAcceptedRequest);
+	a.jmp("snapshot_current");
+
+	// A current-request server error remains visible even if its snapshot
+	// revision is stale. Copy only mutationResult; never copy stale page state.
+	a.label("snapshot_regressed");
+	a.emit(0x83, 0x7E, 0x30, 0x00);
+	a.jcc(0x84, "handled");
+	a.emit(0x8B, 0x46, 0x30, 0xA3);
+	a.dword(stateVir + c.StateMutationResult);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateMutationPending); a.dword(0);
+	a.emit(0x8B, 0x3D); a.dword(stateVir + c.StateWindow);
+	a.emit(0x85, 0xFF); a.jcc(0x84, "handled");
+	a.emit(0xC7, 0x47, c.WindowDirtyOffset); a.dword(1);
+	a.jmp("handled");
+
+	a.label("snapshot_current");
+	// Snapshot common header.
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateMutationPending); a.dword(0);
+	a.emit(0x8B, 0x46, 0x10, 0xA3); a.dword(stateVir + c.StateRevision);
+	a.emit(0x0F, 0xB7, 0x46, 0x14, 0xA3); a.dword(stateVir + c.StateTab);
+	a.emit(0x0F, 0xB7, 0x46, 0x16);
+	a.emit(0x8B, 0xC8, 0x81, 0xE1); a.dword(0xFF);
+	a.emit(0x89, 0x0D); a.dword(stateVir + c.StateFilter);
+	a.emit(0xC1, 0xE8, c.ItemCategoryShift);
+	a.emit(0xA3); a.dword(stateVir + c.StateCategory);
+	a.emit(0x0F, 0xB7, 0x46, 0x18, 0xA3); a.dword(stateVir + c.StatePage);
+	a.emit(0x0F, 0xB7, 0x46, 0x1A, 0xA3); a.dword(stateVir + c.StatePageCount);
+	a.emit(0x0F, 0xB7, 0x46, 0x1C, 0xA3); a.dword(stateVir + c.StateRowCount);
+	a.emit(0x0F, 0xB7, 0x46, 0x1E, 0xA3); a.dword(stateVir + c.StateSnapshotFlags);
+	a.emit(0x8B, 0x46, 0x20, 0xA3); a.dword(stateVir + c.StateCurrentCount);
+	a.emit(0x8B, 0x46, 0x24, 0xA3); a.dword(stateVir + c.StateTotalCount);
+	a.emit(0x8B, 0x46, 0x28, 0xA3); a.dword(stateVir + c.StateSelectedId);
+	a.emit(0x8B, 0x46, 0x2C, 0xA3); a.dword(stateVir + c.StateZeny);
+	a.emit(0x8B, 0x46, 0x30, 0xA3); a.dword(stateVir + c.StateMutationResult);
+
+	// Clear then copy only the length-bounded payload.
+	a.emit(0xFC);
+	a.emit(0x0F, 0xB7, 0x4E, 0x02, 0x81, 0xE9); a.dword(c.SnapshotHeaderSize);
+	a.emit(0x51);
+	a.emit(0xBF); a.dword(payloadVir);
+	a.emit(0x33, 0xC0, 0xB9); a.dword(c.PayloadSize / 4);
+	a.emit(0xF3, 0xAB);
+	a.emit(0x59);
+	a.emit(0x8D, 0x76, c.SnapshotHeaderSize);
+	a.emit(0xBF); a.dword(payloadVir);
+	a.emit(0xF3, 0xA4);
+
+	// A combo-member mutation targets an item ID, not the parent combo ID.
+	// Preserve the locally selected combo when it is still on this page.
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "selection_id_ready");
+	a.emit(0xA1); a.dword(stateVir + c.StateComboId);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "selection_id_ready");
+	a.emit(0xA3); a.dword(stateVir + c.StateSelectedId);
+	a.label("selection_id_ready");
+
+	// Resolve the selected row index inside the bounded page payload.
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(0);
+	a.emit(0x8B, 0x15); a.dword(stateVir + c.StateSelectedId);
+	a.emit(0x85, 0xD2); a.jcc(0x84, "selection_done");
+	a.emit(0x8B, 0x0D); a.dword(stateVir + c.StateRowCount);
+	a.emit(0x85, 0xC9); a.jcc(0x84, "selection_done");
+	a.emit(0x83, 0xF9, c.CardRows); a.jcc(0x86, "selection_count_ok");
+	a.emit(0xB9); a.dword(c.CardRows);
+	a.label("selection_count_ok");
+	a.emit(0x33, 0xC0);
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "selection_card_loop");
+	a.emit(0x83, 0xF9, c.ComboRows); a.jcc(0x86, "selection_combo_loop");
+	a.emit(0xB9); a.dword(c.ComboRows);
+	a.label("selection_combo_loop");
+	a.emit(0x8B, 0xF8, 0x69, 0xFF); a.dword(c.ComboRowSize);
+	a.emit(0x3B, 0x97); a.dword(payloadVir);
+	a.jcc(0x84, "selection_store");
+	a.emit(0x40, 0x49); a.jcc(0x85, "selection_combo_loop");
+	a.jmp("selection_combo_fallback");
+	a.label("selection_card_loop");
+	a.emit(0x8B, 0xF8, 0x6B, 0xFF, c.CardRowSize);
+	a.emit(0x3B, 0x97); a.dword(payloadVir);
+	a.jcc(0x84, "selection_store");
+	a.emit(0x40, 0x49); a.jcc(0x85, "selection_card_loop");
+	a.jmp("selection_done");
+	a.label("selection_store");
+	a.emit(0xA3); a.dword(stateVir + c.StateSelectedIndex);
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "selection_done");
+	a.emit(0x89, 0x15); a.dword(stateVir + c.StateComboId);
+	a.jmp("selection_done");
+	a.label("selection_combo_fallback");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount); a.emit(0);
+	a.jcc(0x84, "selection_done");
+	a.emit(0xA1); a.dword(payloadVir);
+	a.emit(0xA3); a.dword(stateVir + c.StateSelectedId);
+	a.emit(0xA3); a.dword(stateVir + c.StateComboId);
+	a.label("selection_done");
+
+	// Keep a combo member selected independently from the parent combo. This
+	// lets the shared Deposit/Withdraw controls target one required card while
+	// Activate/Deactivate continues to target the stable combo ID.
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "selection_member_done");
+	a.emit(0x8B, 0x0D); a.dword(stateVir + c.StateRowCount);
+	a.emit(0x85, 0xC9); a.jcc(0x84, "selection_member_clear");
+	a.emit(0xA1); a.dword(stateVir + c.StateSelectedIndex);
+	a.emit(0x3B, 0xC1); a.jcc(0x83, "selection_member_clear");
+	a.emit(0x69, 0xC0); a.dword(c.ComboRowSize);
+	a.emit(0x05); a.dword(payloadVir);
+	a.emit(0x8B, 0xF8);
+	a.emit(0x0F, 0xB7, 0x4F, 0x08);
+	a.emit(0x83, 0xF9, c.ComboMembers); a.jcc(0x86, "selection_member_count_ok");
+	a.emit(0xB9); a.dword(c.ComboMembers);
+	a.label("selection_member_count_ok");
+	a.emit(0x85, 0xC9); a.jcc(0x84, "selection_member_clear");
+	a.emit(0x8B, 0x15); a.dword(stateVir + c.StateComboMemberId);
+	a.emit(0x85, 0xD2); a.jcc(0x84, "selection_member_fallback");
+	a.emit(0x33, 0xC0);
+	a.label("selection_member_loop");
+	a.emit(0x8B, 0xD8, 0x6B, 0xDB, c.ComboMemberSize);
+	a.emit(0x3B, 0x54, 0x1F, c.ComboMemberOffset);
+	a.jcc(0x84, "selection_member_store");
+	a.emit(0x40, 0x49); a.jcc(0x85, "selection_member_loop");
+	a.jmp("selection_member_fallback");
+	a.label("selection_member_store");
+	a.emit(0xA3); a.dword(stateVir + c.StateComboMemberIndex);
+	a.jmp("selection_member_done");
+	a.label("selection_member_fallback");
+	a.emit(0x8B, 0x57, c.ComboMemberOffset);
+	a.emit(0x89, 0x15); a.dword(stateVir + c.StateComboMemberId);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateComboMemberIndex); a.dword(0);
+	a.jmp("selection_member_done");
+	a.label("selection_member_clear");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateComboMemberIndex); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateComboMemberId); a.dword(0);
+	a.label("selection_member_done");
+
+	// Page -> scrollbar thumb Y, bounded to trackTop..trackBottom-thumbHeight.
+	a.emit(0xB8); a.dword(c.ScrollbarTrackTop);
+	a.emit(0x8B, 0x0D); a.dword(stateVir + c.StatePageCount);
+	a.emit(0x83, 0xF9, 0x01); a.jcc(0x86, "thumb_store");
+	a.emit(0x49);
+	a.emit(0x8B, 0x1D); a.dword(stateVir + c.StatePage);
+	a.emit(0x69, 0xDB); a.dword(c.ScrollbarThumbTravel);
+	a.emit(0x53, 0x33, 0xD2, 0x8B, 0xC3, 0xF7, 0xF1, 0x5B);
+	a.emit(0x05); a.dword(c.ScrollbarTrackTop);
+	a.label("thumb_store");
+	a.emit(0xA3); a.dword(stateVir + c.StateThumbY);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateReady); a.dword(1);
+	a.emit(0x8B, 0x3D); a.dword(stateVir + c.StateWindow);
+	a.emit(0x85, 0xFF); a.jcc(0x84, "handled");
+	a.emit(0xC7, 0x47, c.WindowDirtyOffset); a.dword(1);
+	a.label("handled");
+	a.emit(0x61, 0x9D);
+	a.emit(0xB8); a.dword(c.PacketMainLoopReturn);
+	a.emit(0xFF, 0xE0);
+	return a;
+};
+
+ItemCollectionUIStatic.buildFillRect = function()
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	// stdcall(window,x,y,width,height,color). Preserve every x86 callee-saved
+	// register and reject empty/signed-invalid rectangles before DEC/JNZ loops.
+	// Clip against the live window height and surface stride so a malformed or
+	// over-complete snapshot can never turn a paint operation into an OOB write.
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57);
+	a.emit(0x8B, 0x75, 0x08, 0x85, 0xF6); a.jcc(0x84, "done");
+	a.emit(0x8B, 0x45, 0x10, 0x85, 0xC0); a.jcc(0x88, "done");
+	a.emit(0x8B, 0x55, 0x18, 0x85, 0xD2); a.jcc(0x8E, "done");
+	a.emit(0x8B, 0x4E, c.WindowHeightOffset, 0x2B, 0xC8, 0x85, 0xC9);
+	a.jcc(0x8E, "done");
+	a.emit(0x3B, 0xD1); a.jcc(0x8E, "height_ok");
+	a.emit(0x89, 0x4D, 0x18);
+	a.label("height_ok");
+	a.emit(0x8B, 0x76, c.WindowSurfaceOffset);
+	a.emit(0x85, 0xF6); a.jcc(0x84, "done");
+	a.emit(0x8B, 0x7E, c.SurfacePixelsOffset, 0x85, 0xFF);
+	a.jcc(0x84, "done");
+	a.emit(0x8B, 0x5E, c.SurfaceWidthOffset, 0x85, 0xDB);
+	a.jcc(0x8E, "done");
+	a.emit(0x8B, 0x45, 0x0C, 0x85, 0xC0); a.jcc(0x88, "done");
+	a.emit(0x8B, 0x55, 0x14, 0x85, 0xD2); a.jcc(0x8E, "done");
+	a.emit(0x8B, 0xCB, 0x2B, 0xC8, 0x85, 0xC9); a.jcc(0x8E, "done");
+	a.emit(0x3B, 0xD1); a.jcc(0x8E, "width_ok");
+	a.emit(0x89, 0x4D, 0x14);
+	a.label("width_ok");
+	a.emit(0x8B, 0x45, 0x10, 0x0F, 0xAF, 0xC3, 0x03, 0x45, 0x0C);
+	a.emit(0x8D, 0x3C, 0x87, 0x8B, 0x55, 0x18);
+	a.label("row");
+	a.emit(0x8B, 0x4D, 0x14, 0x8B, 0xC7);
+	a.label("pixel");
+	a.emit(0x8B, 0x75, 0x1C, 0x89, 0x30, 0x83, 0xC0, 0x04, 0x49);
+	a.jcc(0x85, "pixel");
+	a.emit(0x8D, 0x3C, 0x9F, 0x4A); a.jcc(0x85, "row");
+	a.label("done");
+	a.emit(0x5F, 0x5E, 0x5B, 0x5D, 0xC2, 0x18, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.buildColorKeyBlit = function()
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x18, 0x53, 0x56, 0x57);
+	a.emit(0x8B, 0x75, 0x08, 0x85, 0xF6); a.jcc(0x84, "done");
+	a.emit(0x8B, 0x76, c.WindowSurfaceOffset, 0x85, 0xF6); a.jcc(0x84, "done");
+	a.emit(0x8B, 0x7E, c.SurfacePixelsOffset, 0x85, 0xFF); a.jcc(0x84, "done");
+	a.emit(0x8B, 0x5E, c.SurfaceWidthOffset, 0x85, 0xDB); a.jcc(0x84, "done");
+	a.emit(0x8B, 0x45, 0x14, 0x0F, 0xAF, 0xC3, 0x03, 0x45, 0x10);
+	a.emit(0x8D, 0x3C, 0x87, 0x89, 0x7D, 0xFC);
+	a.emit(0xC1, 0xE3, 0x02, 0x89, 0x5D, 0xEC);
+	a.emit(0x8B, 0x75, 0x0C, 0x85, 0xF6); a.jcc(0x84, "done");
+	a.emit(0x8B, 0x86); a.dword(c.TextureWidthOffset);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "done");
+	a.emit(0x89, 0x45, 0xF4, 0x8D, 0x04, 0x85); a.dword(0);
+	a.emit(0x89, 0x45, 0xE8);
+	a.emit(0x8B, 0x86); a.dword(c.TextureHeightOffset);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "done");
+	a.emit(0x89, 0x45, 0xF0);
+	a.emit(0x8B, 0xB6); a.dword(c.TexturePixelsOffset);
+	a.emit(0x85, 0xF6); a.jcc(0x84, "done");
+	a.emit(0x89, 0x75, 0xF8);
+	a.label("row");
+	a.emit(0x8B, 0x7D, 0xFC, 0x8B, 0x75, 0xF8, 0x8B, 0x4D, 0xF4);
+	a.label("pixel");
+	a.emit(0x8B, 0x06, 0x8B, 0xD0, 0x81, 0xE2); a.dword(0x00FFFFFF);
+	a.emit(0x81, 0xFA); a.dword(0x00FF00FF);
+	a.jcc(0x84, "skip");
+	a.emit(0x89, 0x07);
+	a.label("skip");
+	a.emit(0x83, 0xC6, 0x04, 0x83, 0xC7, 0x04, 0x49); a.jcc(0x85, "pixel");
+	a.emit(0x01, 0x5D, 0xFC, 0x8B, 0x45, 0xE8, 0x01, 0x45, 0xF8);
+	a.emit(0xFF, 0x4D, 0xF0); a.jcc(0x85, "row");
+	a.label("done");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 0x10, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.emitLoadSurface = function(a, pathVir, missingLabel)
+{
+	const c = ItemCollectionUIStatic;
+	a.call(c.GetTexMgr);
+	a.emit(0x8B, 0xD8, 0x85, 0xDB); a.jcc(0x84, missingLabel);
+	c.pushImm(a, pathVir);
+	a.call(c.ConvPath);
+	a.emit(0x83, 0xC4, 0x04, 0x85, 0xC0); a.jcc(0x84, missingLabel);
+	a.emit(0x50, 0x8B, 0xCB);
+	a.call(c.LoadSurface);
+	a.emit(0x85, 0xC0); a.jcc(0x84, missingLabel);
+};
+
+ItemCollectionUIStatic.emitDrawFull = function(a, pathVir, x, y, label)
+{
+	const c = ItemCollectionUIStatic;
+	const done = `${label}_done`;
+	c.emitLoadSurface(a, pathVir, done);
+	c.pushImm(a, 0);
+	a.emit(0x50);
+	c.pushImm(a, y);
+	c.pushImm(a, x);
+	a.emit(0x8B, 0xCE);
+	a.call(c.ImageDraw);
+	a.label(done);
+};
+
+ItemCollectionUIStatic.emitDrawColorKey = function(a, pathVir, x, y, label)
+{
+	const c = ItemCollectionUIStatic;
+	const done = `${label}_done`;
+	c.emitLoadSurface(a, pathVir, done);
+	c.pushImm(a, y);
+	c.pushImm(a, x);
+	a.emit(0x50, 0x56);
+	a.call(c.ColorKeyBlitVir);
+	a.label(done);
+};
+
+ItemCollectionUIStatic.emitDrawColorKeyStateY = function(
+	a, pathVir, x, stateYVir, yOffset, label
+)
+{
+	const c = ItemCollectionUIStatic;
+	const done = `${label}_done`;
+	c.emitLoadSurface(a, pathVir, done);
+	a.emit(0x8B, 0x15); a.dword(stateYVir);
+	if (yOffset !== 0)
+	{
+		a.emit(0x81, 0xC2); a.dword(yOffset);
+	}
+	a.emit(0x52);
+	c.pushImm(a, x);
+	a.emit(0x50, 0x56);
+	a.call(c.ColorKeyBlitVir);
+	a.label(done);
+};
+
+ItemCollectionUIStatic.emitFillRect = function(a, fillRectVir, x, y, width, height, color)
+{
+	const c = ItemCollectionUIStatic;
+	c.pushImm(a, color);
+	c.pushImm(a, height);
+	c.pushImm(a, width);
+	c.pushImm(a, y);
+	c.pushImm(a, x);
+	a.emit(0x56);
+	a.call(fillRectVir);
+};
+
+ItemCollectionUIStatic.emitPanel = function(a, fillRectVir, x, y, width, height)
+{
+	const c = ItemCollectionUIStatic;
+	c.emitFillRect(a, fillRectVir, x, y, width, height, 0xFFB8C0CA);
+	c.emitFillRect(a, fillRectVir, x + 1, y + 1, width - 2, height - 2, 0xFFFFFFFF);
+};
+
+ItemCollectionUIStatic.emitText = function(
+	a, textVir, x, y, color, bold = 0, count = 0
+)
+{
+	const c = ItemCollectionUIStatic;
+	if (!Number.isInteger(textVir) || textVir <= 0)
+		throw Error("ItemCollectionUI: invalid native text pointer");
+	// Match the stock TextDraw ABI used by the Inventory Zeny panel visible
+	// beside Game Settings: font selector 0, height 11. Selector 1 is a
+	// different client font path and remains visibly smaller even at height 12.
+	c.pushImm(a, 0);
+	c.pushImm(a, bold);
+	c.pushImm(a, color);
+	c.pushImm(a, c.TextHeight);
+	c.pushImm(a, c.TextFontSelector);
+	c.pushImm(a, count);
+	c.pushImm(a, textVir);
+	c.pushImm(a, y);
+	c.pushImm(a, x);
+	a.emit(0x8B, 0xCE);
+	a.call(c.TextDraw);
+};
+
+ItemCollectionUIStatic.emitCenteredText = function(
+	a, textVir, left, y, width, color, bold = 0
+)
+{
+	const c = ItemCollectionUIStatic;
+	a.emit(0x53);
+	c.pushImm(a, 0);
+	c.pushImm(a, bold);
+	c.pushImm(a, c.TextHeight);
+	c.pushImm(a, c.TextFontSelector);
+	c.pushImm(a, 0);
+	c.pushImm(a, textVir);
+	a.emit(0x8B, 0xCE);
+	a.call(c.TextWidth);
+	a.emit(0xBB); a.dword(width);
+	a.emit(0x2B, 0xD8, 0xD1, 0xFB, 0x81, 0xC3); a.dword(left);
+	c.pushImm(a, 0);
+	c.pushImm(a, bold);
+	c.pushImm(a, color);
+	c.pushImm(a, c.TextHeight);
+	c.pushImm(a, c.TextFontSelector);
+	c.pushImm(a, 0);
+	c.pushImm(a, textVir);
+	c.pushImm(a, y);
+	a.emit(0x53, 0x8B, 0xCE);
+	a.call(c.TextDraw);
+	a.emit(0x5B);
+};
+
+ItemCollectionUIStatic.buildDynamicPathDraw = function(colorKeyBlitVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	// stdcall(window,path,x,y,colorKey,cropHeight). A non-zero crop draws the
+	// left 75 pixels by cropHeight with native opaque ImageDrawRect.
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57);
+	a.emit(0x33, 0xC0);
+	a.emit(0x8B, 0x75, 0x08);
+	a.call(c.GetTexMgr);
+	a.emit(0x8B, 0xD8, 0x85, 0xDB); a.jcc(0x84, "done");
+	a.emit(0xFF, 0x75, 0x0C);
+	a.call(c.ConvPath);
+	a.emit(0x83, 0xC4, 0x04, 0x85, 0xC0); a.jcc(0x84, "done");
+	a.emit(0x50, 0x8B, 0xCB);
+	a.call(c.LoadSurface);
+	a.emit(0x8B, 0xF8, 0x85, 0xFF); a.jcc(0x84, "done");
+	a.emit(0x83, 0x7D, 0x18, 0); a.jcc(0x84, "opaque");
+	a.emit(0xFF, 0x75, 0x14, 0xFF, 0x75, 0x10, 0x57, 0x56);
+	a.call(colorKeyBlitVir);
+	a.jmp("success");
+	a.label("opaque");
+	a.emit(0x83, 0x7D, 0x1C, 0); a.jcc(0x84, "opaque_full");
+	a.emit(0xFF, 0x75, 0x1C);
+	c.pushImm(a, 75);
+	c.pushImm(a, 0);
+	c.pushImm(a, 0);
+	c.pushImm(a, 0);
+	c.pushImm(a, 0);
+	a.emit(0x57, 0xFF, 0x75, 0x14, 0xFF, 0x75, 0x10, 0x8B, 0xCE);
+	a.call(c.ImageDrawRect);
+	a.jmp("success");
+	a.label("opaque_full");
+	c.pushImm(a, 0);
+	a.emit(0x57, 0xFF, 0x75, 0x14, 0xFF, 0x75, 0x10, 0x8B, 0xCE);
+	a.call(c.ImageDraw);
+	a.label("success");
+	a.emit(0xB8); a.dword(1);
+	a.label("done");
+	a.emit(0x5F, 0x5E, 0x5B, 0x5D, 0xC2, 0x18, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.buildNineSliceButton = function(drawPathVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	// stdcall(window,left,mid,right,x,y,width)
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57);
+	a.emit(0x8B, 0x75, 0x08);
+	const draw = function(pathOffset, xKind)
+	{
+		c.pushImm(a, 0);
+		c.pushImm(a, 1);
+		a.emit(0xFF, 0x75, 0x1C);
+		if (xKind === "left")
+			a.emit(0xFF, 0x75, 0x18);
+		else if (xKind === "middle")
+			a.emit(0x53);
+		else
+			a.emit(0x57);
+		a.emit(0xFF, 0x75, pathOffset, 0x56);
+		a.call(drawPathVir);
+	};
+	draw(0x0C, "left");
+	a.emit(0x8B, 0x5D, 0x18, 0x83, 0xC3, 0x06);
+	a.emit(0x8B, 0x7D, 0x18, 0x03, 0x7D, 0x20, 0x83, 0xEF, 0x06);
+	a.label("middle");
+	a.emit(0x3B, 0xDF); a.jcc(0x8D, "right");
+	draw(0x10, "middle");
+	a.emit(0x83, 0xC3, 0x06); a.jmp("middle");
+	a.label("right");
+	draw(0x14, "right");
+	a.emit(0x5F, 0x5E, 0x5B, 0x5D, 0xC2, 0x1C, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.buildItemResourceResolver = function()
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x56);
+	a.emit(0x8B, 0x35); a.dword(c.ItemInfoManager);
+	a.emit(0x85, 0xF6); a.jcc(0x84, "missing");
+	a.emit(0x8D, 0x45, 0x08, 0x50, 0x8D, 0x4E, 0x08);
+	a.call(c.ItemInfoLookup);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "missing");
+	a.emit(0x83, 0xC0, c.ItemInfoIdentifiedResourceOffset);
+	a.emit(0x83, 0x78, c.ItemInfoStringCapacityOffset, 0x10);
+	a.jcc(0x82, "done");
+	a.emit(0x8B, 0x00); a.jmp("done");
+	a.label("missing");
+	a.emit(0x33, 0xC0);
+	a.label("done");
+	a.emit(0x5E, 0x5D, 0xC2, 0x04, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.emitDrawCollectionArt = function(
+	a, rowVir, itemOffset, itemResolverVir, artFormatVir, itemArtFormatVir, artPathVir,
+	fallbackVir, drawPathVir, x, y, cropHeight, label
+)
+{
+	const c = ItemCollectionUIStatic;
+	const itemFallback = `${label}_item_fallback`;
+	const fallback = `${label}_fallback`;
+	const done = `${label}_done`;
+	a.emit(0xA1); a.dword(rowVir + itemOffset);
+	a.emit(0x85, 0xC0); a.jcc(0x84, fallback);
+	a.emit(0x50);
+	a.call(itemResolverVir);
+	a.emit(0x85, 0xC0); a.jcc(0x84, fallback);
+	a.emit(0x50);
+	c.pushImm(a, artFormatVir);
+	c.pushImm(a, artPathVir);
+	a.call(c.StringFormat);
+	a.emit(0x83, 0xC4, 0x0C);
+	c.pushImm(a, cropHeight);
+	c.pushImm(a, 0);
+	c.pushImm(a, y);
+	c.pushImm(a, x);
+	c.pushImm(a, artPathVir);
+	a.emit(0x56);
+	a.call(drawPathVir);
+	a.emit(0x85, 0xC0); a.jcc(0x85, done);
+	a.label(itemFallback);
+	a.emit(0xA1); a.dword(rowVir + itemOffset);
+	a.emit(0x85, 0xC0); a.jcc(0x84, fallback);
+	a.emit(0x50);
+	a.call(itemResolverVir);
+	a.emit(0x85, 0xC0); a.jcc(0x84, fallback);
+	a.emit(0x50);
+	c.pushImm(a, itemArtFormatVir);
+	c.pushImm(a, artPathVir);
+	a.call(c.StringFormat);
+	a.emit(0x83, 0xC4, 0x0C);
+	c.pushImm(a, 0);
+	c.pushImm(a, 0);
+	c.pushImm(a, y + 38);
+	c.pushImm(a, x + 25);
+	c.pushImm(a, artPathVir);
+	a.emit(0x56);
+	a.call(drawPathVir);
+	a.emit(0x85, 0xC0); a.jcc(0x85, done);
+	a.label(fallback);
+	c.pushImm(a, cropHeight);
+	c.pushImm(a, 0);
+	c.pushImm(a, y);
+	c.pushImm(a, x);
+	c.pushImm(a, fallbackVir);
+	a.emit(0x56);
+	a.call(drawPathVir);
+	a.label(done);
+};
+
+ItemCollectionUIStatic.emitRectGate = function(a, left, top, right, bottom, failLabel)
+{
+	a.emit(0x81, 0xFB); a.dword(left); a.jcc(0x8C, failLabel);
+	a.emit(0x81, 0xFB); a.dword(right); a.jcc(0x8D, failLabel);
+	a.emit(0x81, 0xFA); a.dword(top); a.jcc(0x8C, failLabel);
+	a.emit(0x81, 0xFA); a.dword(bottom); a.jcc(0x8D, failLabel);
+};
+
+ItemCollectionUIStatic.emitMarkDirty = function(a)
+{
+	a.emit(0xC7, 0x46, ItemCollectionUIStatic.WindowDirtyOffset);
+	a.dword(1);
+};
+
+ItemCollectionUIStatic.emitOutline = function(
+	a, fillRectVir, x, y, width, height, color
+)
+{
+	const c = ItemCollectionUIStatic;
+	c.emitFillRect(a, fillRectVir, x, y, width, 1, color);
+	c.emitFillRect(a, fillRectVir, x, y + height - 1, width, 1, color);
+	c.emitFillRect(a, fillRectVir, x, y, 1, height, color);
+	c.emitFillRect(a, fillRectVir, x + width - 1, y, 1, height, color);
+};
+
+ItemCollectionUIStatic.emitNineSlice = function(
+	a, nineSliceVir, family, x, y, width
+)
+{
+	const c = ItemCollectionUIStatic;
+	c.pushImm(a, width);
+	c.pushImm(a, y);
+	c.pushImm(a, x);
+	c.pushImm(a, family[2].vir);
+	c.pushImm(a, family[1].vir);
+	c.pushImm(a, family[0].vir);
+	a.emit(0x56);
+	a.call(nineSliceVir);
+};
+
+ItemCollectionUIStatic.emitButton = function(
+	a, stateVir, paths, nineSliceVir, textVir, x, y, width, controlId,
+	label, selectedOffset = -1, selectedValue = 0, disabled = false
+)
+{
+	const c = ItemCollectionUIStatic;
+	const out = `${label}_out`;
+	const over = `${label}_over`;
+	const press = `${label}_press`;
+	const draw = `${label}_draw`;
+	if (disabled)
+	{
+		c.emitNineSlice(a, nineSliceVir, paths.buttons.disable, x, y, width);
+	}
+	else
+	{
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePressedControl);
+		a.emit(controlId); a.jcc(0x84, press);
+		if (selectedOffset >= 0)
+		{
+			a.emit(0x83, 0x3D); a.dword(stateVir + selectedOffset);
+			a.emit(selectedValue); a.jcc(0x84, press);
+		}
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateHoverControl);
+		a.emit(controlId); a.jcc(0x84, over);
+		a.jmp(out);
+		a.label(press);
+		c.emitNineSlice(a, nineSliceVir, paths.buttons.press, x, y, width);
+		a.jmp(draw);
+		a.label(over);
+		c.emitNineSlice(a, nineSliceVir, paths.buttons.over, x, y, width);
+		a.jmp(draw);
+		a.label(out);
+		c.emitNineSlice(a, nineSliceVir, paths.buttons.out, x, y, width);
+		a.label(draw);
+	}
+	c.emitCenteredText(
+		a, textVir, x, y + 2, width,
+		disabled ? 0xFF838383 : 0xFF172237, 0
+	);
+};
+
+ItemCollectionUIStatic.emitFormatPairU16 = function(
+	a, firstVir, secondVir, formatVir, targetVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	a.emit(0x0F, 0xB7, 0x05); a.dword(secondVir);
+	a.emit(0x50);
+	a.emit(0x0F, 0xB7, 0x05); a.dword(firstVir);
+	a.emit(0x50);
+	c.pushImm(a, formatVir);
+	c.pushImm(a, targetVir);
+	a.call(c.StringFormat);
+	a.emit(0x83, 0xC4, 0x10);
+};
+
+ItemCollectionUIStatic.emitFormatU32 = function(a, valueVir, formatVir, targetVir)
+{
+	const c = ItemCollectionUIStatic;
+	a.emit(0xFF, 0x35); a.dword(valueVir);
+	c.pushImm(a, formatVir);
+	c.pushImm(a, targetVir);
+	a.call(c.StringFormat);
+	a.emit(0x83, 0xC4, 0x0C);
+};
+
+ItemCollectionUIStatic.buildFormatU32Commas = function()
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	// stdcall(value,target). A uint32 needs at most 10 digits plus three
+	// separators. Build backward in a fixed 16-byte local buffer, then copy the
+	// resulting NUL-terminated string. No locale or unbounded sprintf is used.
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57, 0x83, 0xEC, 0x10);
+	a.emit(0x8B, 0x75, 0x0C, 0x85, 0xF6); a.jcc(0x84, "done");
+	a.emit(0x8D, 0x7C, 0x24, 0x0F, 0xC6, 0x07, 0x00, 0x4F);
+	a.emit(0x8B, 0x45, 0x08, 0x85, 0xC0); a.jcc(0x85, "digits");
+	a.emit(0xC6, 0x07, 0x30, 0x4F); a.jmp("copy_prepare");
+	a.label("digits");
+	a.emit(0x33, 0xDB);
+	a.label("digit_loop");
+	a.emit(0x33, 0xD2, 0xB9); a.dword(10);
+	a.emit(0xF7, 0xF1, 0x80, 0xC2, 0x30, 0x88, 0x17, 0x4F, 0x43);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "copy_prepare");
+	a.emit(0x83, 0xFB, 0x03); a.jcc(0x85, "digit_loop");
+	a.emit(0xC6, 0x07, 0x2C, 0x4F, 0x33, 0xDB); a.jmp("digit_loop");
+	a.label("copy_prepare");
+	a.emit(0x47);
+	a.label("copy_loop");
+	a.emit(0x8A, 0x07, 0x88, 0x06, 0x47, 0x46, 0x84, 0xC0);
+	a.jcc(0x85, "copy_loop");
+	a.label("done");
+	a.emit(0x83, 0xC4, 0x10, 0x5F, 0x5E, 0x5B, 0x5D, 0xC2, 0x08, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.emitFormatU32Commas = function(
+	a, formatterVir, valueVir, targetVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	c.pushImm(a, targetVir);
+	a.emit(0xFF, 0x35); a.dword(valueVir);
+	a.call(formatterVir);
+};
+
+ItemCollectionUIStatic.emitProgress = function(
+	a, fillRectVir, currentVir, totalVir, x, y, width, label,
+	fillColor = 0xFF70BF55
+)
+{
+	const c = ItemCollectionUIStatic;
+	c.emitFillRect(a, fillRectVir, x, y, width, 9, 0xFFD7DCE2);
+	c.emitFillRect(a, fillRectVir, x, y, width, 1, 0xFF9EA8B4);
+	a.emit(0x0F, 0xB7, 0x05); a.dword(totalVir);
+	a.emit(0x85, 0xC0); a.jcc(0x84, `${label}_done`);
+	a.emit(0x8B, 0xC8);
+	a.emit(0x0F, 0xB7, 0x05); a.dword(currentVir);
+	a.emit(0x69, 0xC0); a.dword(width);
+	a.emit(0x33, 0xD2, 0xF7, 0xF1);
+	a.emit(0x3D); a.dword(width); a.jcc(0x86, `${label}_width_ok`);
+	a.emit(0xB8); a.dword(width);
+	a.label(`${label}_width_ok`);
+	a.emit(0x85, 0xC0); a.jcc(0x84, `${label}_done`);
+	c.pushImm(a, fillColor);
+	c.pushImm(a, 7);
+	a.emit(0x50);
+	c.pushImm(a, y + 1);
+	c.pushImm(a, x);
+	a.emit(0x56);
+	a.call(fillRectVir);
+	a.label(`${label}_done`);
+};
+
+ItemCollectionUIStatic.emitSummaryProgress = function(
+	a, stateVir, fillRectVir, label
+)
+{
+	const c = ItemCollectionUIStatic;
+	c.emitFillRect(a, fillRectVir, 160, 35, 360, 9, 0xFFD7DCE2);
+	c.emitFillRect(a, fillRectVir, 160, 35, 360, 1, 0xFF9EA8B4);
+	a.emit(0xA1); a.dword(stateVir + c.StateTotalCount);
+	a.emit(0x85, 0xC0); a.jcc(0x84, `${label}_done`);
+	a.emit(0x8B, 0xC8);
+	a.emit(0xA1); a.dword(stateVir + c.StateCurrentCount);
+	a.emit(0x69, 0xC0); a.dword(358);
+	a.emit(0x33, 0xD2, 0xF7, 0xF1);
+	a.emit(0x3D); a.dword(358); a.jcc(0x86, `${label}_width_ok`);
+	a.emit(0xB8); a.dword(358);
+	a.label(`${label}_width_ok`);
+	a.emit(0x85, 0xC0); a.jcc(0x84, `${label}_done`);
+	c.pushImm(a, 0xFF70BF55);
+	c.pushImm(a, 7);
+	a.emit(0x50);
+	c.pushImm(a, 36);
+	c.pushImm(a, 161);
+	a.emit(0x56);
+	a.call(fillRectVir);
+	a.label(`${label}_done`);
+};
+
+ItemCollectionUIStatic.emitScrollbar = function(a, stateVir, paths, fillRectVir)
+{
+	const c = ItemCollectionUIStatic;
+	c.emitFillRect(
+		a, fillRectVir, 516, c.ScrollbarTrackTop, 9,
+		c.ScrollbarTrackBottom - c.ScrollbarTrackTop, 0xFFE7EBF0
+	);
+	c.emitDrawColorKey(a, paths.scroll.up.vir, 516, 116, "collection_scroll_up");
+	c.emitDrawColorKey(a, paths.scroll.down.vir, 516, 480, "collection_scroll_down");
+	c.emitDrawColorKeyStateY(
+		a, paths.scroll.thumbTop.vir, 516, stateVir + c.StateThumbY, 0,
+		"collection_thumb_top"
+	);
+	for (let offset = 3; offset <= 18; offset += 3)
+	{
+		c.emitDrawColorKeyStateY(
+			a, paths.scroll.thumbMid.vir, 516,
+			stateVir + c.StateThumbY, offset,
+			`collection_thumb_mid_${offset}`
+		);
+	}
+	c.emitDrawColorKeyStateY(
+		a, paths.scroll.thumbBottom.vir, 516,
+		stateVir + c.StateThumbY, 21, "collection_thumb_bottom"
+	);
+};
+
+ItemCollectionUIStatic.emitClose = function(a, stateVir, paths)
+{
+	const c = ItemCollectionUIStatic;
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePressedControl);
+	a.emit(c.ControlClose); a.jcc(0x84, "close_pressed");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateHoverControl);
+	a.emit(c.ControlClose); a.jcc(0x84, "close_over");
+	c.emitDrawColorKey(a, paths.close.normal.vir, 742, 0, "close_normal");
+	a.jmp("close_done");
+	a.label("close_over");
+	c.emitDrawColorKey(a, paths.close.over.vir, 742, 0, "close_over_draw");
+	a.jmp("close_done");
+	a.label("close_pressed");
+	c.emitDrawColorKey(a, paths.close.press.vir, 742, 0, "close_press_draw");
+	a.label("close_done");
+};
+
+ItemCollectionUIStatic.emitCardTiles = function(
+	a, stateVir, payloadVir, paths, fillRectVir, strings, itemResolverVir,
+	artPathVir, countTextVir, drawPathVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	// Paint every tile shell before any content. The 75x100 artwork plus its
+	// count band nearly fills each 131-pixel row; this ordering guarantees a
+	// later row can never erase an earlier row's deposited/required text.
+	for (let index = 0; index < c.CardRows; ++index)
+	{
+		const column = index % 5;
+		const row = Math.floor(index / 5);
+		const artX = 18 + column * 96;
+		const tileY = 114 + row * 131;
+		const next = `card_shell_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		c.emitPanel(a, fillRectVir, artX - 5, tileY, 85, 130);
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSelectedIndex);
+		a.emit(index); a.jcc(0x85, `card_shell_${index}_not_selected`);
+		c.emitOutline(a, fillRectVir, artX - 6, tileY - 1, 87, 132, 0xFF1670EA);
+		a.label(`card_shell_${index}_not_selected`);
+		a.label(next);
+	}
+	for (let index = 0; index < c.CardRows; ++index)
+	{
+		const rowVir = payloadVir + index * c.CardRowSize;
+		const column = index % 5;
+		const row = Math.floor(index / 5);
+		const artX = 18 + column * 96;
+		const artY = 132 + row * 131;
+		const next = `card_content_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		c.emitText(a, rowVir + 20, artX, artY - 16, 0xFF172237, 0, 13);
+		c.emitDrawCollectionArt(
+			a, rowVir, 0, itemResolverVir, paths.artFormat.vir,
+			paths.itemArtFormat.vir, artPathVir,
+			paths.fallback.vir, drawPathVir, artX, artY, 0,
+			`card_art_${index}`
+		);
+		a.emit(0xF7, 0x05); a.dword(rowVir + 8); a.dword(c.CardComplete);
+		a.jcc(0x84, `card_tile_${index}_locked_test`);
+		c.emitDrawColorKey(
+			a, paths.badgeComplete.vir, artX + 59, artY + 2,
+			`card_complete_${index}`
+		);
+		a.jmp(`card_tile_${index}_badge_done`);
+		a.label(`card_tile_${index}_locked_test`);
+		a.emit(0x66, 0x83, 0x3D); a.dword(rowVir + 4); a.emit(0);
+		a.jcc(0x85, `card_tile_${index}_badge_done`);
+		c.emitDrawColorKey(
+			a, paths.badgeLocked.vir, artX + 59, artY + 2,
+			`card_locked_${index}`
+		);
+		a.label(`card_tile_${index}_badge_done`);
+		c.emitProgress(
+			a, fillRectVir, rowVir + 4, rowVir + 6,
+			artX + 1, artY + 102, 73, `card_progress_${index}`,
+			0xFF70BF55
+		);
+		c.emitFormatPairU16(
+			a, rowVir + 4, rowVir + 6,
+			strings.countFormat.vir, countTextVir
+		);
+		c.emitCenteredText(
+			a, countTextVir, artX, artY + 101, 75, 0xFF172237, 0
+		);
+		a.label(next);
+	}
+};
+
+ItemCollectionUIStatic.emitCardDetail = function(
+	a, stateVir, payloadVir, paths, fillRectVir, nineSliceVir, strings,
+	itemResolverVir, artPathVir, detailTextVir, drawPathVir,
+	commaFormatterVir, moneyText1Vir, moneyText2Vir
+)
+{
+	const c = ItemCollectionUIStatic;
+	for (let index = 0; index < c.CardRows; ++index)
+	{
+		const rowVir = payloadVir + index * c.CardRowSize;
+		const next = `card_detail_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSelectedIndex);
+		a.emit(index); a.jcc(0x85, next);
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		c.emitCenteredText(a, rowVir + 20, 548, 99, 194, 0xFF171717, 1);
+		c.emitDrawCollectionArt(
+			a, rowVir, 0, itemResolverVir, paths.artFormat.vir,
+			paths.itemArtFormat.vir, artPathVir,
+			paths.fallback.vir, drawPathVir, 607, 126, 0,
+			`detail_card_art_${index}`
+		);
+		a.emit(0xFF, 0x35); a.dword(rowVir);
+		c.pushImm(a, strings.itemIdFormat.vir);
+		c.pushImm(a, detailTextVir);
+		a.call(c.StringFormat);
+		a.emit(0x83, 0xC4, 0x0C);
+		c.emitText(a, detailTextVir, 548, 236, 0xFF25314A);
+		c.emitFormatPairU16(
+			a, rowVir + 4, rowVir + 6,
+			strings.depositedFormat.vir, detailTextVir
+		);
+		c.emitText(a, detailTextVir, 548, 254, 0xFF25314A);
+		c.emitText(a, strings.collectionBonus.vir, 548, 292, 0xFF0757D7, 1);
+		c.emitFillRect(a, fillRectVir, 548, 311, 194, 1, 0xFF2D7CFF);
+		c.emitText(a, rowVir + 52, 554, 320, 0xFF172237, 0, 46);
+		c.emitFormatU32Commas(
+			a, commaFormatterVir, rowVir + 12, moneyText1Vir
+		);
+		c.emitFormatU32Commas(
+			a, commaFormatterVir, rowVir + 16, moneyText2Vir
+		);
+		c.pushImm(a, moneyText2Vir);
+		c.pushImm(a, moneyText1Vir);
+		c.pushImm(a, strings.feeFormat.vir);
+		c.pushImm(a, detailTextVir);
+		a.call(c.StringFormat);
+		a.emit(0x83, 0xC4, 0x10);
+		c.emitText(a, detailTextVir, 548, 365, 0xFF172237);
+		c.emitDrawColorKey(a, paths.minus.normal.vir, 580, 398, `minus_${index}`);
+		c.emitPanel(a, fillRectVir, 603, 390, 86, 24);
+		c.emitFormatU32(
+			a, stateVir + c.StateQuantity,
+			strings.uintFormat.vir, detailTextVir
+		);
+		c.emitCenteredText(a, detailTextVir, 603, 393, 86, 0xFF171717, 0);
+		c.emitDrawColorKey(a, paths.plus.normal.vir, 694, 398, `plus_${index}`);
+		a.emit(0xF7, 0x05); a.dword(stateVir + c.StateSnapshotFlags);
+		a.dword(c.CapabilityStorageReady);
+		a.jcc(0x84, `card_detail_${index}_storage_disabled`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.deposit.vir,
+			553, 422, 184, c.ControlDeposit, `deposit_${index}`
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.depositAll.vir,
+			553, 446, 184, c.ControlDepositAll, `deposit_all_${index}`
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.withdraw.vir,
+			553, 470, 184, c.ControlWithdraw, `withdraw_${index}`
+		);
+		a.jmp(`card_detail_${index}_storage_done`);
+		a.label(`card_detail_${index}_storage_disabled`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.deposit.vir,
+			553, 422, 184, c.ControlDeposit,
+			`deposit_disabled_${index}`, -1, 0, true
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.depositAll.vir,
+			553, 446, 184, c.ControlDepositAll,
+			`deposit_all_disabled_${index}`, -1, 0, true
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.withdraw.vir,
+			553, 470, 184, c.ControlWithdraw,
+			`withdraw_disabled_${index}`, -1, 0, true
+		);
+		a.label(`card_detail_${index}_storage_done`);
+		a.jmp("card_detail_done");
+		a.label(next);
+	}
+	a.label("card_detail_done");
+};
+
+ItemCollectionUIStatic.emitComboRows = function(
+	a, stateVir, payloadVir, paths, fillRectVir, strings, itemResolverVir,
+	artPathVir, countTextVir, drawPathVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	for (let index = 0; index < c.ComboRows; ++index)
+	{
+		const comboVir = payloadVir + index * c.ComboRowSize;
+		const y = 119 + index * 181;
+		const next = `combo_row_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		c.emitPanel(a, fillRectVir, 13, y, 497, 177);
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSelectedIndex);
+		a.emit(index); a.jcc(0x85, `combo_row_${index}_not_selected`);
+		c.emitOutline(a, fillRectVir, 12, y - 1, 499, 179, 0xFF1670EA);
+		a.label(`combo_row_${index}_not_selected`);
+		c.emitText(a, comboVir + 12, 23, y + 5, 0xFF172237, 1, 29);
+		for (let member = 0; member < 5; ++member)
+		{
+			const memberVir = comboVir + c.ComboMemberOffset +
+				member * c.ComboMemberSize;
+			const x = 18 + member * 96;
+			const memberNext = `combo_${index}_member_${member}_next`;
+			a.emit(0x66, 0x83, 0x3D); a.dword(comboVir + 8); a.emit(member);
+			a.jcc(0x86, memberNext);
+			c.emitPanel(a, fillRectVir, x - 3, y + 25, 81, 140);
+			c.emitText(a, memberVir + 12, x, y + 26, 0xFF25314A, 0, 12);
+			c.emitDrawCollectionArt(
+				a, memberVir, 0, itemResolverVir, paths.artFormat.vir,
+				paths.itemArtFormat.vir, artPathVir,
+				paths.fallback.vir, drawPathVir,
+				x, y + 39, 0, `combo_art_${index}_${member}`
+			);
+			c.emitProgress(
+				a, fillRectVir, memberVir + 4, memberVir + 6,
+				x + 1, y + 142, 73,
+				`combo_progress_${index}_${member}`, 0xFF70BF55
+			);
+			c.emitFormatPairU16(
+				a, memberVir + 4, memberVir + 6,
+				strings.countFormat.vir, countTextVir
+			);
+			c.emitCenteredText(
+				a, countTextVir, x, y + 141, 75, 0xFF172237, 0
+			);
+			a.label(memberNext);
+		}
+		a.emit(0x66, 0x83, 0x3D); a.dword(comboVir + 8); a.emit(6);
+		a.jcc(0x85, `combo_${index}_more_done`);
+		c.emitText(a, strings.plusOneMore.vir, 364, y + 7, 0xFF0757D7, 0);
+		a.label(`combo_${index}_more_done`);
+		a.emit(0xF7, 0x05); a.dword(comboVir + 4); a.dword(c.ComboActive);
+		a.jcc(0x84, `combo_${index}_ready_test`);
+		c.emitText(a, strings.active.vir, 424, y + 6, 0xFF247B25, 0);
+		a.jmp(`combo_${index}_status_done`);
+		a.label(`combo_${index}_ready_test`);
+		a.emit(0xF7, 0x05); a.dword(comboVir + 4); a.dword(c.ComboReady);
+		a.jcc(0x84, `combo_${index}_incomplete`);
+		c.emitText(a, strings.ready.vir, 424, y + 6, 0xFF9C5700, 0);
+		a.jmp(`combo_${index}_status_done`);
+		a.label(`combo_${index}_incomplete`);
+		c.emitText(a, strings.incomplete.vir, 408, y + 6, 0xFF8B3232, 0);
+		a.label(`combo_${index}_status_done`);
+		a.label(next);
+	}
+};
+
+ItemCollectionUIStatic.emitComboDetail = function(
+	a, stateVir, payloadVir, paths, fillRectVir, nineSliceVir, strings,
+	countTextVir, detailTextVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	for (let index = 0; index < c.ComboRows; ++index)
+	{
+		const comboVir = payloadVir + index * c.ComboRowSize;
+		const next = `combo_detail_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSelectedIndex);
+		a.emit(index); a.jcc(0x85, next);
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		c.emitCenteredText(a, comboVir + 12, 548, 103, 194, 0xFF171717, 1);
+		c.emitText(a, strings.requiredCards.vir, 548, 140, 0xFF0757D7, 1);
+		c.emitFillRect(a, fillRectVir, 548, 159, 194, 1, 0xFF2D7CFF);
+		for (let member = 0; member < c.ComboMembers; ++member)
+		{
+			const memberVir = comboVir + c.ComboMemberOffset +
+				member * c.ComboMemberSize;
+			const memberNext = `combo_detail_${index}_member_${member}_next`;
+			a.emit(0x66, 0x83, 0x3D); a.dword(comboVir + 8); a.emit(member);
+			a.jcc(0x86, memberNext);
+			a.emit(0x83, 0x3D); a.dword(stateVir + c.StateComboMemberIndex);
+			a.emit(member); a.jcc(0x85, `combo_detail_${index}_member_${member}_plain`);
+			c.emitFillRect(
+				a, fillRectVir, 548, 165 + member * 23, 194, 20, 0xFFE8F1FF
+			);
+			c.emitOutline(
+				a, fillRectVir, 548, 165 + member * 23, 194, 20, 0xFF1670EA
+			);
+			a.label(`combo_detail_${index}_member_${member}_plain`);
+			c.emitText(
+				a, memberVir + 12, 552, 169 + member * 23,
+				0xFF25314A, 0, 20
+			);
+			c.emitFormatPairU16(
+				a, memberVir + 4, memberVir + 6,
+				strings.countFormat.vir, countTextVir
+			);
+			c.emitText(
+				a, countTextVir, 697, 169 + member * 23,
+				0xFF25314A
+			);
+			a.label(memberNext);
+		}
+		c.emitText(a, strings.comboBonus.vir, 548, 309, 0xFF0757D7, 1);
+		c.emitFillRect(a, fillRectVir, 548, 328, 194, 1, 0xFF2D7CFF);
+		c.emitText(a, comboVir + 44, 552, 337, 0xFF172237, 0, 62);
+		c.emitDrawColorKey(a, paths.minus.normal.vir, 580, 369, `combo_minus_${index}`);
+		c.emitPanel(a, fillRectVir, 603, 361, 86, 24);
+		c.emitFormatU32(
+			a, stateVir + c.StateQuantity,
+			strings.uintFormat.vir, detailTextVir
+		);
+		c.emitCenteredText(a, detailTextVir, 603, 364, 86, 0xFF171717, 0);
+		c.emitDrawColorKey(a, paths.plus.normal.vir, 694, 369, `combo_plus_${index}`);
+		a.emit(0xF7, 0x05); a.dword(stateVir + c.StateSnapshotFlags);
+		a.dword(c.CapabilityStorageReady);
+		a.jcc(0x84, `combo_detail_${index}_storage_disabled`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.deposit.vir,
+			553, 390, 184, c.ControlDeposit, `combo_deposit_${index}`
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.depositAll.vir,
+			553, 414, 184, c.ControlDepositAll, `combo_deposit_all_${index}`
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.withdraw.vir,
+			553, 438, 184, c.ControlWithdraw, `combo_withdraw_${index}`
+		);
+		a.jmp(`combo_detail_${index}_storage_done`);
+		a.label(`combo_detail_${index}_storage_disabled`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.deposit.vir,
+			553, 390, 184, c.ControlDeposit,
+			`combo_deposit_disabled_${index}`, -1, 0, true
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.depositAll.vir,
+			553, 414, 184, c.ControlDepositAll,
+			`combo_deposit_all_disabled_${index}`, -1, 0, true
+		);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.withdraw.vir,
+			553, 438, 184, c.ControlWithdraw,
+			`combo_withdraw_disabled_${index}`, -1, 0, true
+		);
+		a.label(`combo_detail_${index}_storage_done`);
+		a.emit(0xF7, 0x05); a.dword(comboVir + 4); a.dword(c.ComboActive);
+		a.jcc(0x84, `combo_detail_${index}_activate`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.deactivateBonus.vir,
+			553, 470, 184, c.ControlComboAction,
+			`combo_deactivate_${index}`
+		);
+		a.jmp(`combo_detail_${index}_action_done`);
+		a.label(`combo_detail_${index}_activate`);
+		a.emit(0xF7, 0x05); a.dword(comboVir + 4); a.dword(c.ComboReady);
+		a.jcc(0x84, `combo_detail_${index}_disabled`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.activateBonus.vir,
+			553, 470, 184, c.ControlComboAction,
+			`combo_activate_${index}`
+		);
+		a.jmp(`combo_detail_${index}_action_done`);
+		a.label(`combo_detail_${index}_disabled`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.activateBonus.vir,
+			553, 470, 184, c.ControlComboAction,
+			`combo_disabled_${index}`, -1, 0, true
+		);
+		a.label(`combo_detail_${index}_action_done`);
+		a.jmp("combo_detail_done");
+		a.label(next);
+	}
+	a.label("combo_detail_done");
+};
+
+ItemCollectionUIStatic.emitTotalRows = function(
+	a, stateVir, payloadVir, fillRectVir, strings
+)
+{
+	const c = ItemCollectionUIStatic;
+	c.emitText(a, strings.totalBonusHeading.vir, 23, 105, 0xFF172237, 1);
+	for (let index = 0; index < c.TotalRows; ++index)
+	{
+		const rowVir = payloadVir + index * c.TotalRowSize;
+		const y = 130 + index * 18;
+		const next = `total_row_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		if ((index & 1) !== 0)
+			c.emitFillRect(a, fillRectVir, 18, y - 1, 492, 17, 0xFFF5F7FA);
+		c.emitText(a, rowVir + 4, 24, y, 0xFF25314A, 0, 30);
+		c.emitText(a, rowVir + 36, 430, y, 0xFF0757D7, 0, 22);
+		a.label(next);
+	}
+	c.emitText(a, strings.totalBonusInfo.vir, 552, 128, 0xFF566278);
+	c.emitText(a, strings.totalBonusInfo2.vir, 552, 150, 0xFF566278);
+};
+
+ItemCollectionUIStatic.emitCategoryDropdown = function(
+	a, stateVir, paths, fillRectVir, strings
+)
+{
+	const c = ItemCollectionUIStatic;
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "category_dropdown_done");
+	c.emitPanel(a, fillRectVir, 360, 62, 170, 23);
+	c.emitOutline(a, fillRectVir, 360, 62, 170, 23, 0xFFB8C4D8);
+	c.emitFillRect(a, fillRectVir, 511, 63, 1, 21, 0xFFB8C4D8);
+	c.emitDrawColorKey(a, paths.scroll.down.vir, 516, 67, "category_dropdown_arrow");
+	for (let category = 0; category < c.CategoryCount; ++category)
+	{
+		const next = `category_dropdown_${category}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateCategory);
+		a.emit(category); a.jcc(0x85, next);
+		// Static labels use NUL-terminated mode. A fixed native TextDraw count
+		// crosses into the next EXE-resident category string.
+		c.emitText(
+			a, strings.categories[category].vir, 366, 68,
+			0xFF172237, 0
+		);
+		a.jmp("category_dropdown_done");
+		a.label(next);
+	}
+	a.label("category_dropdown_done");
+};
+
+ItemCollectionUIStatic.emitCategoryDropdownPopup = function(
+	a, stateVir, fillRectVir, strings
+)
+{
+	const c = ItemCollectionUIStatic;
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "category_dropdown_popup_done");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateCategoryDropdown); a.emit(1);
+	a.jcc(0x85, "category_dropdown_popup_done");
+	c.emitPanel(a, fillRectVir, 360, 86, 170, c.CategoryCount * 18 + 2);
+	c.emitOutline(
+		a, fillRectVir, 360, 86, 170, c.CategoryCount * 18 + 2,
+		0xFF8EA7C8
+	);
+	for (let category = 0; category < c.CategoryCount; ++category)
+	{
+		const y = 87 + category * 18;
+		const selected = `category_popup_${category}_selected`;
+		const backgroundDone = `category_popup_${category}_background_done`;
+		a.emit(0x81, 0x3D); a.dword(stateVir + c.StateHoverControl);
+		a.dword(c.ControlCategoryBase + category); a.jcc(0x84, selected);
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateCategory);
+		a.emit(category); a.jcc(0x84, selected);
+		c.emitFillRect(a, fillRectVir, 361, y, 168, 18, 0xFFFFFFFF);
+		a.jmp(backgroundDone);
+		a.label(selected);
+		c.emitFillRect(a, fillRectVir, 361, y, 168, 18, 0xFFD8E7FA);
+		a.label(backgroundDone);
+		c.emitText(
+			a, strings.categories[category].vir, 367, y + 3,
+			0xFF172237, 0
+		);
+	}
+	a.label("category_dropdown_popup_done");
+};
+
+ItemCollectionUIStatic.emitFilters = function(
+	a, stateVir, paths, nineSliceVir, strings
+)
+{
+	const c = ItemCollectionUIStatic;
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(2);
+	a.jcc(0x84, "filters_done");
+	for (let index = 0; index < 4; ++index)
+	{
+		const cardLabel = `filter_card_${index}`;
+		const comboLabel = `filter_combo_${index}`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+		a.jcc(0x85, `${cardLabel}_combo`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.cardFilters[index].vir,
+			13 + index * 101, 92, 96, c.ControlFilterBase + index,
+			cardLabel, c.StateFilter, index
+		);
+		a.jmp(`${cardLabel}_done`);
+		a.label(`${cardLabel}_combo`);
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.comboFilters[index].vir,
+			13 + index * 101, 92, 96, c.ControlFilterBase + index,
+			comboLabel, c.StateFilter, index
+		);
+		a.label(`${cardLabel}_done`);
+	}
+	a.label("filters_done");
+};
+
+ItemCollectionUIStatic.buildDraw = function(
+	stateVir, payloadVir, paths, fillRectVir, nineSliceVir, strings,
+	itemResolverVir, artPathVir, countTextVir, detailTextVir, drawPathVir,
+	commaFormatterVir, moneyText1Vir, moneyText2Vir, searchInputVir,
+	searchTextVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57, 0x8B, 0xF1);
+	a.call(searchInputVir);
+	c.pushImm(a, 0x00FFFFFF);
+	a.emit(0x8B, 0xCE);
+	a.call(c.WindowClearSurface);
+	c.emitDrawFull(a, paths.body.vir, 0, 17, "collection_body");
+	c.emitDrawFull(a, paths.title.vir, 0, 0, "collection_title");
+	c.emitDrawColorKey(a, paths.icon.vir, 5, 0, "collection_icon");
+	c.emitText(a, strings.title.vir, 27, 1, 0xFFFFFFFF, 1);
+	c.emitClose(a, stateVir, paths);
+
+	c.emitPanel(a, fillRectVir, 8, 24, 744, 32);
+	c.emitPanel(a, fillRectVir, 8, 89, 522, 414);
+	c.emitPanel(a, fillRectVir, 538, 89, 214, 414);
+	c.emitPanel(a, fillRectVir, 8, 508, 744, 24);
+	a.emit(0xFF, 0x35); a.dword(stateVir + c.StateTotalCount);
+	a.emit(0xFF, 0x35); a.dword(stateVir + c.StateCurrentCount);
+	c.pushImm(a, strings.summaryFormat.vir);
+	c.pushImm(a, detailTextVir);
+	a.call(c.StringFormat);
+	a.emit(0x83, 0xC4, 0x10);
+	c.emitText(a, detailTextVir, 18, 31, 0xFF172237);
+	c.emitSummaryProgress(a, stateVir, fillRectVir, "summary_progress");
+	c.emitPanel(a, fillRectVir, 548, 31, 170, 18);
+	c.emitDrawFull(a, paths.searchField.vir, 548, 31, "search_field");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSearchFocused); a.emit(1);
+	a.jcc(0x85, "search_focus_outline_done");
+	c.emitOutline(a, fillRectVir, 547, 30, 172, 20, 0xFF1670EA);
+	a.label("search_focus_outline_done");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePressedControl);
+	a.emit(c.ControlSearchButton); a.jcc(0x84, "search_button_pressed");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateHoverControl);
+	a.emit(c.ControlSearchButton); a.jcc(0x84, "search_button_over");
+	c.emitDrawColorKey(a, paths.searchNormal.vir, 718, 31, "search_normal");
+	a.jmp("search_button_done");
+	a.label("search_button_over");
+	c.emitDrawColorKey(a, paths.searchOver.vir, 718, 31, "search_over");
+	a.jmp("search_button_done");
+	a.label("search_button_pressed");
+	c.emitDrawColorKey(a, paths.searchPress.vir, 718, 31, "search_press");
+	a.label("search_button_done");
+
+	const tabs = [
+		{x: 8, width: 108},
+		{x: 116, width: 132},
+		{x: 248, width: 108}
+	];
+	for (let index = 0; index < tabs.length; ++index)
+	{
+		c.emitButton(
+			a, stateVir, paths, nineSliceVir, strings.tabs[index].vir,
+			tabs[index].x, 62, tabs[index].width,
+			c.ControlTabBase + index, `tab_${index}`,
+			c.StateTab, index
+		);
+	}
+	c.emitCategoryDropdown(a, stateVir, paths, fillRectVir, strings);
+	c.emitFilters(a, stateVir, paths, nineSliceVir, strings);
+	c.emitScrollbar(a, stateVir, paths, fillRectVir);
+
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateReady); a.emit(0);
+	a.jcc(0x85, "draw_ready");
+	c.emitDrawFull(a, paths.loading.vir, 179, 234, "collection_loading");
+	a.jmp("draw_pages_done");
+	a.label("draw_ready");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "draw_combos");
+	c.emitCardTiles(
+		a, stateVir, payloadVir, paths, fillRectVir, strings,
+		itemResolverVir, artPathVir, countTextVir, drawPathVir
+	);
+	c.emitCardDetail(
+		a, stateVir, payloadVir, paths, fillRectVir, nineSliceVir, strings,
+		itemResolverVir, artPathVir, detailTextVir, drawPathVir,
+		commaFormatterVir, moneyText1Vir, moneyText2Vir
+	);
+	a.jmp("draw_pages_done");
+	a.label("draw_combos");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "draw_totals");
+	c.emitComboRows(
+		a, stateVir, payloadVir, paths, fillRectVir, strings,
+		itemResolverVir, artPathVir, countTextVir, drawPathVir
+	);
+	c.emitComboDetail(
+		a, stateVir, payloadVir, paths, fillRectVir, nineSliceVir,
+		strings, countTextVir, detailTextVir
+	);
+	a.jmp("draw_pages_done");
+	a.label("draw_totals");
+	c.emitTotalRows(a, stateVir, payloadVir, fillRectVir, strings);
+	a.label("draw_pages_done");
+
+	c.emitText(a, strings.accountWide.vir, 18, 514, 0xFF25314A);
+	c.emitText(a, strings.zeny.vir, 590, 514, 0xFF25314A);
+	c.emitDrawColorKey(a, paths.zeny.vir, 628, 507, "zeny_icon");
+	c.emitFormatU32Commas(
+		a, commaFormatterVir, stateVir + c.StateZeny, moneyText1Vir
+	);
+	c.emitText(a, moneyText1Vir, 663, 514, 0xFF172237, 0);
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateMutationPending); a.emit(1);
+	a.jcc(0x85, "mutation_result_test");
+	c.emitText(a, strings.saving.vir, 548, 493, 0xFF0757D7);
+	a.jmp("mutation_result_done");
+	a.label("mutation_result_test");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateMutationResult); a.emit(2);
+	a.jcc(0x82, "mutation_result_done");
+	for (let result = 2; result < strings.mutationResults.length; ++result)
+	{
+		const next = `mutation_result_${result}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateMutationResult);
+		a.emit(result); a.jcc(0x85, next);
+		c.emitText(
+			a, strings.mutationResults[result].vir, 548, 493, 0xFFB00020,
+			0, 34
+		);
+		a.jmp("mutation_result_done");
+		a.label(next);
+	}
+	a.label("mutation_result_done");
+	a.emit(0xF7, 0x05); a.dword(stateVir + c.StateSnapshotFlags);
+	a.dword(c.SnapshotFlagTruncated);
+	a.jcc(0x84, "truncated_done");
+	c.emitText(a, strings.truncated.vir, 18, 490, 0xFFB00020);
+	a.label("truncated_done");
+	c.emitCategoryDropdownPopup(a, stateVir, fillRectVir, strings);
+	// Keep repainting only while a debounce deadline is pending.
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSearchSubmitPending); a.emit(1);
+	a.jcc(0x85, "search_repaint_done");
+	a.emit(0xC7, 0x46, c.WindowDirtyOffset); a.dword(1);
+	a.label("search_repaint_done");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC3);
+	return a;
+};
+
+ItemCollectionUIStatic.emitSendRequest = function(
+	a, senderVir, message, action, targetVir = 0, quantityVir = 0
+)
+{
+	const c = ItemCollectionUIStatic;
+	if (quantityVir > 0)
+		a.emit(0xFF, 0x35), a.dword(quantityVir);
+	else
+		c.pushImm(a, 0);
+	if (targetVir > 0)
+		a.emit(0xFF, 0x35), a.dword(targetVir);
+	else
+		c.pushImm(a, 0);
+	c.pushImm(a, action);
+	c.pushImm(a, message);
+	a.call(senderVir);
+};
+
+ItemCollectionUIStatic.buildMouseDown = function(stateVir, payloadVir, senderVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	const emitClearSearchFocus = function()
+	{
+		c.pushImm(a, 0);
+		a.emit(0xB9); a.dword(c.WindowManager);
+		a.call(c.WindowManagerSetFocusEdit);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchFocused); a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchSubmitPending); a.dword(0);
+	};
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57, 0x8B, 0xF1);
+	a.emit(0x8B, 0x5D, 0x08, 0x8B, 0x55, 0x0C);
+	a.emit(0x85, 0xDB); a.jcc(0x88, "consume");
+	a.emit(0x85, 0xD2); a.jcc(0x88, "consume");
+	// An open category popup owns the first click so rows cannot click through.
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateCategoryDropdown); a.emit(1);
+	a.jcc(0x85, "category_popup_check_done");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "category_popup_close");
+	for (let category = 0; category < c.CategoryCount; ++category)
+	{
+		const top = 87 + category * 18;
+		const next = `category_popup_click_${category}_next`;
+		c.emitRectGate(a, 360, top, 530, top + 18, next);
+		emitClearSearchFocus();
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateCategory);
+		a.dword(category);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateCategoryDropdown);
+		a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePage); a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(0);
+		c.emitMarkDirty(a);
+		c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.label("category_popup_close");
+	emitClearSearchFocus();
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateCategoryDropdown); a.dword(0);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("category_popup_check_done");
+	a.emit(0x83, 0xFA, c.TitleHeight); a.jcc(0x8D, "tabs");
+	a.emit(0x81, 0xFB); a.dword(742); a.jcc(0x8C, "drag_title");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlClose);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("drag_title");
+	a.emit(0xFF, 0x75, 0x0C, 0xFF, 0x75, 0x08, 0x8B, 0xCE);
+	a.call(c.FrameMouseDown);
+	a.jmp("consume");
+
+	a.label("tabs");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateMutationPending); a.emit(1);
+	a.jcc(0x84, "consume");
+	c.emitRectGate(a, 548, 31, 718, 49, "mousedown_search_button");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlSearchField);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("mousedown_search_button");
+	c.emitRectGate(a, 718, 31, 744, 49, "mousedown_search_done");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlSearchButton);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("mousedown_search_done");
+	for (let index = 0; index < 3; ++index)
+	{
+		const left = [8, 116, 248][index];
+		const width = [108, 132, 108][index];
+		const next = `mousedown_tab_${index}_next`;
+		c.emitRectGate(a, left, 62, left + width, 85, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+		a.dword(c.ControlTabBase + index);
+		c.emitMarkDirty(a);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "mousedown_category_done");
+	c.emitRectGate(a, 360, 62, 530, 85, "mousedown_category_done");
+	emitClearSearchFocus();
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateCategoryDropdown); a.dword(1);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("mousedown_category_done");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(2);
+	a.jcc(0x84, "browser_rows");
+	for (let index = 0; index < 4; ++index)
+	{
+		const left = 13 + index * 101;
+		const next = `mousedown_filter_${index}_next`;
+		c.emitRectGate(a, left, 92, left + 96, 112, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+		a.dword(c.ControlFilterBase + index);
+		c.emitMarkDirty(a);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.label("browser_rows");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "combo_rows_test");
+	for (let index = 0; index < c.CardRows; ++index)
+	{
+		const column = index % 5;
+		const row = Math.floor(index / 5);
+		const left = 13 + column * 96;
+		const top = 114 + row * 131;
+		const next = `mousedown_card_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		c.emitRectGate(a, left, top, left + 85, top + 130, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+		a.dword(c.ControlCardBase + index);
+		c.emitMarkDirty(a);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.jmp("detail_controls");
+	a.label("combo_rows_test");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "detail_controls");
+	for (let index = 0; index < c.ComboRows; ++index)
+	{
+		const top = 119 + index * 181;
+		const next = `mousedown_combo_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+		a.emit(index); a.jcc(0x86, next);
+		c.emitRectGate(a, 13, top, 510, top + 177, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+		a.dword(c.ControlComboBase + index);
+		c.emitMarkDirty(a);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.label("detail_controls");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "combo_action_test");
+	a.emit(0xF7, 0x05); a.dword(stateVir + c.StateSnapshotFlags);
+	a.dword(c.CapabilityStorageReady);
+	a.jcc(0x84, "scroll_controls");
+	const cardControls = [
+		{left: 577, top: 390, right: 602, bottom: 414, id: c.ControlMinus},
+		{left: 690, top: 390, right: 716, bottom: 414, id: c.ControlPlus},
+		{left: 553, top: 422, right: 737, bottom: 442, id: c.ControlDeposit},
+		{left: 553, top: 446, right: 737, bottom: 466, id: c.ControlDepositAll},
+		{left: 553, top: 470, right: 737, bottom: 490, id: c.ControlWithdraw}
+	];
+	for (let index = 0; index < cardControls.length; ++index)
+	{
+		const control = cardControls[index];
+		const next = `mousedown_detail_${index}_next`;
+		c.emitRectGate(
+			a, control.left, control.top, control.right, control.bottom, next
+		);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+		a.dword(control.id);
+		c.emitMarkDirty(a);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.jmp("scroll_controls");
+	a.label("combo_action_test");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "scroll_controls");
+	for (let member = 0; member < c.ComboMembers; ++member)
+	{
+		const next = `mousedown_combo_member_${member}_next`;
+		c.emitRectGate(
+			a, 548, 165 + member * 23, 742, 185 + member * 23, next
+		);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+		a.dword(c.ControlComboMemberBase + member);
+		c.emitMarkDirty(a);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.emit(0xF7, 0x05); a.dword(stateVir + c.StateSnapshotFlags);
+	a.dword(c.CapabilityStorageReady);
+	a.jcc(0x84, "combo_action_only");
+	const comboCardControls = [
+		{left: 577, top: 361, right: 602, bottom: 385, id: c.ControlMinus},
+		{left: 690, top: 361, right: 716, bottom: 385, id: c.ControlPlus},
+		{left: 553, top: 390, right: 737, bottom: 410, id: c.ControlDeposit},
+		{left: 553, top: 414, right: 737, bottom: 434, id: c.ControlDepositAll},
+		{left: 553, top: 438, right: 737, bottom: 458, id: c.ControlWithdraw}
+	];
+	for (let index = 0; index < comboCardControls.length; ++index)
+	{
+		const control = comboCardControls[index];
+		const next = `mousedown_combo_detail_${index}_next`;
+		c.emitRectGate(
+			a, control.left, control.top, control.right, control.bottom, next
+		);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+		a.dword(control.id);
+		c.emitMarkDirty(a);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.label("combo_action_only");
+	c.emitRectGate(a, 553, 470, 737, 490, "scroll_controls");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlComboAction);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("scroll_controls");
+	a.emit(0x81, 0xFB); a.dword(512); a.jcc(0x8C, "consume");
+	a.emit(0x81, 0xFB); a.dword(529); a.jcc(0x8D, "consume");
+	a.emit(0xA1); a.dword(stateVir + c.StateThumbY);
+	a.emit(0x3B, 0xD0); a.jcc(0x8C, "scroll_track_or_arrow");
+	a.emit(0x8D, 0x48, c.ScrollbarThumbHeight);
+	a.emit(0x3B, 0xD1); a.jcc(0x8D, "scroll_track_or_arrow");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlScrollbarThumb);
+	a.emit(0x8B, 0xC2, 0x2B, 0x05); a.dword(stateVir + c.StateThumbY);
+	a.emit(0xA3); a.dword(stateVir + c.StateScrollbarDragOffset);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("scroll_track_or_arrow");
+	a.emit(0x81, 0xFA); a.dword(c.ScrollbarTrackTop);
+	a.jcc(0x8C, "scroll_up_test");
+	a.emit(0x81, 0xFA); a.dword(c.ScrollbarTrackBottom);
+	a.jcc(0x8D, "scroll_down_test");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlScrollbarTrack);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("scroll_up_test");
+	c.emitRectGate(a, 512, 112, 529, c.ScrollbarTrackTop, "consume");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlPrevious);
+	c.emitMarkDirty(a);
+	a.jmp("consume");
+	a.label("scroll_down_test");
+	c.emitRectGate(a, 512, c.ScrollbarTrackBottom, 529, 503, "consume");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl);
+	a.dword(c.ControlNext);
+	c.emitMarkDirty(a);
+	a.label("consume");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 0x08, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.buildMouseMove = function(stateVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57, 0x8B, 0xF1);
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePressedControl);
+	a.emit(c.ControlScrollbarThumb); a.jcc(0x85, "native_drag_test");
+	a.emit(0x8B, 0x45, 0x0C, 0x2B, 0x05);
+	a.dword(stateVir + c.StateScrollbarDragOffset);
+	a.emit(0x3D); a.dword(c.ScrollbarTrackTop);
+	a.jcc(0x8D, "thumb_max_test");
+	a.emit(0xB8); a.dword(c.ScrollbarTrackTop);
+	a.label("thumb_max_test");
+	a.emit(0x3D); a.dword(c.ScrollbarTrackBottom - c.ScrollbarThumbHeight);
+	a.jcc(0x8E, "thumb_store");
+	a.emit(0xB8); a.dword(c.ScrollbarTrackBottom - c.ScrollbarThumbHeight);
+	a.label("thumb_store");
+	a.emit(0xA3); a.dword(stateVir + c.StateThumbY);
+	c.emitMarkDirty(a);
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 0x08, 0x00);
+	a.label("native_drag_test");
+	a.emit(0x80, 0x7E, c.WindowDragStateOffset, c.WindowDragIdle);
+	a.jcc(0x85, "pass");
+	a.emit(0x8B, 0x5D, 0x08, 0x8B, 0x55, 0x0C, 0x33, 0xFF);
+	const hoverRect = function(left, top, right, bottom, id, label)
+	{
+		const next = `hover_${label}_next`;
+		c.emitRectGate(a, left, top, right, bottom, next);
+		a.emit(0xBF); a.dword(id);
+		a.jmp("hover_store");
+		a.label(next);
+	};
+	hoverRect(742, 0, 758, 17, c.ControlClose, "close");
+	hoverRect(548, 31, 718, 49, c.ControlSearchField, "search_field");
+	hoverRect(718, 31, 744, 49, c.ControlSearchButton, "search_button");
+	for (let index = 0; index < 3; ++index)
+	{
+		const left = [8, 116, 248][index];
+		const width = [108, 132, 108][index];
+		hoverRect(left, 62, left + width, 85, c.ControlTabBase + index, `tab_${index}`);
+	}
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "hover_category_done");
+	hoverRect(360, 62, 530, 85, c.ControlCategoryDropdown, "category_dropdown");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateCategoryDropdown); a.emit(1);
+	a.jcc(0x85, "hover_category_done");
+	for (let category = 0; category < c.CategoryCount; ++category)
+	{
+		const top = 87 + category * 18;
+		hoverRect(
+			360, top, 530, top + 18,
+			c.ControlCategoryBase + category, `category_row_${category}`
+		);
+	}
+	a.label("hover_category_done");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(2);
+	a.jcc(0x84, "hover_detail");
+	for (let index = 0; index < 4; ++index)
+	{
+		const left = 13 + index * 101;
+		hoverRect(
+			left, 92, left + 96, 112,
+			c.ControlFilterBase + index, `filter_${index}`
+		);
+	}
+	a.label("hover_detail");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(0);
+	a.jcc(0x85, "hover_combo");
+	hoverRect(577, 390, 602, 414, c.ControlMinus, "minus");
+	hoverRect(690, 390, 716, 414, c.ControlPlus, "plus");
+	hoverRect(553, 422, 737, 442, c.ControlDeposit, "deposit");
+	hoverRect(553, 446, 737, 466, c.ControlDepositAll, "deposit_all");
+	hoverRect(553, 470, 737, 490, c.ControlWithdraw, "withdraw");
+	a.jmp("hover_scroll");
+	a.label("hover_combo");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "hover_scroll");
+	for (let member = 0; member < c.ComboMembers; ++member)
+		hoverRect(
+			548, 165 + member * 23, 742, 185 + member * 23,
+			c.ControlComboMemberBase + member, `combo_member_${member}`
+		);
+	hoverRect(577, 361, 602, 385, c.ControlMinus, "combo_minus");
+	hoverRect(690, 361, 716, 385, c.ControlPlus, "combo_plus");
+	hoverRect(553, 390, 737, 410, c.ControlDeposit, "combo_deposit");
+	hoverRect(553, 414, 737, 434, c.ControlDepositAll, "combo_deposit_all");
+	hoverRect(553, 438, 737, 458, c.ControlWithdraw, "combo_withdraw");
+	hoverRect(553, 470, 737, 490, c.ControlComboAction, "combo_action");
+	a.label("hover_scroll");
+	hoverRect(512, 112, 529, c.ScrollbarTrackTop, c.ControlPrevious, "previous");
+	hoverRect(512, c.ScrollbarTrackBottom, 529, 503, c.ControlNext, "next");
+	a.label("hover_store");
+	a.emit(0x3B, 0x3D); a.dword(stateVir + c.StateHoverControl);
+	a.jcc(0x84, "done");
+	a.emit(0x89, 0x3D); a.dword(stateVir + c.StateHoverControl);
+	c.emitMarkDirty(a);
+	a.label("done");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 0x08, 0x00);
+	a.label("pass");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D);
+	a.jmp(c.FrameMouseMove);
+	return a;
+};
+
+ItemCollectionUIStatic.buildMouseUp = function(
+	stateVir, payloadVir, senderVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57, 0x8B, 0xF1);
+	a.emit(0x8B, 0x5D, 0x08, 0x8B, 0x55, 0x0C);
+	a.emit(0x8B, 0x3D); a.dword(stateVir + c.StatePressedControl);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl); a.dword(0);
+	a.emit(0x85, 0xFF); a.jcc(0x84, "base_mouse_up");
+	c.emitMarkDirty(a);
+	a.emit(0x83, 0xFF, c.ControlClose); a.jcc(0x85, "search_field");
+	c.emitRectGate(a, 742, 0, 758, 17, "consume");
+	c.pushImm(a, 0);
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowManagerSetFocusEdit);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchFocused); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchSubmitPending); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateCategoryDropdown); a.dword(0);
+	a.emit(0xC7, 0x46, c.WindowVisibleOffset); a.dword(0);
+	a.jmp("consume");
+	a.label("search_field");
+	a.emit(0x83, 0xFF, c.ControlSearchField); a.jcc(0x85, "search_button");
+	c.emitRectGate(a, 548, 31, 718, 49, "consume");
+	a.emit(0xFF, 0x35); a.dword(stateVir + c.StateSearchEdit);
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowManagerSetFocusEdit);
+	a.jmp("consume");
+	a.label("search_button");
+	a.emit(0x83, 0xFF, c.ControlSearchButton); a.jcc(0x85, "tabs");
+	c.emitRectGate(a, 718, 31, 744, 49, "consume");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchFocused); a.dword(1);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchSubmitPending); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePage); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(0);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.jmp("consume");
+	a.label("tabs");
+	c.pushImm(a, 0);
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowManagerSetFocusEdit);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchFocused); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchSubmitPending); a.dword(0);
+	for (let index = 0; index < 3; ++index)
+	{
+		const next = `mouseup_tab_${index}_next`;
+		a.emit(0x83, 0xFF, c.ControlTabBase + index); a.jcc(0x85, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateTab); a.dword(index);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateFilter); a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePage); a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateCategoryDropdown); a.dword(0);
+		if (index !== 0)
+		{
+			a.emit(0xC7, 0x05); a.dword(stateVir + c.StateCategory); a.dword(0);
+		}
+		c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+		a.jmp("consume");
+		a.label(next);
+	}
+	for (let index = 0; index < 4; ++index)
+	{
+		const next = `mouseup_filter_${index}_next`;
+		a.emit(0x83, 0xFF, c.ControlFilterBase + index); a.jcc(0x85, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateFilter); a.dword(index);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePage); a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(0);
+		c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.emit(0x83, 0xFF, c.ControlScrollbarThumb);
+	a.jcc(0x85, "scrollbar_track_release");
+	a.emit(0x8B, 0x0D); a.dword(stateVir + c.StatePageCount);
+	a.emit(0x83, 0xF9, 0x01); a.jcc(0x86, "thumb_page_zero");
+	a.emit(0x49);
+	a.emit(0xA1); a.dword(stateVir + c.StateThumbY);
+	a.emit(0x2D); a.dword(c.ScrollbarTrackTop);
+	a.emit(0xF7, 0xE1);                                // relativeY * (pageCount-1)
+	a.emit(0x05); a.dword(Math.floor(c.ScrollbarThumbTravel / 2));
+	a.emit(0x33, 0xD2, 0xB9); a.dword(c.ScrollbarThumbTravel);
+	a.emit(0xF7, 0xF1, 0x8B, 0xD8);                   // EBX=rounded page
+	a.jmp("thumb_page_ready");
+	a.label("thumb_page_zero");
+	a.emit(0x33, 0xDB);
+	a.label("thumb_page_ready");
+	a.emit(0x3B, 0x1D); a.dword(stateVir + c.StatePage);
+	a.jcc(0x84, "consume");
+	a.emit(0x89, 0x1D); a.dword(stateVir + c.StatePage);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.jmp("consume");
+	a.label("scrollbar_track_release");
+	a.emit(0x83, 0xFF, c.ControlScrollbarTrack);
+	a.jcc(0x85, "previous_page");
+	a.emit(0x8B, 0x55, 0x0C, 0xA1); a.dword(stateVir + c.StateThumbY);
+	a.emit(0x3B, 0xD0); a.jcc(0x8C, "track_previous");
+	a.emit(0x83, 0xC0, c.ScrollbarThumbHeight);
+	a.emit(0x3B, 0xD0); a.jcc(0x8D, "track_next");
+	a.jmp("consume");
+	a.label("track_previous");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePage); a.emit(0);
+	a.jcc(0x8E, "consume");
+	a.emit(0xFF, 0x0D); a.dword(stateVir + c.StatePage);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.jmp("consume");
+	a.label("track_next");
+	a.emit(0xA1); a.dword(stateVir + c.StatePage);
+	a.emit(0x40, 0x3B, 0x05); a.dword(stateVir + c.StatePageCount);
+	a.jcc(0x8D, "consume");
+	a.emit(0xFF, 0x05); a.dword(stateVir + c.StatePage);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.jmp("consume");
+	a.label("previous_page");
+	a.emit(0x83, 0xFF, c.ControlPrevious); a.jcc(0x85, "next_page");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePage); a.emit(0);
+	a.jcc(0x8E, "consume");
+	a.emit(0xFF, 0x0D); a.dword(stateVir + c.StatePage);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.jmp("consume");
+	a.label("next_page");
+	a.emit(0x83, 0xFF, c.ControlNext); a.jcc(0x85, "quantity_minus");
+	a.emit(0xA1); a.dword(stateVir + c.StatePage);
+	a.emit(0x40, 0x3B, 0x05); a.dword(stateVir + c.StatePageCount);
+	a.jcc(0x8D, "consume");
+	a.emit(0xFF, 0x05); a.dword(stateVir + c.StatePage);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.jmp("consume");
+	a.label("quantity_minus");
+	a.emit(0x83, 0xFF, c.ControlMinus); a.jcc(0x85, "quantity_plus");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateQuantity); a.emit(1);
+	a.jcc(0x8E, "consume");
+	a.emit(0xFF, 0x0D); a.dword(stateVir + c.StateQuantity);
+	a.jmp("consume");
+	a.label("quantity_plus");
+	a.emit(0x83, 0xFF, c.ControlPlus); a.jcc(0x85, "deposit");
+	a.emit(0x81, 0x3D); a.dword(stateVir + c.StateQuantity); a.dword(999);
+	a.jcc(0x8D, "consume");
+	a.emit(0xFF, 0x05); a.dword(stateVir + c.StateQuantity);
+	a.jmp("consume");
+	a.label("deposit");
+	a.emit(0x83, 0xFF, c.ControlDeposit); a.jcc(0x85, "deposit_all");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "deposit_card_target");
+	c.emitSendRequest(
+		a, senderVir, c.MessageMutate, c.ActionDeposit,
+		stateVir + c.StateComboMemberId, stateVir + c.StateQuantity
+	);
+	a.jmp("consume");
+	a.label("deposit_card_target");
+	c.emitSendRequest(
+		a, senderVir, c.MessageMutate, c.ActionDeposit,
+		stateVir + c.StateSelectedId, stateVir + c.StateQuantity
+	);
+	a.jmp("consume");
+	a.label("deposit_all");
+	a.emit(0x83, 0xFF, c.ControlDepositAll); a.jcc(0x85, "withdraw");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "deposit_all_card_target");
+	c.emitSendRequest(
+		a, senderVir, c.MessageMutate, c.ActionDepositAll,
+		stateVir + c.StateComboMemberId
+	);
+	a.jmp("consume");
+	a.label("deposit_all_card_target");
+	c.emitSendRequest(
+		a, senderVir, c.MessageMutate, c.ActionDepositAll,
+		stateVir + c.StateSelectedId
+	);
+	a.jmp("consume");
+	a.label("withdraw");
+	a.emit(0x83, 0xFF, c.ControlWithdraw); a.jcc(0x85, "combo_action");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateTab); a.emit(1);
+	a.jcc(0x85, "withdraw_card_target");
+	c.emitSendRequest(
+		a, senderVir, c.MessageMutate, c.ActionWithdraw,
+		stateVir + c.StateComboMemberId, stateVir + c.StateQuantity
+	);
+	a.jmp("consume");
+	a.label("withdraw_card_target");
+	c.emitSendRequest(
+		a, senderVir, c.MessageMutate, c.ActionWithdraw,
+		stateVir + c.StateSelectedId, stateVir + c.StateQuantity
+	);
+	a.jmp("consume");
+	a.label("combo_action");
+	a.emit(0x83, 0xFF, c.ControlComboAction); a.jcc(0x85, "combo_member_select");
+	for (let index = 0; index < c.ComboRows; ++index)
+	{
+		const comboVir = payloadVir + index * c.ComboRowSize;
+		const next = `mouseup_combo_action_${index}_next`;
+		a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSelectedIndex);
+		a.emit(index); a.jcc(0x85, next);
+		a.emit(0xF7, 0x05); a.dword(comboVir + 4); a.dword(c.ComboActive);
+		a.jcc(0x84, `mouseup_combo_action_${index}_activate`);
+		c.emitSendRequest(
+			a, senderVir, c.MessageMutate, c.ActionDeactivate,
+			stateVir + c.StateSelectedId
+		);
+		a.jmp("consume");
+		a.label(`mouseup_combo_action_${index}_activate`);
+		a.emit(0xF7, 0x05); a.dword(comboVir + 4); a.dword(c.ComboReady);
+		a.jcc(0x84, "consume");
+		c.emitSendRequest(
+			a, senderVir, c.MessageMutate, c.ActionActivate,
+			stateVir + c.StateSelectedId
+		);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.label("combo_member_select");
+	for (let member = 0; member < c.ComboMembers; ++member)
+	{
+		const memberNext = `mouseup_combo_member_${member}_next`;
+		a.emit(0x81, 0xFF); a.dword(c.ControlComboMemberBase + member);
+		a.jcc(0x85, memberNext);
+		for (let index = 0; index < c.ComboRows; ++index)
+		{
+			const comboVir = payloadVir + index * c.ComboRowSize;
+			const selectedNext = `mouseup_combo_member_${member}_row_${index}_next`;
+			a.emit(0x83, 0x3D); a.dword(stateVir + c.StateSelectedIndex);
+			a.emit(index); a.jcc(0x85, selectedNext);
+			a.emit(0x83, 0x3D); a.dword(stateVir + c.StateRowCount);
+			a.emit(index); a.jcc(0x86, "consume");
+			a.emit(0x66, 0x83, 0x3D); a.dword(comboVir + 8); a.emit(member);
+			a.jcc(0x86, "consume");
+			a.emit(0xC7, 0x05); a.dword(stateVir + c.StateComboMemberIndex);
+			a.dword(member);
+			a.emit(0xA1); a.dword(
+				comboVir + c.ComboMemberOffset + member * c.ComboMemberSize
+			);
+			a.emit(0xA3); a.dword(stateVir + c.StateComboMemberId);
+			a.emit(0xC7, 0x05); a.dword(stateVir + c.StateQuantity); a.dword(1);
+			a.jmp("consume");
+			a.label(selectedNext);
+		}
+		a.jmp("consume");
+		a.label(memberNext);
+	}
+	a.label("card_select");
+	for (let index = 0; index < c.CardRows; ++index)
+	{
+		const rowVir = payloadVir + index * c.CardRowSize;
+		const next = `mouseup_card_select_${index}_next`;
+		a.emit(0x81, 0xFF); a.dword(c.ControlCardBase + index);
+		a.jcc(0x85, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(index);
+		a.emit(0xA1); a.dword(rowVir);
+		a.emit(0xA3); a.dword(stateVir + c.StateSelectedId);
+		c.emitSendRequest(
+			a, senderVir, c.MessageNavigate, c.ActionSelect,
+			stateVir + c.StateSelectedId
+		);
+		a.jmp("consume");
+		a.label(next);
+	}
+	for (let index = 0; index < c.ComboRows; ++index)
+	{
+		const rowVir = payloadVir + index * c.ComboRowSize;
+		const next = `mouseup_combo_select_${index}_next`;
+		a.emit(0x81, 0xFF); a.dword(c.ControlComboBase + index);
+		a.jcc(0x85, next);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSelectedIndex); a.dword(index);
+		a.emit(0xA1); a.dword(rowVir);
+		a.emit(0xA3); a.dword(stateVir + c.StateSelectedId);
+		a.emit(0xA3); a.dword(stateVir + c.StateComboId);
+		a.emit(0xA1); a.dword(rowVir + c.ComboMemberOffset);
+		a.emit(0xA3); a.dword(stateVir + c.StateComboMemberId);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateComboMemberIndex); a.dword(0);
+		a.emit(0xC7, 0x05); a.dword(stateVir + c.StateQuantity); a.dword(1);
+		c.emitSendRequest(
+			a, senderVir, c.MessageNavigate, c.ActionSelect,
+			stateVir + c.StateSelectedId
+		);
+		a.jmp("consume");
+		a.label(next);
+	}
+	a.label("consume");
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 0x08, 0x00);
+	a.label("base_mouse_up");
+	a.emit(0xFF, 0x75, 0x0C, 0xFF, 0x75, 0x08, 0x8B, 0xCE);
+	a.call(c.FrameMouseUp);
+	a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 0x08, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.buildMouseWheel = function(stateVir, senderVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x56, 0x8B, 0xF1);
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StateMutationPending); a.emit(1);
+	a.jcc(0x84, "return");
+	a.emit(0x83, 0x7D, 0x08, 0); a.jcc(0x84, "return");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePageCount); a.emit(1);
+	a.jcc(0x86, "return");
+	a.emit(0x83, 0x7D, 0x08, 0); a.jcc(0x8C, "down");
+	a.emit(0x83, 0x3D); a.dword(stateVir + c.StatePage); a.emit(0);
+	a.jcc(0x8E, "handled");
+	a.emit(0xFF, 0x0D); a.dword(stateVir + c.StatePage);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.jmp("handled");
+	a.label("down");
+	a.emit(0xA1); a.dword(stateVir + c.StatePage);
+	a.emit(0x40, 0x3B, 0x05); a.dword(stateVir + c.StatePageCount);
+	a.jcc(0x8D, "handled");
+	a.emit(0xFF, 0x05); a.dword(stateVir + c.StatePage);
+	c.emitSendRequest(a, senderVir, c.MessageNavigate, c.ActionNone);
+	a.label("handled");
+	c.emitMarkDirty(a);
+	a.label("return");
+	a.emit(0x5E, 0x5D, 0xC2, 0x04, 0x00);
+	return a;
+};
+
+ItemCollectionUIStatic.buildDestructor = function(stateVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x53, 0x56, 0x8B, 0xF1);
+	a.emit(0x8B, 0x1D); a.dword(stateVir + c.StateSearchEdit);
+	a.emit(0x85, 0xDB); a.jcc(0x84, "focus_done");
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowManagerGetFocusEdit);
+	a.emit(0x3B, 0xC3); a.jcc(0x85, "focus_done");
+	c.pushImm(a, 0);
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowManagerSetFocusEdit);
+	a.label("focus_done");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchEdit); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchFocused); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateSearchSubmitPending); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateHoverControl); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateWindow); a.dword(0);
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowCaptureGet);
+	a.emit(0x3B, 0xC6); a.jcc(0x85, "capture_done");
+	a.emit(0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowCaptureRelease);
+	a.label("capture_done");
+	a.emit(0x8B, 0xCE, 0x5E, 0x5B);
+	a.jmp(c.FrameDeletingDestructor);
+	return a;
+};
+
+ItemCollectionUIStatic.cloneFrameVtable = function(
+	drawVir, mouseDownVir, mouseMoveVir, mouseUpVir, mouseWheelVir,
+	destructorVir
+)
+{
+	const c = ItemCollectionUIStatic;
+	const sourcePhy = Exe.Vir2Phy(c.FrameVtable);
+	if (sourcePhy < 0)
+		throw Error("ItemCollectionUI: UIFrameWnd vtable is not mapped");
+	const bytes = c.FrameVtableEntries * 4;
+	const [clonePhy, cloneVir] = Exe.Allocate(bytes, 4);
+	Exe.SetHex(clonePhy, Exe.GetHex(sourcePhy, bytes));
+	Exe.SetUint32(clonePhy + 0 * 4, destructorVir);
+	Exe.SetUint32(clonePhy + 20 * 4, drawVir);
+	Exe.SetUint32(clonePhy + 25 * 4, mouseDownVir);
+	Exe.SetUint32(clonePhy + 28 * 4, mouseMoveVir);
+	Exe.SetUint32(clonePhy + 31 * 4, mouseUpVir);
+	Exe.SetUint32(clonePhy + 35 * 4, mouseWheelVir);
+	return {phy: clonePhy, vir: cloneVir, size: bytes};
+};
+
+ItemCollectionUIStatic.buildToggle = function(stateVir, vtableVir, senderVir)
+{
+	const c = ItemCollectionUIStatic;
+	const a = c.asm();
+	a.emit(0x9C, 0x60);
+	c.emitSendRequest(a, senderVir, c.MessageOpen, c.ActionNone);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateHoverControl); a.dword(0);
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StatePressedControl); a.dword(0);
+	a.emit(0x8B, 0x35); a.dword(stateVir + c.StateWindow);
+	a.emit(0x85, 0xF6); a.jcc(0x84, "create");
+	a.emit(0x81, 0x3E); a.dword(vtableVir); a.jcc(0x84, "existing");
+	a.emit(0xC7, 0x05); a.dword(stateVir + c.StateWindow); a.dword(0);
+	a.emit(0x33, 0xF6);
+	a.label("create");
+	c.pushImm(a, c.FrameObjectSize);
+	a.call(c.OperatorNew);
+	a.emit(0x83, 0xC4, 0x04, 0x85, 0xC0); a.jcc(0x84, "done");
+	a.emit(0x8B, 0xF0);
+	c.pushImm(a, 0);
+	a.emit(0x8B, 0xCE);
+	a.call(c.FrameConstructor);
+	a.emit(0xC7, 0x06); a.dword(vtableVir);
+	c.pushImm(a, c.WindowHeight);
+	c.pushImm(a, c.WindowWidth);
+	a.emit(0x8B, 0xCE);
+	a.call(c.WindowSetSize);
+	a.emit(0xC7, 0x46, c.WindowIdOffset); a.dword(c.WindowId);
+	a.emit(0x8B, 0x15); a.dword(c.Renderer);
+	a.emit(0x85, 0xD2); a.jcc(0x84, "position_done");
+	a.emit(0x8B, 0x42, c.RendererWidthOffset, 0x2D); a.dword(c.WindowWidth);
+	a.emit(0xD1, 0xF8, 0x89, 0x46, c.WindowXOffset);
+	a.emit(0x8B, 0x42, c.RendererHeightOffset, 0x2D); a.dword(c.WindowHeight);
+	a.emit(0xD1, 0xF8, 0x89, 0x46, c.WindowYOffset);
+	a.label("position_done");
+	c.pushImm(a, c.UIEditCtrlObjectSize);
+	a.call(c.OperatorNew);
+	a.emit(0x83, 0xC4, 0x04, 0x85, 0xC0); a.jcc(0x84, "search_edit_done");
+	a.emit(0x8B, 0xF8, 0x8B, 0xCF);
+	a.call(c.UIEditCtrlConstructor);
+	a.emit(0x8B, 0xF8);
+	c.pushImm(a, 18);
+	c.pushImm(a, 170);
+	a.emit(0x8B, 0xCF);
+	a.call(c.WindowChildSetSize);
+	a.emit(0x8B, 0x07);
+	c.pushImm(a, 31);
+	c.pushImm(a, 548);
+	a.emit(0x8B, 0xCF, 0xFF, 0x50, 0x10);
+	a.emit(0xC7, 0x87); a.dword(c.UIEditCtrlMaximumOffset);
+	a.dword(c.SearchMaximumChars);
+	a.emit(0xC7, 0x87); a.dword(c.UIEditCtrlStyleOffset); a.dword(0);
+	a.emit(0x89, 0x3D); a.dword(stateVir + c.StateSearchEdit);
+	a.emit(0x57, 0x8B, 0xCE);
+	a.call(c.WindowAddChild);
+	a.label("search_edit_done");
+	a.emit(0x89, 0x35); a.dword(stateVir + c.StateWindow);
+	a.emit(0x56, 0xB9); a.dword(c.WindowManager);
+	a.call(c.WindowAddTopLevelFront);
+	c.emitMarkDirty(a);
+	a.jmp("done");
+	a.label("existing");
+	a.emit(0xC7, 0x46, c.WindowDragStateOffset); a.dword(c.WindowDragIdle);
+	a.emit(0x80, 0x76, c.WindowVisibleOffset, 0x01);
+	c.emitMarkDirty(a);
+	a.label("done");
+	a.emit(0x61, 0x9D, 0xC3);
+	return a;
+};
+
+ItemCollectionUIStatic.assertCode = function(label, virAddr, expectedBytes)
+{
+	const phy = Exe.Vir2Phy(virAddr, CODE);
+	if (phy < 0)
+		throw Error(`ItemCollectionUI: ${label} is not mapped`);
+	const expected = expectedBytes.replace(/\s+/g, " ").trim().toUpperCase();
+	const actual = Exe.GetHex(phy, expected.split(" ").length)
+		.replace(/\s+/g, " ").trim().toUpperCase();
+	if (actual !== expected)
+		throw Error(`ItemCollectionUI: ${label} mismatch, got ${actual}`);
+	return phy;
+};
+
+ItemCollectionUIStatic.verifyNativeContracts = function()
+{
+	const c = ItemCollectionUIStatic;
+	c.assertCode(
+		"UIFrameWnd constructor", c.FrameConstructor,
+		"55 8B EC 6A FF 68 F9 45 EA 00"
+	);
+	c.assertCode(
+		"UIFrameWnd mouse-down", c.FrameMouseDown,
+		"55 8B EC 83 EC 08 56 8B F1"
+	);
+	c.assertCode("UIFrameWnd mouse-move", c.FrameMouseMove, "C2 08 00");
+	c.assertCode(
+		"UIFrameWnd mouse-up", c.FrameMouseUp,
+		"56 8B F1 B9 E8 F4 31 01 E8"
+	);
+	c.assertCode("UIFrameWnd mouse-wheel", c.FrameMouseWheel, "C2 04 00");
+	c.assertCode(
+		"UIWindowMgr capture getter", c.WindowCaptureGet,
+		"8B 81 9C 01 00 00 C3"
+	);
+	c.assertCode(
+		"UIWindowMgr capture release", c.WindowCaptureRelease,
+		"C7 81 9C 01 00 00 00 00 00 00 C3"
+	);
+	c.assertCode(
+		"item-info lookup", c.ItemInfoLookup,
+		"55 8B EC 6A FF 68 9D 54 EF 00"
+	);
+	c.assertCode(
+		"UIEditCtrl constructor", c.UIEditCtrlConstructor,
+		"55 8B EC 6A FF 68 45 81 E9 00"
+	);
+	c.assertCode(
+		"UIEditCtrl GetText", c.UIEditCtrlGetText,
+		"56 8B F1 B9 E8 F4 31 01 E8"
+	);
+	c.assertCode(
+		"UIWindowMgr SetFocusEdit", c.WindowManagerSetFocusEdit,
+		"55 8B EC 53 56 8B 75 08 57 8B F9"
+	);
+	c.assertCode(
+		"UIWindowMgr GetFocusEdit", c.WindowManagerGetFocusEdit,
+		"8B 81 A0 01 00 00 C3"
+	);
+	c.assertCode(
+		"clipped image draw", c.ImageDrawRect,
+		"55 8B EC 56 8B 71 24"
+	);
+	const vtablePhy = Exe.Vir2Phy(c.FrameVtable);
+	if (vtablePhy < 0)
+		throw Error("ItemCollectionUI: native vtable is not mapped");
+	const slots = [
+		[0, c.FrameDeletingDestructor],
+		[20, c.FrameVtableDraw],
+		[25, c.FrameMouseDown],
+		[28, c.FrameMouseMove],
+		[31, c.FrameMouseUp],
+		[35, c.FrameMouseWheel]
+	];
+	for (const [slot, expected] of slots)
+	{
+		if (Exe.GetUint32(vtablePhy + slot * 4) !== expected)
+			throw Error(`ItemCollectionUI: native vtable slot ${slot} changed`);
+	}
+	return true;
+};
+
+ItemCollectionUIStatic.uiPrefix = function()
+{
+	return String.fromCharCode(
+		0xC0, 0xAF, 0xC0, 0xFA, 0xC0, 0xCE, 0xC5, 0xCD,
+		0xC6, 0xE4, 0xC0, 0xCC, 0xBD, 0xBA
+	);
+};
+
+ItemCollectionUIStatic.AssetDirectories = [
+	"chrome",
+	"icons",
+	"reused/artwork",
+	"reused/buttons",
+	"reused/buttons/generic",
+	"reused/close",
+	"reused/currency",
+	"reused/scrollbar",
+	"reused/search",
+	"reused/status",
+	"reused/steppers"
+];
+
+ItemCollectionUIStatic.Assets = [
+	"chrome/title_bar_760.bmp",
+	"chrome/bg_collection.bmp",
+	"chrome/loading.bmp",
+	"chrome/nowloading.act",
+	"chrome/nowloading.spr",
+	"icons/icon_collection.bmp",
+	"icons/badge_locked.bmp",
+	"icons/badge_complete.bmp",
+	"icons/category_all.bmp",
+	"icons/category_card.bmp",
+	"icons/category_weapon.bmp",
+	"icons/category_armor.bmp",
+	"icons/category_shield.bmp",
+	"icons/category_headgear.bmp",
+	"icons/category_garment.bmp",
+	"icons/category_shoes.bmp",
+	"icons/category_accessory.bmp",
+	"icons/category_consumable.bmp",
+	"icons/category_etc.bmp",
+	"icons/category_ammo.bmp",
+	"icons/category_pet.bmp",
+	"icons/category_shadow.bmp",
+	"icons/category_cash.bmp",
+	"reused/artwork/fallback_question_mark.bmp",
+	"reused/buttons/generic/btn_out_left.bmp",
+	"reused/buttons/generic/btn_out_mid.bmp",
+	"reused/buttons/generic/btn_out_right.bmp",
+	"reused/buttons/generic/btn_over_left.bmp",
+	"reused/buttons/generic/btn_over_mid.bmp",
+	"reused/buttons/generic/btn_over_right.bmp",
+	"reused/buttons/generic/btn_press_left.bmp",
+	"reused/buttons/generic/btn_press_mid.bmp",
+	"reused/buttons/generic/btn_press_right.bmp",
+	"reused/buttons/generic/btn_disable_left.bmp",
+	"reused/buttons/generic/btn_disable_mid.bmp",
+	"reused/buttons/generic/btn_disable_right.bmp",
+	"reused/close/btn_close_normal.bmp",
+	"reused/close/btn_close_mouseon.bmp",
+	"reused/close/btn_close_pressed.bmp",
+	"reused/close/btn_close_disabled.bmp",
+	"reused/search/searchbar_bg.bmp",
+	"reused/search/btn_searchbar_normal.bmp",
+	"reused/search/btn_searchbar__mouseon.bmp",
+	"reused/search/btn_searchbar_pressed.bmp",
+	"reused/search/btn_searchbar_disabled.bmp",
+	"reused/scrollbar/scrollbar_bg_top.bmp",
+	"reused/scrollbar/scrollbar_bg_mid.bmp",
+	"reused/scrollbar/scrollbar_bg_btm.bmp",
+	"reused/scrollbar/scrollbar_thumb_out_top.bmp",
+	"reused/scrollbar/scrollbar_thumb_out_mid.bmp",
+	"reused/scrollbar/scrollbar_thumb_out_btm.bmp",
+	"reused/scrollbar/scrollbar_thumb_over_top.bmp",
+	"reused/scrollbar/scrollbar_thumb_over_mid.bmp",
+	"reused/scrollbar/scrollbar_thumb_over_btm.bmp",
+	"reused/scrollbar/scrollbar_thumb_press_top.bmp",
+	"reused/scrollbar/scrollbar_thumb_press_mid.bmp",
+	"reused/scrollbar/scrollbar_thumb_press_btm.bmp",
+	"reused/scrollbar/btn_scroll_arrow_up.bmp",
+	"reused/scrollbar/btn_scroll_arrow_down.bmp",
+	"reused/steppers/btn_minus_normal.bmp",
+	"reused/steppers/btn_minus_over.bmp",
+	"reused/steppers/btn_minus_press.bmp",
+	"reused/steppers/btn_plus_normal.bmp",
+	"reused/steppers/btn_plus_over.bmp",
+	"reused/steppers/btn_plus_press.bmp",
+	"reused/currency/icon_zeny.bmp",
+	"reused/status/badge_complete.bmp"
+];
+
+ItemCollectionUIStatic.MenuAssets = [
+	"bt_itemcollection.bmp",
+	"bt_itemcollection_disabled.bmp",
+	"bt_itemcollection_normal.bmp",
+	"bt_itemcollection_mouseon.bmp",
+	"bt_itemcollection_press.bmp",
+	"bt_itemcollection_pressed.bmp",
+	"bt_itemcollection_old_disabled.bmp",
+	"bt_itemcollection_old_normal.bmp",
+	"bt_itemcollection_old_mouseon.bmp",
+	"bt_itemcollection_old_pressed.bmp"
+];
+
+ItemCollectionUIStatic.onApplied = function()
+{
+	if (Warp.TestMode || !Exe.GetSavedInput("$copyItemCollectionAssets"))
+		return;
+	const c = ItemCollectionUIStatic;
+	const source = Warp.Path + c.AssetPath;
+	const clientDir = System.DirPath(Warp.TgtExe);
+	const target = clientDir + "/data/texture/" + c.uiPrefix() + "/" + c.TargetLeaf;
+	if (!System.MkDir(target))
+		throw Error(`ItemCollectionUI: unable to create ${target}`);
+	for (const directory of c.AssetDirectories)
+	{
+		if (!System.MkDir(target + "/" + directory))
+			throw Error(`ItemCollectionUI: unable to create ${directory}`);
+	}
+	for (const file of c.Assets)
+	{
+		if (!System.Copy(source + "/" + file, target + "/" + file, true))
+			throw Error(`ItemCollectionUI: unable to copy ${file}`);
+	}
+	const menuTarget = clientDir + "/data/texture/" + c.uiPrefix() +
+		"/uirenewal/menuicon";
+	if (!System.MkDir(menuTarget))
+		throw Error(`ItemCollectionUI: unable to create ${menuTarget}`);
+	for (const file of c.MenuAssets)
+	{
+		if (!System.Copy(
+			source + "/menuicon/" + file,
+			menuTarget + "/" + file,
+			true
+		))
+			throw Error(`ItemCollectionUI: unable to copy menu icon ${file}`);
+	}
+};
+
+ItemCollectionUI = function(_)
+{
+	const c = ItemCollectionUIStatic;
+	if (Exe.BuildDate !== c.BuildDate)
+		throw Error("ItemCollectionUI supports only the 2025-07-16 client");
+	if (typeof CustomSlashCommand === "undefined" ||
+		typeof CustomSlashCommand.register !== "function")
+		throw Error("ItemCollectionUI: CustomSlashCommand helper unavailable");
+
+	$$(_, 1, "Verify the native UIFrameWnd and item-resource ABI");
+	c.verifyNativeContracts();
+
+	$$(_, 2, "Build Item Collection resource paths and runtime labels");
+	const resource = relative => c.buildResourcePath(
+		c.TargetLeaf + "\\" + relative
+	);
+	const paths = {
+		title: resource("chrome\\title_bar_760.bmp"),
+		body: resource("chrome\\bg_collection.bmp"),
+		loading: resource("chrome\\loading.bmp"),
+		icon: resource("icons\\icon_collection.bmp"),
+		badgeLocked: resource("icons\\badge_locked.bmp"),
+		badgeComplete: resource("icons\\badge_complete.bmp"),
+		fallback: resource("reused\\artwork\\fallback_question_mark.bmp"),
+		searchField: resource("reused\\search\\searchbar_bg.bmp"),
+		searchNormal: resource("reused\\search\\btn_searchbar_normal.bmp"),
+		searchOver: resource("reused\\search\\btn_searchbar__mouseon.bmp"),
+		searchPress: resource("reused\\search\\btn_searchbar_pressed.bmp"),
+		zeny: resource("reused\\currency\\icon_zeny.bmp"),
+		close: {
+			normal: resource("reused\\close\\btn_close_normal.bmp"),
+			over: resource("reused\\close\\btn_close_mouseon.bmp"),
+			press: resource("reused\\close\\btn_close_pressed.bmp")
+		},
+		minus: {
+			normal: resource("reused\\steppers\\btn_minus_normal.bmp"),
+			over: resource("reused\\steppers\\btn_minus_over.bmp"),
+			press: resource("reused\\steppers\\btn_minus_press.bmp")
+		},
+		plus: {
+			normal: resource("reused\\steppers\\btn_plus_normal.bmp"),
+			over: resource("reused\\steppers\\btn_plus_over.bmp"),
+			press: resource("reused\\steppers\\btn_plus_press.bmp")
+		},
+		scroll: {
+			up: resource("reused\\scrollbar\\btn_scroll_arrow_up.bmp"),
+			down: resource("reused\\scrollbar\\btn_scroll_arrow_down.bmp"),
+			thumbTop: resource("reused\\scrollbar\\scrollbar_thumb_out_top.bmp"),
+			thumbMid: resource("reused\\scrollbar\\scrollbar_thumb_out_mid.bmp"),
+			thumbBottom: resource("reused\\scrollbar\\scrollbar_thumb_out_btm.bmp")
+		},
+		buttons: {},
+		artFormat: c.buildResourcePath("collection\\%s.bmp"),
+		itemArtFormat: c.buildResourcePath("item\\%s.bmp")
+	};
+	for (const state of ["out", "over", "press", "disable"])
+	{
+		paths.buttons[state] = ["left", "mid", "right"].map(part =>
+			resource(`reused\\buttons\\generic\\btn_${state}_${part}.bmp`)
+		);
+	}
+
+	const text = value => c.allocateString(value);
+	const strings = {
+		title: text("ITEM COLLECTION"),
+		collected: text("Collected"),
+		summaryFormat: text("Collected %u / %u"),
+		searchPlaceholder: text("Search item name or ID"),
+		tabs: ["Items", "Combo Collections", "Total Bonuses"].map(text),
+		categories: [
+			"All Items", "Cards", "Weapons", "Armor", "Shields",
+			"Headgear", "Garments", "Shoes", "Accessories",
+			"Consumables", "Etc", "Ammo", "Pet Items", "Shadow Gear",
+			"Cash Items"
+		].map(text),
+		cardFilters: ["All", "Missing", "Partial", "Completed"].map(text),
+		comboFilters: ["All", "Incomplete", "Ready", "Active"].map(text),
+		countFormat: text("%u / %u"),
+		uintFormat: text("%u"),
+		itemIdFormat: text("Item ID %u"),
+		depositedFormat: text("%u / %u deposited"),
+		feeFormat: text("Deposit %s / Withdraw %s Zeny"),
+		collectionBonus: text("Collection Bonus"),
+		requiredCards: text("Required Cards"),
+		comboBonus: text("Combo Bonus"),
+		totalBonusHeading: text("Active Collection Bonuses"),
+		totalBonusInfo: text("All values are authoritative"),
+		totalBonusInfo2: text("and account-wide."),
+		deposit: text("Deposit"),
+		depositAll: text("Deposit All"),
+		withdraw: text("Withdraw"),
+		activateBonus: text("Activate Bonus"),
+		deactivateBonus: text("Deactivate Bonus"),
+		cardsRemain: text("Cards remain in your collection."),
+		plusOneMore: text("+1 more"),
+		active: text("Active"),
+		ready: text("Ready"),
+		incomplete: text("Incomplete"),
+		accountWide: text("Item Collection is account-wide."),
+		zeny: text("Zeny"),
+		saving: text("Saving collection change..."),
+		mutationResults: [
+			"",
+			"",
+			"Invalid collection request.",
+			"Item Collection is disabled.",
+			"Collection changed; please retry.",
+			"Collection target was not found.",
+			"Storage is busy; please retry.",
+			"No eligible card is in inventory.",
+			"Storage rejected the transfer.",
+			"Withdrawal is disabled.",
+			"Combo requirements are not met.",
+			"Storage save failed.",
+			"Collection target is ambiguous.",
+			"Duplicate request was ignored.",
+			"Unsupported collection action."
+		].map(text),
+		truncated: text("Some collection entries were truncated by the server.")
+	};
+
+	const state = c.allocateBytes(new Array(c.StateSize).fill(0), 4);
+	const payload = c.allocateBytes(new Array(c.PayloadSize).fill(0), 4);
+	const artPath = c.allocateBytes(new Array(256).fill(0), 4);
+	const countText = c.allocateBytes(new Array(32).fill(0), 4);
+	const detailText = c.allocateBytes(new Array(128).fill(0), 4);
+	const moneyText1 = c.allocateBytes(new Array(c.MoneyBufferSize).fill(0), 4);
+	const moneyText2 = c.allocateBytes(new Array(c.MoneyBufferSize).fill(0), 4);
+	const searchText = c.allocateBytes(new Array(c.SearchTextSize).fill(0), 4);
+	Exe.SetUint32(state.phy + c.StateQuantity, 1);
+	Exe.SetUint32(state.phy + c.StateThumbY, 128);
+
+	$$(_, 3, "Install COUI v1 request and shared snapshot transport");
+	const packetRefs = c.resolvePacketRefs();
+	const sender = c.allocateCode(c.buildRequestSender(
+		state.vir, packetRefs, searchText.vir
+	));
+	const receiver = c.allocateCode(c.buildSnapshotReceiver(state.vir, payload.vir));
+	const route = c.ensureSharedPacketRoute(_, receiver.vir);
+
+	$$(_, 4, "Create the native Item Collection UIFrameWnd");
+	const fillRect = c.allocateCode(c.buildFillRect());
+	const colorKeyBlit = c.allocateCode(c.buildColorKeyBlit());
+	c.ColorKeyBlitVir = colorKeyBlit.vir;
+	const drawPath = c.allocateCode(c.buildDynamicPathDraw(colorKeyBlit.vir));
+	const nineSlice = c.allocateCode(c.buildNineSliceButton(drawPath.vir));
+	const itemResolver = c.allocateCode(c.buildItemResourceResolver());
+	const commaFormatter = c.allocateCode(c.buildFormatU32Commas());
+	const timeGetTimeIat = Exe.FindFunc("timeGetTime", "winmm.dll");
+	if (timeGetTimeIat < 0)
+		throw Error("ItemCollectionUI: timeGetTime IAT missing");
+	const searchInput = c.allocateCode(c.buildSearchNativeInput(
+		state.vir, searchText.vir, sender.vir, timeGetTimeIat
+	));
+	const draw = c.allocateCode(c.buildDraw(
+		state.vir, payload.vir, paths, fillRect.vir, nineSlice.vir,
+		strings, itemResolver.vir, artPath.vir, countText.vir,
+		detailText.vir, drawPath.vir, commaFormatter.vir,
+		moneyText1.vir, moneyText2.vir, searchInput.vir, searchText.vir
+	));
+	const mouseDown = c.allocateCode(c.buildMouseDown(
+		state.vir, payload.vir, sender.vir
+	));
+	const mouseMove = c.allocateCode(c.buildMouseMove(state.vir));
+	const mouseUp = c.allocateCode(c.buildMouseUp(
+		state.vir, payload.vir, sender.vir
+	));
+	const mouseWheel = c.allocateCode(c.buildMouseWheel(state.vir, sender.vir));
+	const destructor = c.allocateCode(c.buildDestructor(state.vir));
+	const vtable = c.cloneFrameVtable(
+		draw.vir, mouseDown.vir, mouseMove.vir, mouseUp.vir,
+		mouseWheel.vir, destructor.vir
+	);
+	const toggle = c.allocateCode(c.buildToggle(state.vir, vtable.vir, sender.vir));
+	const menuButtonVisible = c.allocateBytes([1, 0, 0, 0], 4);
+
+	CustomSlashCommand.register(_ + ".SlashCommand", {
+		command: "/itemcollection",
+		targetVir: toggle.vir
+	});
+	CACHE.put("ItemCollectionUI.MenuButton.v1", {
+		toggleVir: toggle.vir,
+		requestVir: toggle.vir,
+		visibleVir: menuButtonVisible.vir,
+		visiblePhy: menuButtonVisible.phy,
+		label: "Item Collection"
+	});
+
+	if (!Warp.TestMode)
+		Exe.GetUserInput(
+			"$copyItemCollectionAssets",
+			D_Bool,
+			"Copy Item Collection UI Assets",
+			"Copy the approved Item Collection BMP assets into the target client data folder?",
+			true,
+			{saveDefault: true}
+		);
+
+	if (typeof PatchDiagnostics !== "undefined" &&
+		typeof PatchDiagnostics.add === "function")
+	{
+		PatchDiagnostics.add("ItemCollectionUI.QjsOnly", {
+			buildDate: Exe.BuildDate,
+			opener: "/itemcollection",
+			nativeHost: "UIFrameWnd",
+			windowSize: [c.WindowWidth, c.WindowHeight],
+			clientPacketId: c.ClientPacketId,
+			serverPacketId: c.ServerPacketId,
+			magic: "COUI",
+			version: c.ProtocolVersion,
+			stateVir: state.vir,
+			payloadVir: payload.vir,
+			senderVir: sender.vir,
+			receiverVir: receiver.vir,
+			routerVir: route.routerVir,
+			couiHandlerCellVir: route.couiHandlerCellVir,
+			toggleVir: toggle.vir,
+			search: "native-ui-edit-ctrl-debounce",
+			searchTextVir: searchText.vir,
+			searchInputVir: searchInput.vir,
+			searchEditStateVir: state.vir + c.StateSearchEdit,
+			externalModules: 0
+		});
+	}
+	$$(_, 5, "Item Collection UI and server-authoritative actions enabled");
+	return true;
+};
+
+ItemCollectionUI.onApplied = ItemCollectionUIStatic.onApplied;
+
+ItemCollectionUI.validate = function()
+{
+	if (Exe.BuildDate !== ItemCollectionUIStatic.BuildDate)
+		return false;
+	try
+	{
+		ItemCollectionUIStatic.verifyNativeContracts();
+		return true;
+	}
+	catch (_)
+	{
+		return false;
+	}
+};

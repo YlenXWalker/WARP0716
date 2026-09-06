@@ -442,18 +442,6 @@ CustomFont:
             author : Louis T Steinhil
             desc : Forces the 2025-07-16 client's multibyte codepage with a QJS-only static patch. Use 65001 for UTF-8; this patch does not add DLL imports or runtime hooks.
 
-        - ItemCollectionUI:
-            title : Enable Item Collection UI (Standalone QJS-only)
-            recommend : no
-            author : Louis T Steinhil
-            desc : "Creates the native 760x540 Item Collection window and the server-authoritative 0x0BF8/COUI request plus shared 0x0BEF snapshot transport. Includes Items, Combo Collections, Total Bonuses, category filtering, native search input, deposits, withdrawals, activation, dynamic ItemId art resolution, and optional BMP deployment. It has no RO Global UI or Auto Hunt dependency. Target: 2025-07-16."
-
-        - ItemCollectionStockMenuButton:
-            title : Item Collection Stock Menu Button
-            recommend : no
-            author : Louis T Steinhil
-            desc : "Adds an independent Item Collection launcher beside the stock UIMenuIconWnd using the supplied New UI or Classic icon assets. Requires Enable Item Collection UI and does not install RO Global UI or Auto Hunt. Target: 2025-07-16."
-
 IgnoreErrors:
     title : IGNORE ERRORS
     mutex : false

@@ -67,4 +67,3 @@ Injected addresses vary by patch order. The former metadata hook at 0x00605D41 a
 | dual_weapon_male_assets.grf | 37a7e2aa876ab9b4383f86e00c0015a65555cebf919612ec2a4b57409c8930cc |
 
 No server or character-record changes are included.
-

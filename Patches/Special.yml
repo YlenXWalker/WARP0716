@@ -78,7 +78,7 @@ CustomSpecials:
             title : Dual / Off-Hand Daggers, Swords and Axes [TESTING]
             recommend : no
             author : Louis T Steinhil
-            desc : "2025-07-16: original dual/off-hand daggers, one-handed swords and axes. Five male and five female Assassin-family body profiles cover all 24 mapped non-Drake views in the audited GRFs. Missing job resources require the 60-entry Inputs/DualWeaponRuntime/dual_weapon_male_assets.grf registered first in the actual embedded or INI loader. Existing accepted placements remain unchanged; added images use individual frame, axis and grip profiles. Other bodies/classes/views remain stock. Keep compositor.dwcp and legacy-support.dwls with their manifests. CPU execution/geometry verified; live acceptance tracked in docs/dual-wield-original-weapon-sprites.md."
+            desc : "2025-07-16: original dual/off-hand daggers, one-handed swords and axes. Five male and five female Assassin-family body profiles cover all 24 mapped non-Drake views in the audited GRFs. Missing job resources require the 60-entry Inputs/DualWeaponRuntime/dual_weapon_male_assets.grf registered first in the actual embedded or INI loader. Existing accepted placements remain unchanged; added images use individual frame, axis and grip profiles. Other bodies/classes/views remain stock. Keep compositor.dwcp and legacy-support.dwls with the script. CPU execution/geometry verified; live acceptance tracked in docs/dual-wield-original-weapon-sprites.md."
 
 CustomSkills:
     title : SKILL CUSTOMIZATIONS

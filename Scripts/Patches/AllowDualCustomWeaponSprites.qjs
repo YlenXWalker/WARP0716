@@ -31,8 +31,8 @@
 *   channel represents a physical hand. Both hands prepare before drawing. *
 *   Actual item views and requested Lua resource suffixes are verified.    *
 *                                                                          *
-*   New readable compositor: CustomDLL/DualWeapon/compositor.c             *
-*   Payload: Inputs/DualWeaponRuntime/compositor.dwcp (build with tools).  *
+*   Source, generation tools and full evidence are linked in the document. *
+*   Payload: Inputs/DualWeaponRuntime/compositor.dwcp.                    *
 *   The frozen depth helper remains active; legacy capture is not injected.*
 *   The new path derives ownership from current stock ACT/SPR + palette,   *
 *   without the legacy capture ring or its hard-coded pair28 fingerprint.  *
@@ -40,8 +40,8 @@
 *   cover 24 mapped non-Drake dagger, sword and axe views. Missing job     *
 *   filenames require the bundled 60-entry compatibility GRF.              *
 *   Native solo80/dual88 timelines remain distinct; other bodies stay stock*
-*   Readable source and generated data replace the old inline hex blobs.   *
-*   Keep compositor.dwcp and legacy-support.dwls beside their manifests.   *
+*   Validated runtime bundles replace the old inline hex blobs.          *
+*   Keep compositor.dwcp and legacy-support.dwls with this patch.         *
 *   See docs/dual-wield-original-weapon-sprites.md for scope and proof.     *
 *                                                                          *
 \**************************************************************************/

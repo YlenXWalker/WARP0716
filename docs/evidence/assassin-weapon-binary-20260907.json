@@ -1,0 +1,74 @@
+{
+  "schema": "assassin_weapon_preserved_binary/v1",
+  "source_sha256": "eed157256a8b8fbedcf6a1e11ab04c930cb1975401e44c137524f6f92d628357",
+  "output_sha256": "6e470532594152e65a8bb2f982c6d14bb630f3a11355e6cc634e8db4f1b5c972",
+  "payload_sha256": "b8bf5902c798e4ba7a144d60f04f2b7dff3933414230e8cafc86cacb3bf33404",
+  "old_code_va": "0x1eb20f0",
+  "code_va": "0x1f47000",
+  "entry_va": "0x1f49f00",
+  "context_va": "0x1f3c640",
+  "call_va": "0x1f45632",
+  "code_bytes": 1253380,
+  "payload_bytes": 1279298,
+  "modifications": [
+    {
+      "label": "last section virtual size",
+      "file_offset": "0x3c0",
+      "before": "3b 90 82 00",
+      "after": "42 25 96 00"
+    },
+    {
+      "label": "last section raw size",
+      "file_offset": "0x3c8",
+      "before": "00 92 82 00",
+      "after": "00 26 96 00"
+    },
+    {
+      "label": "image size",
+      "file_offset": "0x1d0",
+      "before": "00 70 b4 01",
+      "after": "00 00 c8 01"
+    },
+    {
+      "label": "code size",
+      "file_offset": "0x19c",
+      "before": "00 fe bb 00",
+      "after": "00 92 cf 00"
+    },
+    {
+      "label": "checksum",
+      "file_offset": "0x1d8",
+      "before": "2e c6 78 01",
+      "after": "00 00 00 00"
+    },
+    {
+      "label": "compositor CALL",
+      "file_offset": "0x177d632",
+      "before": "e8 a9 f6 f6 ff",
+      "after": "e8 c9 48 00 00"
+    },
+    {
+      "label": "canonical rig pointer",
+      "file_offset": "0x1774684",
+      "before": "f4 60 f3 01",
+      "after": "04 90 07 02"
+    },
+    {
+      "label": "legacy grip pointer",
+      "file_offset": "0x1774690",
+      "before": "62 aa f3 01",
+      "after": "72 d9 07 02"
+    }
+  ],
+  "existing_changed_bytes": 25,
+  "overlay_bytes": 1695,
+  "overlay_sha256": "aef0e1887b6caf0f69bc94feee6d898795c06e77ecdec55a4dc42e68e5e52792",
+  "all_other_existing_bytes_identical": true,
+  "state_protection_range": [
+    "0x1e97000",
+    "0x1e9c000"
+  ],
+  "new_code_outside_protected_state": true,
+  "aslr_enabled": false,
+  "live_acceptance": false
+}

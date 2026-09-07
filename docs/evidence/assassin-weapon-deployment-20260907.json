@@ -1,0 +1,25 @@
+{
+  "schema": "assassin_weapon_deployment/v1",
+  "live_visual_acceptance": false,
+  "files": [
+    {
+      "after_sha256": "37a7e2aa876ab9b4383f86e00c0015a65555cebf919612ec2a4b57409c8930cc",
+      "before_sha256": "fb8da94cc4088d46fdcc77ec507fd967116418ebad7703dbc87670b80727e8dc",
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\dual_weapon_male_assets.grf",
+      "backup": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\dual_weapon_male_assets.grf.before-assassin-coverage-fb8da94cc408.bak",
+      "source": "D:\\Programs\\Games\\Ragnarok\\01_github\\WARP20250716-main\\Outputs\\female_dagger_gap\\dual_weapon_male_assets.grf"
+    },
+    {
+      "after_sha256": "6e470532594152e65a8bb2f982c6d14bb630f3a11355e6cc634e8db4f1b5c972",
+      "before_sha256": "eed157256a8b8fbedcf6a1e11ab04c930cb1975401e44c137524f6f92d628357",
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\2025-07-16_Ragexe_175220998_clientinfo_patched.exe",
+      "backup": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\2025-07-16_Ragexe_175220998_clientinfo_patched.exe.before-assassin-coverage-eed157256a8b.bak",
+      "source": "D:\\Programs\\Games\\Ragnarok\\01_github\\WARP20250716-main\\Outputs\\female_dagger_gap\\client-assassin-weapon-coverage.exe"
+    }
+  ],
+  "previous_patches_preserved": true,
+  "server_rebuilt": false,
+  "embedded_archive_filename_unchanged": true,
+  "character_gender_fix_preserved": true,
+  "installed_at": "2026-09-07T01:53:24.6808197Z"
+}

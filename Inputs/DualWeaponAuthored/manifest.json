@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "status": "pair28-only-live-accepted-closure",
+  "attack_act_sha256": "6126C72516F1CB165439C79E251AC265480EA0E82E832A42679F1B302E562D67",
+  "attack_spr_sha256": "7E8CED08220F5E4086EE915C95DD55B2BE5B637E43EACEAED0DD597B7B130912",
+  "pose_csv_sha256": "7329786D42A9FBCAA9C0975251349702B434F6251C9023B655469C3B229CC898",
+  "grip_csv_sha256": "665F2967A18163D452602DFF60A7EFF26DFB59726648A46ECFF7EFCBB4E648E0",
+  "pose_records": 224,
+  "grip_records": 48,
+  "missing": [
+    "female Assassin pair28 held authoring ACT",
+    "all non-pair28 authored pose ACTs",
+    "all non-pair28 per-view hilt/grip authoring"
+  ]
+}

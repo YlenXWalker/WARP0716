@@ -1,0 +1,8755 @@
+{
+  "schema": "pair28_pose_transfer/v1",
+  "base_sha256": "cda6c39af7cb620febd02d6a5a84e9027993904d33bf1de810cbfd1be304b38f",
+  "output_sha256": "67396d67411b6bc1476b84ad6f4570922e22e80d65ec90bd0c1154be2c6c4421",
+  "output_bytes": 18912,
+  "resources": {
+    "data/sprite/인간족/어세신/어세신_여_1238.act": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "24d3624800b3ea1005c28ae3797890584eb9e461571a5d0995a042fd94fa163d"
+    },
+    "data/sprite/인간족/어세신/어세신_여_13412.act": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "be0a6270f3871544697ced740d3799ed7e2dc08173c8b1090a21e9d29b2b4e6c"
+    },
+    "data/sprite/인간족/어세신/어세신_여_단검_검.act": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "9f3856f691c9fafe7a766c76e8114d06b4759d2f0deeb2f29a84d3ab2b55bd15"
+    },
+    "data/sprite/인간족/어세신/어세신_여_단검_검_검광.act": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "9cf10e17e639841585ce5b3093101438f1e7b69140b64fae45e3a5d24a1714bf"
+    },
+    "data/sprite/인간족/어세신/어세신_여_1238.spr": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "bd777779a3eeefbaf890bf4918ae21f4de61dd4a843f8c3aa9ef1aa0c9566333"
+    },
+    "data/sprite/인간족/어세신/어세신_여_13412.spr": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "ce61ad9a6c3492b22bd1ebd7e5699f17f07e63f774102a4a55513d147a207fa7"
+    },
+    "data/sprite/인간족/어세신/어세신_여_단검_검.spr": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "3323f303e9ae6f89d9e48de040c0cb497b4274ec6ccf49c85a1ffea4c210469b"
+    },
+    "data/sprite/인간족/어세신/어세신_여_단검_검_검광.spr": {
+      "path": "D:\\Programs\\Games\\Ragnarok\\02_client\\Banquet of Heroes\\spritedata.grf",
+      "sha256": "c0ef8fdfb80c2ec9d2c4d30f7cbcb387dcda7e7cdc92b40656a6cd566d1b8d3d"
+    }
+  },
+  "changed_cells": [
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 0,
+        "dy": -9,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -4.000000000000001,
+        -18.0
+      ],
+      "output": [
+        -4,
+        -18,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 0,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        0,
+        -9,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 0,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 0,
+        "dy": -10,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -4.000000000000001,
+        -19.0
+      ],
+      "output": [
+        -4,
+        -19,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 0,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        0,
+        -10,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 0,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 1,
+        "dy": -10,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -3.000000000000001,
+        -19.0
+      ],
+      "output": [
+        -3,
+        -19,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 0,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        1,
+        -10,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 0,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 1,
+        "dy": -10,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -3.000000000000001,
+        -19.0
+      ],
+      "output": [
+        -3,
+        -19,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 0,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        1,
+        -10,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 0,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -2,
+        "dy": -9,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -6.000000000000001,
+        -18.0
+      ],
+      "output": [
+        -6,
+        -18,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 0,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -2,
+        -9,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 0,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 0,
+        "dy": -9,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -4.000000000000001,
+        -18.0
+      ],
+      "output": [
+        -4,
+        -18,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 0,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        0,
+        -9,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 0,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 32,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 0,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 1,
+        "dy": -9,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -3.000000000000001,
+        -18.0
+      ],
+      "output": [
+        -3,
+        -18,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 1,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        1,
+        -9,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 1,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 2,
+        "dy": -9,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -2.000000000000001,
+        -18.0
+      ],
+      "output": [
+        -2,
+        -18,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 1,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        2,
+        -9,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 1,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 2,
+        "dy": -10,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -2.000000000000001,
+        -19.0
+      ],
+      "output": [
+        -2,
+        -19,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 1,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        2,
+        -10,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 1,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 1,
+        "dy": -11,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -3.000000000000001,
+        -20.0
+      ],
+      "output": [
+        -3,
+        -20,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 1,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        1,
+        -11,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 1,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -1,
+        "dy": -9,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -5.000000000000001,
+        -18.0
+      ],
+      "output": [
+        -5,
+        -18,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 1,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -1,
+        -9,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 1,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 2,
+        "dy": -9,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": 90
+      },
+      "native_center_correction": [
+        -4.000000000000001,
+        -9.0
+      ],
+      "unrounded_actor_target": [
+        -2.000000000000001,
+        -18.0
+      ],
+      "output": [
+        -2,
+        -18,
+        0,
+        67,
+        90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 1,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        2,
+        -9,
+        0,
+        67,
+        90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 1,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 33,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -57,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        15.0,
+        -57.0
+      ],
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 1,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        15,
+        -57,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -62,
+        "dy": -18,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -48.84430330899728,
+        -13.211717993440637
+      ],
+      "output": [
+        -49,
+        -13,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 2,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -62,
+        -18,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 2,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -62,
+        "dy": -20,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -48.84430330899728,
+        -15.211717993440637
+      ],
+      "output": [
+        -49,
+        -15,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 2,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -62,
+        -20,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 2,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -61,
+        "dy": -21,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -47.84430330899728,
+        -16.211717993440637
+      ],
+      "output": [
+        -48,
+        -16,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 2,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -61,
+        -21,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 2,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -61,
+        "dy": -22,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -47.84430330899728,
+        -17.211717993440637
+      ],
+      "output": [
+        -48,
+        -17,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 2,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -61,
+        -22,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 2,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -56,
+        "dy": -22,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -42.84430330899728,
+        -17.211717993440637
+      ],
+      "output": [
+        -43,
+        -17,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 2,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -56,
+        -22,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 2,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -56,
+        "dy": -22,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -42.84430330899728,
+        -17.211717993440637
+      ],
+      "output": [
+        -43,
+        -17,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 2,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -56,
+        -22,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 2,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 34,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 2,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -62,
+        "dy": -18,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -48.84430330899728,
+        -13.211717993440637
+      ],
+      "output": [
+        -49,
+        -13,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 3,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -62,
+        -18,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 3,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -62,
+        "dy": -20,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -48.84430330899728,
+        -15.211717993440637
+      ],
+      "output": [
+        -49,
+        -15,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 3,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -62,
+        -20,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 3,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -61,
+        "dy": -21,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -47.84430330899728,
+        -16.211717993440637
+      ],
+      "output": [
+        -48,
+        -16,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 3,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -61,
+        -21,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 3,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -61,
+        "dy": -22,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -47.84430330899728,
+        -17.211717993440637
+      ],
+      "output": [
+        -48,
+        -17,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 3,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -61,
+        -22,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 3,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -56,
+        "dy": -22,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -42.84430330899728,
+        -17.211717993440637
+      ],
+      "output": [
+        -43,
+        -17,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 3,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -56,
+        -22,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 3,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -56,
+        "dy": -22,
+        "flags": 0,
+        "metadata": 67,
+        "rotation": -70
+      },
+      "native_center_correction": [
+        13.155696691002717,
+        4.788282006559363
+      ],
+      "unrounded_actor_target": [
+        -42.84430330899728,
+        -17.211717993440637
+      ],
+      "output": [
+        -43,
+        -17,
+        0,
+        67,
+        -70
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 3,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -56,
+        -22,
+        0,
+        67,
+        -70
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 3,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 35,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -22.0,
+        -43.0
+      ],
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 3,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -22,
+        -43,
+        0,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 28,
+        "dy": -17,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        14.212691457829088,
+        -14.568925512662975
+      ],
+      "output": [
+        14,
+        -15,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 4,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        28,
+        -17,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 4,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 29,
+        "dy": -18,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        15.212691457829088,
+        -15.568925512662975
+      ],
+      "output": [
+        15,
+        -16,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 4,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        29,
+        -18,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 4,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 31,
+        "dy": -18,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        17.212691457829088,
+        -15.568925512662975
+      ],
+      "output": [
+        17,
+        -16,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 4,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        31,
+        -18,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 4,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 31,
+        "dy": -19,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        17.212691457829088,
+        -16.568925512662975
+      ],
+      "output": [
+        17,
+        -17,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 4,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        31,
+        -19,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 4,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 30,
+        "dy": -18,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        16.212691457829088,
+        -15.568925512662975
+      ],
+      "output": [
+        16,
+        -16,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 4,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        30,
+        -18,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 4,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 29,
+        "dy": -17,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        15.212691457829088,
+        -14.568925512662975
+      ],
+      "output": [
+        15,
+        -15,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 4,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        29,
+        -17,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 4,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 36,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 4,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 28,
+        "dy": -17,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        14.212691457829088,
+        -14.568925512662975
+      ],
+      "output": [
+        14,
+        -15,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 5,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        28,
+        -17,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 5,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 29,
+        "dy": -18,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        15.212691457829088,
+        -15.568925512662975
+      ],
+      "output": [
+        15,
+        -16,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 5,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        29,
+        -18,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 5,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 31,
+        "dy": -18,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        17.212691457829088,
+        -15.568925512662975
+      ],
+      "output": [
+        17,
+        -16,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 5,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        31,
+        -18,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 5,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 31,
+        "dy": -19,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        17.212691457829088,
+        -16.568925512662975
+      ],
+      "output": [
+        17,
+        -17,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 5,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        31,
+        -19,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 5,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 30,
+        "dy": -18,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        16.212691457829088,
+        -15.568925512662975
+      ],
+      "output": [
+        16,
+        -16,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 5,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        30,
+        -18,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 5,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 29,
+        "dy": -17,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": 80
+      },
+      "native_center_correction": [
+        -13.787308542170912,
+        2.4310744873370256
+      ],
+      "unrounded_actor_target": [
+        15.212691457829088,
+        -14.568925512662975
+      ],
+      "output": [
+        15,
+        -15,
+        64,
+        67,
+        80
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 5,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        29,
+        -17,
+        64,
+        67,
+        80
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 5,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 37,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -12.0,
+        -43.0
+      ],
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 5,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -12,
+        -43,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -10,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -3.0000000000000004,
+        -2.0
+      ],
+      "output": [
+        -3,
+        -2,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 6,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -7,
+        -10,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 6,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -6,
+        "dy": -11,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -2.0000000000000004,
+        -3.0
+      ],
+      "output": [
+        -2,
+        -3,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 6,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -6,
+        -11,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 6,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -8,
+        "dy": -12,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -4.0,
+        -4.0
+      ],
+      "output": [
+        -4,
+        -4,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 6,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -8,
+        -12,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 6,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -10,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -3.0000000000000004,
+        -2.0
+      ],
+      "output": [
+        -3,
+        -2,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 6,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -7,
+        -10,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 6,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -8,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -4.0,
+        -1.0
+      ],
+      "output": [
+        -4,
+        -1,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 6,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -8,
+        -9,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 6,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -3.0000000000000004,
+        -1.0
+      ],
+      "output": [
+        -3,
+        -1,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 6,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -7,
+        -9,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 6,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 38,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 6,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -10,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -3.0000000000000004,
+        -2.0
+      ],
+      "output": [
+        -3,
+        -2,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 7,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -7,
+        -10,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 7,
+      "frame": 0,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -6,
+        "dy": -11,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -2.0000000000000004,
+        -3.0
+      ],
+      "output": [
+        -2,
+        -3,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 7,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -6,
+        -11,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 7,
+      "frame": 1,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -8,
+        "dy": -12,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -4.0,
+        -4.0
+      ],
+      "output": [
+        -4,
+        -4,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 7,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -8,
+        -12,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 7,
+      "frame": 2,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -10,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -3.0000000000000004,
+        -2.0
+      ],
+      "output": [
+        -3,
+        -2,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 7,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -7,
+        -10,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 7,
+      "frame": 3,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -8,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -4.0,
+        -1.0
+      ],
+      "output": [
+        -4,
+        -1,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 7,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -8,
+        -9,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 7,
+      "frame": 4,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 67,
+        "rotation": -90
+      },
+      "native_center_correction": [
+        3.9999999999999996,
+        8.0
+      ],
+      "unrounded_actor_target": [
+        -3.0000000000000004,
+        -1.0
+      ],
+      "output": [
+        -3,
+        -1,
+        64,
+        67,
+        -90
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 1,
+      "phase": 0,
+      "direction": 7,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 0,
+      "output": [
+        -7,
+        -9,
+        64,
+        67,
+        -90
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 0,
+      "direction": 7,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 39,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -51,
+        "dy": -57,
+        "flags": 64,
+        "metadata": 66,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -51.0,
+        -57.0
+      ],
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 0,
+      "phase": 0,
+      "direction": 7,
+      "frame": 5,
+      "hand": 0,
+      "pair28_reference_hand": 1,
+      "output": [
+        -51,
+        -57,
+        64,
+        66,
+        0
+      ],
+      "status": "exact_pair28_held_subset_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 3,
+        "dy": 7,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": -143
+      },
+      "native_center_correction": [
+        -14.79178727957439,
+        -3.6335972638449157
+      ],
+      "unrounded_actor_target": [
+        6.20821272042561,
+        -40.63359726384492
+      ],
+      "output": [
+        6,
+        -41,
+        4,
+        67,
+        -143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 12,
+        "dy": 0,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": 178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        30.0,
+        -44.0
+      ],
+      "output": [
+        30,
+        -44,
+        4,
+        66,
+        178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 3,
+        "dy": 7,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": -143
+      },
+      "native_center_correction": [
+        -14.79178727957439,
+        -3.6335972638449157
+      ],
+      "unrounded_actor_target": [
+        8.20821272042561,
+        -40.63359726384492
+      ],
+      "output": [
+        8,
+        -41,
+        4,
+        67,
+        -143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 13,
+        "dy": 1,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": 178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        33.0,
+        -43.0
+      ],
+      "output": [
+        33,
+        -43,
+        4,
+        66,
+        178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -17,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 37
+      },
+      "native_center_correction": [
+        14.79178727957439,
+        3.6335972638449183
+      ],
+      "unrounded_actor_target": [
+        1.7917872795743897,
+        -47.36640273615508
+      ],
+      "output": [
+        2,
+        -47,
+        4,
+        67,
+        37
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -7,
+        "dy": 9,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -8.0,
+        -25.0
+      ],
+      "output": [
+        -8,
+        -25,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -21,
+        "dy": -33,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 50
+      },
+      "native_center_correction": [
+        13.595293194325418,
+        6.867896545546456
+      ],
+      "unrounded_actor_target": [
+        -42.40470680567458,
+        -68.13210345445354
+      ],
+      "output": [
+        -42,
+        -68,
+        4,
+        67,
+        50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 8,
+        "dy": 20,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -27.0,
+        -22.0
+      ],
+      "output": [
+        -27,
+        -22,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 16,
+        "dy": -29,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 50
+      },
+      "native_center_correction": [
+        13.595293194325418,
+        6.867896545546456
+      ],
+      "unrounded_actor_target": [
+        -4.404706805674582,
+        -64.13210345445354
+      ],
+      "output": [
+        -4,
+        -64,
+        4,
+        67,
+        50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 42,
+        "dy": 25,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        8.0,
+        -17.0
+      ],
+      "output": [
+        8,
+        -17,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -15,
+        "dy": -31,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 50
+      },
+      "native_center_correction": [
+        13.595293194325418,
+        6.867896545546456
+      ],
+      "unrounded_actor_target": [
+        -34.40470680567458,
+        -65.13210345445354
+      ],
+      "output": [
+        -34,
+        -65,
+        4,
+        67,
+        50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 7,
+        "dy": 22,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -26.0,
+        -19.0
+      ],
+      "output": [
+        -26,
+        -19,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 80,
+        "dy": -42,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        80.0,
+        -42.0
+      ],
+      "output": [
+        80,
+        -42,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 9,
+        "dy": -5,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -35.0,
+        -29.0
+      ],
+      "output": [
+        -35,
+        -29,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 80,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 73,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        73.0,
+        -43.0
+      ],
+      "output": [
+        73,
+        -43,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 0,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 80,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 7,
+        "dy": -6,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -32.0,
+        -30.0
+      ],
+      "output": [
+        -32,
+        -30,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 3,
+        "dy": 7,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": -143
+      },
+      "native_center_correction": [
+        -14.79178727957439,
+        -3.6335972638449157
+      ],
+      "unrounded_actor_target": [
+        6.20821272042561,
+        -40.63359726384492
+      ],
+      "output": [
+        6,
+        -41,
+        4,
+        67,
+        -143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 12,
+        "dy": 0,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": 178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        30.0,
+        -44.0
+      ],
+      "output": [
+        30,
+        -44,
+        4,
+        66,
+        178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 3,
+        "dy": 7,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": -143
+      },
+      "native_center_correction": [
+        -14.79178727957439,
+        -3.6335972638449157
+      ],
+      "unrounded_actor_target": [
+        8.20821272042561,
+        -40.63359726384492
+      ],
+      "output": [
+        8,
+        -41,
+        4,
+        67,
+        -143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 13,
+        "dy": 1,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": 178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        33.0,
+        -43.0
+      ],
+      "output": [
+        33,
+        -43,
+        4,
+        66,
+        178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -17,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 37
+      },
+      "native_center_correction": [
+        14.79178727957439,
+        3.6335972638449183
+      ],
+      "unrounded_actor_target": [
+        1.7917872795743897,
+        -47.36640273615508
+      ],
+      "output": [
+        2,
+        -47,
+        4,
+        67,
+        37
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -7,
+        "dy": 9,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -8.0,
+        -25.0
+      ],
+      "output": [
+        -8,
+        -25,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -22,
+        "dy": -35,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 50
+      },
+      "native_center_correction": [
+        13.595293194325418,
+        6.867896545546456
+      ],
+      "unrounded_actor_target": [
+        -43.40470680567458,
+        -70.13210345445354
+      ],
+      "output": [
+        -43,
+        -70,
+        4,
+        67,
+        50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 8,
+        "dy": 20,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -27.0,
+        -22.0
+      ],
+      "output": [
+        -27,
+        -22,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -31,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 50
+      },
+      "native_center_correction": [
+        13.595293194325418,
+        6.867896545546456
+      ],
+      "unrounded_actor_target": [
+        -5.404706805674582,
+        -66.13210345445354
+      ],
+      "output": [
+        -5,
+        -66,
+        4,
+        67,
+        50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 42,
+        "dy": 25,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        8.0,
+        -17.0
+      ],
+      "output": [
+        8,
+        -17,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -15,
+        "dy": -31,
+        "flags": 4,
+        "metadata": 83,
+        "rotation": 50
+      },
+      "native_center_correction": [
+        13.595293194325418,
+        6.867896545546456
+      ],
+      "unrounded_actor_target": [
+        -34.40470680567458,
+        -65.13210345445354
+      ],
+      "output": [
+        -34,
+        -65,
+        4,
+        67,
+        50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 7,
+        "dy": 22,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -26.0,
+        -19.0
+      ],
+      "output": [
+        -26,
+        -19,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 80,
+        "dy": -42,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        80.0,
+        -42.0
+      ],
+      "output": [
+        80,
+        -42,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 9,
+        "dy": -5,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -35.0,
+        -29.0
+      ],
+      "output": [
+        -35,
+        -29,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 81,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 73,
+        "dy": -43,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        73.0,
+        -43.0
+      ],
+      "output": [
+        73,
+        -43,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 1,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 81,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 7,
+        "dy": -6,
+        "flags": 4,
+        "metadata": 82,
+        "rotation": -2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -32.0,
+        -30.0
+      ],
+      "output": [
+        -32,
+        -30,
+        4,
+        66,
+        -2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -25,
+        "dy": -4,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": 109
+      },
+      "native_center_correction": [
+        16.33701216410124,
+        10.913387812682561
+      ],
+      "unrounded_actor_target": [
+        -21.66298783589876,
+        -28.08661218731744
+      ],
+      "output": [
+        -22,
+        -28,
+        0,
+        67,
+        109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 10,
+        "dy": -2,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -3.0,
+        -37.0
+      ],
+      "output": [
+        -3,
+        -37,
+        0,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -29,
+        "dy": -8,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": 106
+      },
+      "native_center_correction": [
+        16.885785443743064,
+        10.043418240214576
+      ],
+      "unrounded_actor_target": [
+        -26.114214556256936,
+        -28.956581759785422
+      ],
+      "output": [
+        -26,
+        -29,
+        0,
+        67,
+        106
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 11,
+        "dy": -6,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -3.0,
+        -37.0
+      ],
+      "output": [
+        -3,
+        -37,
+        0,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -19,
+        "dy": -13,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": 109
+      },
+      "native_center_correction": [
+        16.33701216410124,
+        10.913387812682561
+      ],
+      "unrounded_actor_target": [
+        -29.66298783589876,
+        -44.08661218731744
+      ],
+      "output": [
+        -30,
+        -44,
+        0,
+        67,
+        109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 2,
+        "dy": 6,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -25.0,
+        -36.0
+      ],
+      "output": [
+        -25,
+        -36,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 54,
+        "dy": 7,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": -97
+      },
+      "native_center_correction": [
+        -19.467723598210856,
+        -2.6472132335088108
+      ],
+      "unrounded_actor_target": [
+        39.53227640178915,
+        -47.64721323350881
+      ],
+      "output": [
+        40,
+        -48,
+        0,
+        67,
+        -97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -20,
+        "dy": 29,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -15.0,
+        -23.0
+      ],
+      "output": [
+        -15,
+        -23,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 45,
+        "dy": 23,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": -97
+      },
+      "native_center_correction": [
+        -19.467723598210856,
+        -2.6472132335088108
+      ],
+      "unrounded_actor_target": [
+        29.532276401789144,
+        -28.64721323350881
+      ],
+      "output": [
+        30,
+        -29,
+        0,
+        67,
+        -97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -30,
+        "dy": 45,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -26.0,
+        -4.0
+      ],
+      "output": [
+        -26,
+        -4,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 39,
+        "dy": -10,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": -97
+      },
+      "native_center_correction": [
+        -19.467723598210856,
+        -2.6472132335088108
+      ],
+      "unrounded_actor_target": [
+        21.532276401789144,
+        -62.64721323350881
+      ],
+      "output": [
+        22,
+        -63,
+        0,
+        67,
+        -97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -37,
+        "dy": 8,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -35.0,
+        -42.0
+      ],
+      "output": [
+        -35,
+        -42,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 75,
+        "dy": 42,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        75.0,
+        42.0
+      ],
+      "output": [
+        75,
+        42,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 0,
+        "dy": 3,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 162
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -40.0,
+        -56.0
+      ],
+      "output": [
+        -40,
+        -56,
+        0,
+        66,
+        162
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 73,
+        "dy": 39,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        73.0,
+        39.0
+      ],
+      "output": [
+        73,
+        39,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 2,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 82,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 1,
+        "dy": 2,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 162
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -36.0,
+        -55.0
+      ],
+      "output": [
+        -36,
+        -55,
+        0,
+        66,
+        162
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -26,
+        "dy": -4,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": 109
+      },
+      "native_center_correction": [
+        16.33701216410124,
+        10.913387812682561
+      ],
+      "unrounded_actor_target": [
+        -22.66298783589876,
+        -28.08661218731744
+      ],
+      "output": [
+        -23,
+        -28,
+        0,
+        67,
+        109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 10,
+        "dy": -2,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -3.0,
+        -37.0
+      ],
+      "output": [
+        -3,
+        -37,
+        0,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -23,
+        "dy": -7,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": 106
+      },
+      "native_center_correction": [
+        16.885785443743064,
+        10.043418240214576
+      ],
+      "unrounded_actor_target": [
+        -20.114214556256936,
+        -27.956581759785422
+      ],
+      "output": [
+        -20,
+        -28,
+        0,
+        67,
+        106
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 11,
+        "dy": -6,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -3.0,
+        -37.0
+      ],
+      "output": [
+        -3,
+        -37,
+        0,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -17,
+        "dy": -12,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": 109
+      },
+      "native_center_correction": [
+        16.33701216410124,
+        10.913387812682561
+      ],
+      "unrounded_actor_target": [
+        -27.66298783589876,
+        -43.08661218731744
+      ],
+      "output": [
+        -28,
+        -43,
+        0,
+        67,
+        109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 2,
+        "dy": 6,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -25.0,
+        -36.0
+      ],
+      "output": [
+        -25,
+        -36,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 53,
+        "dy": 6,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": -97
+      },
+      "native_center_correction": [
+        -19.467723598210856,
+        -2.6472132335088108
+      ],
+      "unrounded_actor_target": [
+        38.53227640178915,
+        -48.64721323350881
+      ],
+      "output": [
+        39,
+        -49,
+        0,
+        67,
+        -97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -20,
+        "dy": 29,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -15.0,
+        -23.0
+      ],
+      "output": [
+        -15,
+        -23,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 45,
+        "dy": 24,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": -97
+      },
+      "native_center_correction": [
+        -19.467723598210856,
+        -2.6472132335088108
+      ],
+      "unrounded_actor_target": [
+        29.532276401789144,
+        -27.64721323350881
+      ],
+      "output": [
+        30,
+        -28,
+        0,
+        67,
+        -97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -30,
+        "dy": 45,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -26.0,
+        -4.0
+      ],
+      "output": [
+        -26,
+        -4,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 40,
+        "dy": -10,
+        "flags": 0,
+        "metadata": 83,
+        "rotation": -97
+      },
+      "native_center_correction": [
+        -19.467723598210856,
+        -2.6472132335088108
+      ],
+      "unrounded_actor_target": [
+        22.532276401789144,
+        -62.64721323350881
+      ],
+      "output": [
+        23,
+        -63,
+        0,
+        67,
+        -97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -37,
+        "dy": 8,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 151
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -35.0,
+        -42.0
+      ],
+      "output": [
+        -35,
+        -42,
+        0,
+        66,
+        151
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 75,
+        "dy": 42,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        75.0,
+        42.0
+      ],
+      "output": [
+        75,
+        42,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 0,
+        "dy": 3,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 162
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -40.0,
+        -56.0
+      ],
+      "output": [
+        -40,
+        -56,
+        0,
+        66,
+        162
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 73,
+        "dy": 39,
+        "flags": 0,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        73.0,
+        39.0
+      ],
+      "output": [
+        73,
+        39,
+        0,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 3,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 83,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 1,
+        "dy": 2,
+        "flags": 0,
+        "metadata": 82,
+        "rotation": 162
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -36.0,
+        -55.0
+      ],
+      "output": [
+        -36,
+        -55,
+        0,
+        66,
+        162
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 25,
+        "dy": -5,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": -109
+      },
+      "native_center_correction": [
+        -19.918261863129963,
+        0.5126834810900753
+      ],
+      "unrounded_actor_target": [
+        19.081738136870037,
+        -39.48731651890992
+      ],
+      "output": [
+        19,
+        -39,
+        64,
+        67,
+        -109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -15,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -1.0,
+        -44.0
+      ],
+      "output": [
+        -1,
+        -44,
+        64,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 25,
+        "dy": -8,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": -106
+      },
+      "native_center_correction": [
+        -19.917796357730055,
+        -0.5304604151069316
+      ],
+      "unrounded_actor_target": [
+        19.082203642269945,
+        -39.53046041510693
+      ],
+      "output": [
+        19,
+        -40,
+        64,
+        67,
+        -106
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -12,
+        "dy": -8,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        2.0,
+        -39.0
+      ],
+      "output": [
+        2,
+        -39,
+        64,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 18,
+        "dy": -12,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": -109
+      },
+      "native_center_correction": [
+        -19.918261863129963,
+        0.5126834810900753
+      ],
+      "unrounded_actor_target": [
+        25.081738136870037,
+        -53.48731651890992
+      ],
+      "output": [
+        25,
+        -53,
+        64,
+        67,
+        -109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -4,
+        "dy": 6,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        23.0,
+        -36.0
+      ],
+      "output": [
+        23,
+        -36,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -53,
+        "dy": 7,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": 97
+      },
+      "native_center_correction": [
+        18.127160820754234,
+        8.270794434545733
+      ],
+      "unrounded_actor_target": [
+        -39.872839179245766,
+        -36.729205565454265
+      ],
+      "output": [
+        -40,
+        -37,
+        64,
+        67,
+        97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 17,
+        "dy": 29,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        12.0,
+        -23.0
+      ],
+      "output": [
+        12,
+        -23,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -42,
+        "dy": 23,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": 97
+      },
+      "native_center_correction": [
+        18.127160820754234,
+        8.270794434545733
+      ],
+      "unrounded_actor_target": [
+        -27.872839179245766,
+        -17.729205565454265
+      ],
+      "output": [
+        -28,
+        -18,
+        64,
+        67,
+        97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 28,
+        "dy": 45,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        24.0,
+        -4.0
+      ],
+      "output": [
+        24,
+        -4,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -37,
+        "dy": -10,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": 97
+      },
+      "native_center_correction": [
+        18.127160820754234,
+        8.270794434545733
+      ],
+      "unrounded_actor_target": [
+        -19.872839179245766,
+        -51.729205565454265
+      ],
+      "output": [
+        -20,
+        -52,
+        64,
+        67,
+        97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 36,
+        "dy": 8,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        35.0,
+        -42.0
+      ],
+      "output": [
+        35,
+        -42,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -75,
+        "dy": 42,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -75.0,
+        42.0
+      ],
+      "output": [
+        -75,
+        42,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -1,
+        "dy": 3,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -158
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        40.0,
+        -56.0
+      ],
+      "output": [
+        40,
+        -56,
+        64,
+        66,
+        -158
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -73,
+        "dy": 39,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -73.0,
+        39.0
+      ],
+      "output": [
+        -73,
+        39,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 4,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 84,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -2,
+        "dy": 2,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -158
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        36.0,
+        -55.0
+      ],
+      "output": [
+        36,
+        -55,
+        64,
+        66,
+        -158
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 24,
+        "dy": -4,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": -109
+      },
+      "native_center_correction": [
+        -19.918261863129963,
+        0.5126834810900753
+      ],
+      "unrounded_actor_target": [
+        18.081738136870037,
+        -38.48731651890992
+      ],
+      "output": [
+        18,
+        -38,
+        64,
+        67,
+        -109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -15,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -1.0,
+        -44.0
+      ],
+      "output": [
+        -1,
+        -44,
+        64,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 25,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": -106
+      },
+      "native_center_correction": [
+        -19.917796357730055,
+        -0.5304604151069316
+      ],
+      "unrounded_actor_target": [
+        19.082203642269945,
+        -40.53046041510693
+      ],
+      "output": [
+        19,
+        -41,
+        64,
+        67,
+        -106
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -15,
+        "dy": -13,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": 160
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -1.0,
+        -44.0
+      ],
+      "output": [
+        -1,
+        -44,
+        64,
+        66,
+        160
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 15,
+        "dy": -14,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": -109
+      },
+      "native_center_correction": [
+        -19.918261863129963,
+        0.5126834810900753
+      ],
+      "unrounded_actor_target": [
+        22.081738136870037,
+        -55.48731651890992
+      ],
+      "output": [
+        22,
+        -55,
+        64,
+        67,
+        -109
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -4,
+        "dy": 6,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        23.0,
+        -36.0
+      ],
+      "output": [
+        23,
+        -36,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -56,
+        "dy": 8,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": 97
+      },
+      "native_center_correction": [
+        18.127160820754234,
+        8.270794434545733
+      ],
+      "unrounded_actor_target": [
+        -42.872839179245766,
+        -35.729205565454265
+      ],
+      "output": [
+        -43,
+        -36,
+        64,
+        67,
+        97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 17,
+        "dy": 29,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        12.0,
+        -23.0
+      ],
+      "output": [
+        12,
+        -23,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -44,
+        "dy": 23,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": 97
+      },
+      "native_center_correction": [
+        18.127160820754234,
+        8.270794434545733
+      ],
+      "unrounded_actor_target": [
+        -29.872839179245766,
+        -17.729205565454265
+      ],
+      "output": [
+        -30,
+        -18,
+        64,
+        67,
+        97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 28,
+        "dy": 45,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        24.0,
+        -4.0
+      ],
+      "output": [
+        24,
+        -4,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -39,
+        "dy": -9,
+        "flags": 64,
+        "metadata": 83,
+        "rotation": 97
+      },
+      "native_center_correction": [
+        18.127160820754234,
+        8.270794434545733
+      ],
+      "unrounded_actor_target": [
+        -21.872839179245766,
+        -50.729205565454265
+      ],
+      "output": [
+        -22,
+        -51,
+        64,
+        67,
+        97
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": 36,
+        "dy": 8,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -148
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        35.0,
+        -42.0
+      ],
+      "output": [
+        35,
+        -42,
+        64,
+        66,
+        -148
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -75,
+        "dy": 42,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -75.0,
+        42.0
+      ],
+      "output": [
+        -75,
+        42,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -1,
+        "dy": 3,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -158
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        40.0,
+        -56.0
+      ],
+      "output": [
+        40,
+        -56,
+        64,
+        66,
+        -158
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -73,
+        "dy": 39,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -73.0,
+        39.0
+      ],
+      "output": [
+        -73,
+        39,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 5,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 85,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -2,
+        "dy": 2,
+        "flags": 64,
+        "metadata": 82,
+        "rotation": -158
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        36.0,
+        -55.0
+      ],
+      "output": [
+        36,
+        -55,
+        64,
+        66,
+        -158
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -3,
+        "dy": 7,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": 143
+      },
+      "native_center_correction": [
+        -6.771371491702519,
+        12.615408361260384
+      ],
+      "unrounded_actor_target": [
+        -27.771371491702517,
+        -24.384591638739614
+      ],
+      "output": [
+        -28,
+        -24,
+        68,
+        67,
+        143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -15,
+        "dy": 0,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": -178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -33.0,
+        -44.0
+      ],
+      "output": [
+        -33,
+        -44,
+        68,
+        66,
+        -178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -2,
+        "dy": 6,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": 143
+      },
+      "native_center_correction": [
+        -6.771371491702519,
+        12.615408361260384
+      ],
+      "unrounded_actor_target": [
+        -27.771371491702517,
+        -25.384591638739614
+      ],
+      "output": [
+        -28,
+        -25,
+        68,
+        67,
+        143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -15,
+        "dy": 1,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": -178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -34.0,
+        -43.0
+      ],
+      "output": [
+        -34,
+        -43,
+        68,
+        66,
+        -178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -11,
+        "dy": 0,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": 143
+      },
+      "native_center_correction": [
+        -6.771371491702519,
+        12.615408361260384
+      ],
+      "unrounded_actor_target": [
+        -16.771371491702517,
+        -21.384591638739614
+      ],
+      "output": [
+        -17,
+        -21,
+        68,
+        67,
+        143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 8,
+        "dy": 9,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        9.0,
+        -25.0
+      ],
+      "output": [
+        9,
+        -25,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 22,
+        "dy": -36,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": -50
+      },
+      "native_center_correction": [
+        3.759972267211144,
+        -13.81530341866595
+      ],
+      "unrounded_actor_target": [
+        61.75997226721115,
+        -91.81530341866595
+      ],
+      "output": [
+        62,
+        -92,
+        68,
+        67,
+        -50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -5,
+        "dy": 20,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        31.0,
+        -22.0
+      ],
+      "output": [
+        31,
+        -22,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -14,
+        "dy": -30,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": -50
+      },
+      "native_center_correction": [
+        3.759972267211144,
+        -13.81530341866595
+      ],
+      "unrounded_actor_target": [
+        23.759972267211143,
+        -85.81530341866595
+      ],
+      "output": [
+        24,
+        -86,
+        68,
+        67,
+        -50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -42,
+        "dy": 25,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -8.0,
+        -17.0
+      ],
+      "output": [
+        -8,
+        -17,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 16,
+        "dy": -33,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": -50
+      },
+      "native_center_correction": [
+        3.759972267211144,
+        -13.81530341866595
+      ],
+      "unrounded_actor_target": [
+        52.75997226721115,
+        -87.81530341866595
+      ],
+      "output": [
+        53,
+        -88,
+        68,
+        67,
+        -50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -6,
+        "dy": 22,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        27.0,
+        -19.0
+      ],
+      "output": [
+        27,
+        -19,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -81,
+        "dy": -42,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -81.0,
+        -42.0
+      ],
+      "output": [
+        -81,
+        -42,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -9,
+        "dy": -5,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        35.0,
+        -29.0
+      ],
+      "output": [
+        35,
+        -29,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 86,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -74,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -74.0,
+        -43.0
+      ],
+      "output": [
+        -74,
+        -43,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 6,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 86,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -6,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        32.0,
+        -30.0
+      ],
+      "output": [
+        32,
+        -30,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 0,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -3,
+        "dy": 7,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": 143
+      },
+      "native_center_correction": [
+        -6.771371491702519,
+        12.615408361260384
+      ],
+      "unrounded_actor_target": [
+        -27.771371491702517,
+        -24.384591638739614
+      ],
+      "output": [
+        -28,
+        -24,
+        68,
+        67,
+        143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 0,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -15,
+        "dy": 0,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": -178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -33.0,
+        -44.0
+      ],
+      "output": [
+        -33,
+        -44,
+        68,
+        66,
+        -178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 1,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -2,
+        "dy": 6,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": 143
+      },
+      "native_center_correction": [
+        -6.771371491702519,
+        12.615408361260384
+      ],
+      "unrounded_actor_target": [
+        -27.771371491702517,
+        -25.384591638739614
+      ],
+      "output": [
+        -28,
+        -25,
+        68,
+        67,
+        143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 1,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -15,
+        "dy": 1,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": -178
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -34.0,
+        -43.0
+      ],
+      "output": [
+        -34,
+        -43,
+        68,
+        66,
+        -178
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 2,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -11,
+        "dy": 0,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": 143
+      },
+      "native_center_correction": [
+        -6.771371491702519,
+        12.615408361260384
+      ],
+      "unrounded_actor_target": [
+        -16.771371491702517,
+        -21.384591638739614
+      ],
+      "output": [
+        -17,
+        -21,
+        68,
+        67,
+        143
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 2,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 8,
+        "dy": 9,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        9.0,
+        -25.0
+      ],
+      "output": [
+        9,
+        -25,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 3,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 24,
+        "dy": -36,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": -50
+      },
+      "native_center_correction": [
+        3.759972267211144,
+        -13.81530341866595
+      ],
+      "unrounded_actor_target": [
+        63.75997226721115,
+        -91.81530341866595
+      ],
+      "output": [
+        64,
+        -92,
+        68,
+        67,
+        -50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 3,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -5,
+        "dy": 20,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        31.0,
+        -22.0
+      ],
+      "output": [
+        31,
+        -22,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 4,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -15,
+        "dy": -31,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": -50
+      },
+      "native_center_correction": [
+        3.759972267211144,
+        -13.81530341866595
+      ],
+      "unrounded_actor_target": [
+        22.759972267211143,
+        -86.81530341866595
+      ],
+      "output": [
+        23,
+        -87,
+        68,
+        67,
+        -50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 4,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -42,
+        "dy": 25,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -8.0,
+        -17.0
+      ],
+      "output": [
+        -8,
+        -17,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 5,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": 18,
+        "dy": -34,
+        "flags": 68,
+        "metadata": 83,
+        "rotation": -50
+      },
+      "native_center_correction": [
+        3.759972267211144,
+        -13.81530341866595
+      ],
+      "unrounded_actor_target": [
+        54.75997226721115,
+        -88.81530341866595
+      ],
+      "output": [
+        55,
+        -89,
+        68,
+        67,
+        -50
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 5,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -6,
+        "dy": 22,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        27.0,
+        -19.0
+      ],
+      "output": [
+        27,
+        -19,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 6,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -81,
+        "dy": -42,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -81.0,
+        -42.0
+      ],
+      "output": [
+        -81,
+        -42,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 6,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -9,
+        "dy": -5,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        35.0,
+        -29.0
+      ],
+      "output": [
+        35,
+        -29,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 7,
+      "hand": 0,
+      "source_action": 87,
+      "source_frame": 0,
+      "reference_transform": {
+        "dx": -74,
+        "dy": -43,
+        "flags": 64,
+        "metadata": 91,
+        "rotation": 0
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        -74.0,
+        -43.0
+      ],
+      "output": [
+        -74,
+        -43,
+        64,
+        75,
+        0
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    },
+    {
+      "state": 6,
+      "phase": 1,
+      "direction": 7,
+      "frame": 7,
+      "hand": 1,
+      "source_action": 87,
+      "source_frame": 4,
+      "reference_transform": {
+        "dx": -7,
+        "dy": -6,
+        "flags": 68,
+        "metadata": 82,
+        "rotation": 2
+      },
+      "native_center_correction": [
+        0,
+        0
+      ],
+      "unrounded_actor_target": [
+        32.0,
+        -30.0
+      ],
+      "output": [
+        32,
+        -30,
+        68,
+        66,
+        2
+      ],
+      "status": "derived_from_live_reference_pending_acceptance"
+    }
+  ],
+  "live_acceptance": false,
+  "checks": [
+    "all original pair28 poses unchanged",
+    "all other dual-pair poses unchanged",
+    "all 96 visible main-dagger source cells valid with matching native orientation",
+    "pair25 packet deltas converted using the working pair28 native guide",
+    "off-only held is exact matching physical hand subset",
+    "solo attack timeline is not inferred from dual attack"
+  ]
+}

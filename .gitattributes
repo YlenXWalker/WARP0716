@@ -1,0 +1,37 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# WARP requires CRLF; the runtime metadata also pins exact source bytes.
+Scripts/Patches/AllowDualCustomWeaponSprites.qjs text eol=crlf
+CustomDLL/DualWeapon/compositor.c text eol=crlf
+CustomDLL/DualWeapon/grip_profile.h text eol=lf
+CustomDLL/DualWeapon/held_edge_contacts.h text eol=crlf
+CustomDLL/DualWeapon/native_basis.h text eol=lf
+Inputs/DualWeaponRuntime/*.dwcp binary
+Inputs/DualWeaponRuntime/*.json text eol=crlf
+Inputs/DualWeaponAuthored/grips/female-assassin-pixel-landmarks.json text eol=crlf
+CustomDLL/DualWeapon/male_compositor.h text eol=lf
+CustomDLL/DualWeapon/male_profile.h text eol=lf
+Inputs/DualWeaponAuthored/grips/male-assassin-landmarks.json text eol=crlf
+
+Inputs/DualWeaponAuthored/male-compat/** binary
+Inputs/DualWeaponRuntime/*.grf binary
+docs/evidence/dual-weapon-male-missing-assets-20260907.json text eol=crlf
+
+Inputs/DualWeaponRuntime/*.dwls binary
+Inputs/DualWeaponAuthored/female-compat/** binary
+Inputs/DualWeaponAuthored/reference/*.dwcp binary
+CustomDLL/DualWeapon/female_dagger_compositor.h text eol=crlf
+CustomDLL/DualWeapon/female_dagger_profile.h text eol=crlf
+CustomDLL/DualWeapon/female_family_compositor.h text eol=crlf
+CustomDLL/DualWeapon/female_family_profile.h text eol=crlf
+CustomDLL/DualWeapon/male_axe_profile.h text eol=crlf
+docs/evidence/assassin-weapon-assets-20260907.json text eol=crlf
+tools/*weapon*.py text eol=lf
+tools/*assassin*.py text eol=lf
+Inputs/DualWeaponAuthored/profiles/*.gz binary
+docs/media/dual-wield/*.gif binary
+tools/build_female_dagger_profile.py text eol=lf
+tools/build_female_family_profile.py text eol=lf
+tools/build_male_axe_profile.py text eol=lf
+tools/inspect_client_grf_handles.py text eol=lf

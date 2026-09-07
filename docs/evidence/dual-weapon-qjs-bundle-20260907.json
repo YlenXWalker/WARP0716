@@ -1,0 +1,22 @@
+{
+  "schema": "dual_weapon_legacy_bundle_execution/v1",
+  "qjs_before_bytes": 292780,
+  "qjs_after_bytes": 38397,
+  "largest_line": 119,
+  "bundle_sha256": "e6d0149196ef2a344f429b4ab4280c860d22a4bd20853514719372f00e8077d2",
+  "exact_original_bytes": true,
+  "exact_435_relocations": true,
+  "relocated_base_cases": 8,
+  "rejections_before_exe_access": [
+    "bad magic",
+    "unsupported version",
+    "length overflow",
+    "reserved flags",
+    "bad checksum",
+    "relocation outside image",
+    "relocation target outside image",
+    "duplicate relocation",
+    "missing file"
+  ],
+  "exe_accesses": 0
+}

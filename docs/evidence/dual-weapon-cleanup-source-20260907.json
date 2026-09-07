@@ -1,0 +1,84 @@
+{
+  "schema": "dual_weapon_cleanup_source/v1",
+  "source_sha256": "836b27681d97e16a1882ede5a3afa0dbcefc3943d289536123597fe1aa20fbcf",
+  "source_bytes": 38397,
+  "longest_line": 119,
+  "patch_entry": "AllowDualCustomWeaponSprites",
+  "tree_file_export_match": true,
+  "upstream_profile_and_allocator_fallback": true,
+  "removed_runtime_debug_and_capture": true,
+  "wrapper_comparisons": [
+    {
+      "name": "buildScopedDepthDrawThunk",
+      "base": 25165824,
+      "bytes": 106,
+      "sha256": "1754858f747d3739c652f16d5424c5fd99acea9cf58650a29455d762da83ef72"
+    },
+    {
+      "name": "buildScopedDepthDrawThunk",
+      "base": 33554432,
+      "bytes": 106,
+      "sha256": "441c944f48dec597a6f6efb984c1f87d13e7bfe0baed87b4edd07182c5525222"
+    },
+    {
+      "name": "buildScopedDepthDrawThunk",
+      "base": 50331648,
+      "bytes": 106,
+      "sha256": "b5c3ae6823306d2ea00f8578dcbe6e892d7e2dff30a904feb79b819193bdd693"
+    },
+    {
+      "name": "buildVertexDepthBridge",
+      "base": 25165824,
+      "bytes": 29,
+      "sha256": "f2df0fab8414463da2ee728156276ecd09948498867dbace11e384b7e721fc71"
+    },
+    {
+      "name": "buildVertexDepthBridge",
+      "base": 33554432,
+      "bytes": 29,
+      "sha256": "52ed97935822176a987dbcd31994951eeb1357d158cbd0c96cdbe80a1b97bcd3"
+    },
+    {
+      "name": "buildVertexDepthBridge",
+      "base": 50331648,
+      "bytes": 29,
+      "sha256": "e43dc9d96c9a456c80e112a6028679ae03f1e9021914ed71945f9d492f7a986f"
+    },
+    {
+      "name": "buildFinalDrawWrapper",
+      "base": 25165824,
+      "bytes": 135,
+      "sha256": "6d71b0ecd3bf46cffb05d58c69ed62e878fc649037984a718c2990cb7642fb48"
+    },
+    {
+      "name": "buildFinalDrawWrapper",
+      "base": 33554432,
+      "bytes": 135,
+      "sha256": "77f9dcf42e57a906cb7f961361ee29a5f430e0137d5cef86459c3d21b5dcf47c"
+    },
+    {
+      "name": "buildFinalDrawWrapper",
+      "base": 50331648,
+      "bytes": 135,
+      "sha256": "c4b9cf820b72267b3974dc3e944abea2e1390700a14a88028b992379a6a90468"
+    },
+    {
+      "name": "buildEquipEntry",
+      "base": 25165824,
+      "bytes": 5,
+      "sha256": "4b56c0944038cb439c819b32ae71ddbaedbb466b8efd271bb2a5397186d8379a"
+    },
+    {
+      "name": "buildEquipEntry",
+      "base": 33554432,
+      "bytes": 5,
+      "sha256": "34d46015a57eb0a7e9234554984697710037234c4822fe7eaae78198f32bd993"
+    },
+    {
+      "name": "buildEquipEntry",
+      "base": 50331648,
+      "bytes": 5,
+      "sha256": "194b301672d56e617640fe927a3a73370f38e61f899cddc521452f8bfd6aa474"
+    }
+  ]
+}

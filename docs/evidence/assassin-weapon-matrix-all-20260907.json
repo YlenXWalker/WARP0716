@@ -1,0 +1,543 @@
+{
+  "schema": "assassin_weapon_execution_matrix/v1",
+  "quick": false,
+  "payload_sha256": "b8bf5902c798e4ba7a144d60f04f2b7dff3933414230e8cafc86cacb3bf33404",
+  "cases": 668160,
+  "draws": 1182240,
+  "off_only_cases": 11520,
+  "matrix": [
+    {
+      "body": 0,
+      "job": "어세신",
+      "gender": "여",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 1,
+      "job": "어세신_h",
+      "gender": "여",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 2,
+      "job": "어쌔신크로스",
+      "gender": "여",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 3,
+      "job": "길로틴크로스",
+      "gender": "여",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 4,
+      "job": "shadow_cross",
+      "gender": "여",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 5,
+      "job": "어세신",
+      "gender": "남",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 6,
+      "job": "어세신_h",
+      "gender": "남",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 7,
+      "job": "어쌔신크로스",
+      "gender": "남",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 8,
+      "job": "길로틴크로스",
+      "gender": "남",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    },
+    {
+      "body": 9,
+      "job": "shadow_cross",
+      "gender": "남",
+      "views": [
+        1,
+        2,
+        6,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        58,
+        59,
+        60,
+        61
+      ],
+      "cases": 66816,
+      "all_available_originals_handled": true
+    }
+  ],
+  "guards": [
+    [
+      0,
+      "unprofiled_view",
+      200
+    ],
+    [
+      0,
+      "unprofiled_view",
+      600
+    ],
+    [
+      0,
+      "unprofiled_view",
+      500
+    ],
+    [
+      0,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      1,
+      "unprofiled_view",
+      200
+    ],
+    [
+      1,
+      "unprofiled_view",
+      600
+    ],
+    [
+      1,
+      "unprofiled_view",
+      500
+    ],
+    [
+      1,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      2,
+      "unprofiled_view",
+      200
+    ],
+    [
+      2,
+      "unprofiled_view",
+      600
+    ],
+    [
+      2,
+      "unprofiled_view",
+      500
+    ],
+    [
+      2,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      3,
+      "unprofiled_view",
+      200
+    ],
+    [
+      3,
+      "unprofiled_view",
+      600
+    ],
+    [
+      3,
+      "unprofiled_view",
+      500
+    ],
+    [
+      3,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      4,
+      "unprofiled_view",
+      200
+    ],
+    [
+      4,
+      "unprofiled_view",
+      600
+    ],
+    [
+      4,
+      "unprofiled_view",
+      500
+    ],
+    [
+      4,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      5,
+      "unprofiled_view",
+      200
+    ],
+    [
+      5,
+      "unprofiled_view",
+      600
+    ],
+    [
+      5,
+      "unprofiled_view",
+      500
+    ],
+    [
+      5,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      6,
+      "unprofiled_view",
+      200
+    ],
+    [
+      6,
+      "unprofiled_view",
+      600
+    ],
+    [
+      6,
+      "unprofiled_view",
+      500
+    ],
+    [
+      6,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      7,
+      "unprofiled_view",
+      200
+    ],
+    [
+      7,
+      "unprofiled_view",
+      600
+    ],
+    [
+      7,
+      "unprofiled_view",
+      500
+    ],
+    [
+      7,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      8,
+      "unprofiled_view",
+      200
+    ],
+    [
+      8,
+      "unprofiled_view",
+      600
+    ],
+    [
+      8,
+      "unprofiled_view",
+      500
+    ],
+    [
+      8,
+      "unprofiled_view",
+      10002
+    ],
+    [
+      9,
+      "unprofiled_view",
+      200
+    ],
+    [
+      9,
+      "unprofiled_view",
+      600
+    ],
+    [
+      9,
+      "unprofiled_view",
+      500
+    ],
+    [
+      9,
+      "unprofiled_view",
+      10002
+    ]
+  ],
+  "live_acceptance": false
+}

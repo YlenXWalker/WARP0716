@@ -1,3 +1,143 @@
+# CrazyBebop - 2025-07-16 build (September 4, 2026)
+
+> **Patch update - re-WARP to apply.** Two new patches, six fixes and a new `WARP.exe`. Re-apply WARP to use them.
+>
+> Easiest route: open **[WARPGATE](https://mirror2.romirrors.com/downloads/Warpgate.zip)**, use the **WARP** tab to update the patcher and this patch set, then re-apply your profile. Guides for the patches that need files from you are at **[warp.legacygamers.net/warp0716](https://warp.legacygamers.net/warp0716/)**.
+
+## September 4 Update
+
+### New patch: Party HP/SP Bars (Reforged) ([#34](https://github.com/CrazyBebop/WARP0716/issues/34))
+
+Splits every party member's bar into an HP half and an SP half, in the party window and on the detached mini widgets, and draws the SP number beside it. You can set the HP and SP colours, with your own row separate from everyone else's so you are easy to find in a full party.
+
+This one needs a change on your server as well: the client half alone gives you a split bar whose SP side never moves. The `SHOW_PARTY_SP` build flag makes rAthena send the 22-byte `0x0BAB` party packet carrying `sp` and `maxsp`, and adds the `@spbar` command so a player can hide their own SP from the party. The patch is in the repository at `examples/ShowPartySP/`, and the guide walks through applying it: **[Party HP/SP Bars guide](https://warp.legacygamers.net/warp0716/ShowPartySP/)**.
+
+Party SP travels only to members who can see each other, which is the client's own behaviour for HP.
+
+### New patch: Add your own buttons
+
+Adds extra buttons to the row below the HP/SP bars in the Basic Info window, past the 25 the client ships with. Each one is written as `iconName = behaves like`: the icon name is also the file name, so the client loads `bt_<iconName>.bmp` and `bt_<iconName>_press.bmp` from `data\texture\<UI folder>\menu_icon\`, and `behaves like` names one of the stock buttons whose action the new one performs. Guide: **[Custom Buttons](https://warp.legacygamers.net/warp0716/CustomButtons/)**.
+
+### Custom Jobs (Reforged): weapons and palettes ([#62](https://github.com/CrazyBebop/WARP0716/issues/62))
+
+Reported by mimishi. A custom job's weapon hung in the air beside the character instead of sitting in its hand. Fixed, and the job's weapon sprite folders are now read from `PCHands.lua` at the moment you patch, so a new job needs a row there and nothing else.
+
+The palette half was not a bug in the patch. `PCPals` is a filename **prefix**, while `PCPaths` and `PCHands` are **folder** names, so a folder named after your job means the client never finds the files. The **[Custom Jobs guide](https://warp.legacygamers.net/warp0716/CustomJobs/)** now names the exact folder, lists the files the client opens for your own value, and warns that a palette copied from another job keeps that job's prefix until you rename it.
+
+### Hide Buttons / Show Buttons (New UI): every button, listed ([#24](https://github.com/CrazyBebop/WARP0716/issues/24))
+
+Reported by gidzdlcrz. Both patches now list **every** button this client has, rather than only the ones the client leaves visible. On 2025-07-16 the three the client hides by itself are **Battleground, Booking and Twitter**, and they are selectable in both lists now; the prompt says which are already hidden, and picking one that is already in that state simply does nothing. Choosing the same button in both patches is rejected with an error naming it, rather than silently resolving one way.
+
+### Fixed: EXP bar customization ([#49](https://github.com/CrazyBebop/WARP0716/issues/49))
+
+The patched client would not start at all: a strange icon, then "This app can't run on your PC". It was writing over the executable's DOS header at offset 0, so Windows refused to load the image. Four stacked defects sat behind that one symptom and all four are fixed.
+
+### Fixed: Resize Player HP/SP bar ([#52](https://github.com/CrazyBebop/WARP0716/issues/52))
+
+It never appeared in WARP's patch list, because a build-date check hid it from a 2025-07-16 client. With that lifted it still only moved the bar, because the size it searched for is written differently on this client. Both fixed: the bar measures 120x20 in game, up from 60x9.
+
+### Zoom: a 25% step, and a level you set yourself ([#50](https://github.com/CrazyBebop/WARP0716/issues/50))
+
+**Increase Zoom Out (to 25%)** is the gentler step that was asked for, for when Max is too far out. **Increase Zoom Out (custom %)** takes the percentage you want over the client default and works out the distance, so `60` gives the camera 60% more range. **Max** was corrected as well: it used to pull back further than this client can draw, which showed black at the edges of the screen, and it now stops at the real limit.
+
+All of them had been overwriting a constant the renderer also uses as its reference resolution, so they rescaled sprites and effects as well as moving the camera. They move the camera and nothing else now.
+
+★ Remember to turn zoom out on in game with `/zoom`, or none of this shows: with the client's own setting off, the camera is capped tighter than stock.
+
+### Walk Delay (Reforged) ([#39](https://github.com/CrazyBebop/WARP0716/issues/39))
+
+Sets the delay between walk-click inputs in milliseconds. The old **Remove Walk Delay** patch was this one with the value pinned to zero, so it is retired. Do not go below 10: below that the character stops playing its walk animation.
+
+### A new `win32/WARP.exe`
+
+**Select Recommended** now loads `profiles/community_recommended.yml`, which is 37 patches that give you a working English client in one click, without answering a single question. The dead **Convert Profile to Session** row is gone from the menu.
+
+### Housekeeping
+
+- **Retired**, declarations commented out with the reason, implementations left intact so re-enabling is uncommenting one block: `NoWalkDelay` (merged into Walk Delay), `CancelToLogin` (unsatisfiable on this client and redundant), `MsgStrings` and `QuestDisplay` (the client reads those files anyway). `SendClientFlags` is no longer recommended.
+- **`docs/` has left the repository.** The guides live on **[warp.legacygamers.net](https://warp.legacygamers.net/warp0716/)**, where they are rebuilt with the patch set. What used to sit under `docs/` and is not a guide has moved to **`examples/`**: the Custom Jobs example job and its annotated Lua reference, and the Party HP/SP Bars server patch.
+- `profiles/community_recommended.yml` rebuilt against the current patch set.
+
+---
+
+# CrazyBebop - 2025-07-16 build (August 18, 2026)
+
+> **Patch update - re-WARP to apply.** Seven new patches and a Simplified Chinese translation. Re-apply WARP to use them.
+
+## August 18 Update
+
+### New patch: Tighter Entity Click Area ([#63](https://github.com/CrazyBebop/WARP0716/pull/63))
+
+The client does not let an entity's clickable box get small. It widens every one up to a minimum worked out from your window width, `width / 640 x 40` pixels for actors and `x 34` for map NPCs and skill units. At 1600x900 that is a 100 px box around a sprite that may be a fraction of it, so a poring standing near an NPC can swallow clicks meant for the NPC. This patch lets you shrink that floor, so small things claim only the space they occupy. Thanks to Stingor.
+
+### New patch: Restore the "View Skill Info." checkbox ([#61](https://github.com/CrazyBebop/WARP0716/pull/61))
+
+Older Ragexe builds had a checkbox in the top right of the ALT+S Skill Tree, and while it was ticked, hovering a skill popped its detail window next to the cursor instead of making you right-click. The client still owns the option internally and still saves it; only the checkbox went missing. This brings it back. Thanks to Stingor.
+
+### New patch: Restore GM weapon trails ([#60](https://github.com/CrazyBebop/WARP0716/pull/60))
+
+Accounts listed under `<admin>` in your clientinfo lose the weapon trail, the blade gleam drawn while attacking. The client writes 0 into that sprite layer for GM accounts, so the renderer drops it. **Disable GM sprite** does not cover this, because it only touches the two name-list functions. Thanks to Stingor.
+
+### New patch: Restore Sonic Blow and Arrow Vulcan animations ([#58](https://github.com/CrazyBebop/WARP0716/pull/58))
+
+Gives Sonic Blow and Arrow Vulcan back the attacker's sprite animation. Pick either or both when you apply it. Gravity never deleted the animations, only the routing that chose them: the client still plays it for Chain Crush Combo, and this sends the selected skills back down that same path. Sound and effects were never affected. Thanks to Stingor.
+
+### New patch: Mark pet chatter in chat ([#55](https://github.com/CrazyBebop/WARP0716/pull/55))
+
+Pet chatter arrives with no sender and the ordinary message type, so a pet named after a player reads exactly like that player talking. This tags every automated pet line with a marker of your choosing, default `pet`, with a choice of brackets. Thanks to Stingor.
+
+### New patch: No bogus "not your guildsman" whisper warning ([#54](https://github.com/CrazyBebop/WARP0716/pull/54))
+
+Stops the "This character is not your guildsman" and "This name is not registered in your Friend List" lines the client prints on incoming whispers. They exist to flag impostors who swap a capital I for a lowercase l, which is a real problem, but the comparison is far too loose and fires on ordinary names that merely resemble a friend's. Thanks to Stingor.
+
+### New patch: Shared head palettes for Doram ([#53](https://github.com/CrazyBebop/WARP0716/pull/53))
+
+The existing shared head palette patches skip the Doram races entirely, so a Doram still needs one palette file per hairstyle **and** per gender while everyone else needs one. This applies the same shared naming to Doram. The files stay in the Doram race folder on purpose: Doram sprites do not share the human palette indexing, and pointing them at the human files leaves the character mostly black. Thanks to Stingor.
+
+### Simplified Chinese translation ([#56](https://github.com/CrazyBebop/WARP0716/pull/56))
+
+WARP's own interface is now available in Simplified Chinese. Thanks to jj163494, building on xvn5002036's Traditional Chinese work.
+
+---
+
+# CrazyBebop - 2025-07-16 build (July 29, 2026)
+
+> **EXE update - grab the new Ragexe.** These fixes live in the injected EXE itself, not in a WARP patch, so re-WARPing the exe you already have will **not** pick them up.
+>
+> Get it through **[WARPGATE](https://mirror2.romirrors.com/downloads/Warpgate.zip)**: unzip, run it, and use the **RAGEXE** tab. Then re-apply your patch set if you use one.
+>
+> If you have already patched your own executable, WARPGATE keeps yours and will not overwrite it. Choose ours from the RAGEXE tab (your copy is saved as a `.bak`), or re-patch starting from the new one.
+
+## July 29 Update
+
+### The "exit" button on server select now actually exits ([#17](https://github.com/CrazyBebop/WARP0716/issues/17))
+
+Reported by gidzdlcrz: on the service/server select screen, pressing the second button made the window vanish and left you with nothing on screen. The only way out was to close the client.
+
+The button was renamed to "exit" in an earlier build, but only the label changed. It still performed a cancel, and cancel on that screen closes the window and then sends a message the client ignores while it is on the server list, so nothing replaces it.
+
+It now uses the client's own exit path, which was already present and simply never shown: a confirmation dialog, and a clean shutdown if you accept. Pressing cancel on that dialog returns you to the server list with everything intact.
+
+### Multi-connection clientinfo.xml: switching servers mid-session now works
+
+If your `clientinfo.xml` lists more than one `<connection>`, players can pick a server on the service select screen. That worked from a fresh start, but not after you had already played: log in to one server, go all the way in-game, back out to the server list, pick a **different** server, and the client would fail to connect.
+
+The old code kept its own private copy of every server's address and port and looked yours up by position in that list. That copy went stale once you had been in-game, and it could also drift out of step with the on-screen list if any `<connection>` was missing an `<address>`. It was capped at 8 servers, silently.
+
+It now reads the address and port the client itself resolved for the connection you picked, so there is nothing of ours to go stale, no cap, and no way for the list positions to disagree. Verified against two live servers: pick the second or third entry after a full in-game session and you land on the right one.
+
+### Leaner startup, and the 8 server limit is gone
+
+The old code scanned your entire `clientinfo.xml` at startup and built its own private copy of every server's address and port before the login screen even appeared. That work scaled with the length of your server list, and it was capped at 8 servers.
+
+None of that happens now. The client reads the address and port for the server you picked, at the moment it connects. Startup does strictly less work, there is no cap on how many servers you can list, and there is no second copy of your server list to fall out of step with the file.
+
+### clientinfo.xml problems now tell you what is wrong
+
+Previously a missing, unreadable or incomplete `clientinfo.xml` just produced a failed connection with no explanation. The client now names the actual problem: the file could not be opened, or it has no usable `<clientinfo>`/`<connection>`, or the server you picked has no `<address>`.
+
+---
+
 # CrazyBebop - 2025-07-16 build (July 20, 2026)
 
 > **Patch update - re-WARP to apply.** Adds one new patch for Skill Tree performance; re-apply WARP to use it.
@@ -266,7 +406,7 @@ The Custom Jobs patch has been significantly expanded — all built from scratch
 - Job names, sprite paths, palettes, head sprites, and display names all driven by Lua files
 - Supports up to 10,000 custom job classes
 - Custom job sprites render correctly in character select, creation, and in-game
-- Example sprite, IMF, and icon files included in `docs/CustomJobs/example/`
+- Example sprite, IMF, and icon files included in `examples/CustomJobs/data/`
 
 ### New Dark Theme — WARP0716
 - New icons, recommend stamps, and editor font

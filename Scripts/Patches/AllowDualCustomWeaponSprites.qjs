@@ -42,7 +42,7 @@
 *   Native solo80/dual88 timelines remain distinct; other bodies stay stock*
 *   Validated runtime bundles replace the old inline hex blobs.          *
 *   Keep compositor.dwcp and legacy-support.dwls with this patch.         *
-*   See docs/dual-wield-original-weapon-sprites.md for scope and proof.     *
+*   See examples/dual-wield-original-weapon-sprites.md for scope and proof.     *
 *                                                                          *
 \**************************************************************************/
 

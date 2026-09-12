@@ -9,28 +9,28 @@
 *   the Free Software Foundation, either version 3 of the License, or      *
 *   (at your option) any later version.                                    *
 *                                                                          *
-*   This program is distributed in the hope that it will be useful,        *
+*   WARP is distributed in the hope that it will be useful,                *
 *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
 *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
 *   GNU General Public License for more details.                           *
 *                                                                          *
-*   You should have received a copy of the GNU General Public License      *
-*   along with this program.  If not, see <http://www.gnu.org/licenses/>.  *
-*                                                                          *
 |**************************************************************************|
 *                                                                          *
 *   Author(s)     : Louis T Steinhil                                       *
-*   Created Date  : 2026-09-12                                             *
 *   Last Modified : 2026-09-12                                             *
 *                                                                          *
-*   Description   : Applies ACT layer transforms to Equipment (Alt+Q)      *
-*                   and Skill Tree (Alt+S) previews on 2025-07-16 Ragexe.  *
-*                   The stock unscaled blits enlarge HD sprites; this      *
-*                   patch draws into their persistent native UI surfaces. *
-*                   Uses existing SPR/ACT resources without preview packs *
-*                   or runtime DLLs. Maintained native source is in       *
-*                   tools/native/native_act_job_ui.cpp.                   *
-*                                                                          *
+*   Description   : Fixes HD job sprite previews in Equipment (Alt+Q) and  *
+*                   Skill Tree (Alt+S) on 2025-07-16 Ragexe. Applies ACT   *
+*                   scale, mirror, rotation, and layer tint while drawing  *
+*                   existing textures into native UI surfaces. Preserves   *
+*                   palettes, head offsets, frame selection, dragging, and *
+*                   repaint ownership. Uses existing SPR/ACT paths without *
+*                   generated preview packs, runtime DLLs, or world        *
+*                   renderer hooks.                                        *
+                                                                           *
+*   Source        : tools/native/native_act_job_ui.cpp                     *
+*   Generator     : tools/build_native_act_job_ui.py                       *
+                                                                           *
 \**************************************************************************/
 
 NativeActJobPreviews = function(_)

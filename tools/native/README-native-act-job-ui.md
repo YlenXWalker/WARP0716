@@ -55,4 +55,7 @@ A male Monk using a 2x SPR with ACT scale 0.5 has live user confirmation for the
 world, standing Equipment preview and seated Skill Tree preview. Broader job,
 sex, direction, animation, special-job-scale and reopen/drag combinations still
 need live acceptance. Automated surface tests do not replace that acceptance.
-The screenshots and game-specific test packs are intentionally not included.
+The user-supplied preview below shows that confirmed case. Game-specific test
+packs are not required by the patch and are not included.
+
+![HD Monk world sprite with standing Equipment and seated Skill Tree previews](../../.github/images/native-act-job-previews.png)

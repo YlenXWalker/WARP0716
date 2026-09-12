@@ -1,0 +1,102 @@
+/**************************************************************************\
+*                                                                          *
+*   Copyright (C) 2026 Louis T Steinhil                                    *
+*                                                                          *
+*   This file is a part of WARP project (specific to RO clients)           *
+*                                                                          *
+*   WARP is free software: you can redistribute it and/or modify           *
+*   it under the terms of the GNU General Public License as published by   *
+*   the Free Software Foundation, either version 3 of the License, or      *
+*   (at your option) any later version.                                    *
+*                                                                          *
+*   This program is distributed in the hope that it will be useful,        *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+*   GNU General Public License for more details.                           *
+*                                                                          *
+*   You should have received a copy of the GNU General Public License      *
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.  *
+*                                                                          *
+|**************************************************************************|
+*                                                                          *
+*   Author(s)     : Louis T Steinhil                                       *
+*   Created Date  : 2026-09-12                                             *
+*   Last Modified : 2026-09-12                                             *
+*                                                                          *
+*   Description   : Applies ACT layer transforms to Equipment (Alt+Q)      *
+*                   and Skill Tree (Alt+S) previews on 2025-07-16 Ragexe.  *
+*                   The stock unscaled blits enlarge HD sprites; this      *
+*                   patch draws into their persistent native UI surfaces. *
+*                   Uses existing SPR/ACT resources without preview packs *
+*                   or runtime DLLs. Maintained native source is in       *
+*                   tools/native/native_act_job_ui.cpp.                   *
+*                                                                          *
+\**************************************************************************/
+
+NativeActJobPreviews = function(_)
+{
+	const self = NativeActJobPreviews;
+	if (!self.validate())
+		throw Error('NativeActJobPreviews: only profiled for 2025-07-16');
+	$$(_, 1, 'Verify the native preview and surface-rendering profile');
+	const read = (va, count) =>
+	{
+		const phy = Exe.Vir2Phy(va);
+		if (phy < 0)
+			throw Error('NativeActJobPreviews: unmapped address ' + va.toString(16));
+		return Exe.GetHex(phy, count).replace(/\s+/g, '').toLowerCase();
+	};
+	const check = (va, hex, label) =>
+	{
+		if (read(va, hex.length / 2) !== hex)
+			throw Error('NativeActJobPreviews: ' + label + ' differs at 0x' + va.toString(16));
+	};
+	for (const row of self.checks)
+		check(row.va, row.hex, row.label);
+
+	const blob = self.blob;
+	const payload = blob.hex.match(/../g).map(value => parseInt(value, 16));
+	const u32 = off => (payload[off] | (payload[off + 1] << 8) |
+		(payload[off + 2] << 16) | (payload[off + 3] << 24)) >>> 0;
+	for (const off of blob.relocations)
+	{
+		if (!Number.isInteger(off) || off < 0 || off + 4 > payload.length)
+			throw Error('NativeActJobPreviews: invalid payload relocation');
+		const target = u32(off) - blob.imageBase;
+		if (target < 0 || target >= payload.length)
+			throw Error('NativeActJobPreviews: relocation target outside payload');
+	}
+	for (const key of ['NativeActSkillBridge', '@NativeActEquipmentDraw@52'])
+		if (!Number.isInteger(blob.exports[key]) || blob.exports[key] < 0 || blob.exports[key] >= payload.length)
+			throw Error('NativeActJobPreviews: invalid bridge entry');
+
+	$$(_, 2, 'Install ACT-aware rendering into the native UI surfaces');
+	const [phy, vir] = Exe.Allocate(payload.length, 0x10);
+	for (const off of blob.relocations)
+	{
+		const value = (u32(off) + vir - blob.imageBase) >>> 0;
+		for (let i = 0; i < 4; ++i)
+			payload[off + i] = (value >>> (i * 8)) & 255;
+	}
+	// Write the fully relocated payload once. Overlapping writes can lose
+	// relocation operands when WARP reconstructs one of its own prior outputs.
+	const hex = bytes => bytes.map(value => value.toString(16).padStart(2, '0')).join(' ');
+	Exe.SetHex(phy, hex(payload));
+	const write = (va, expected, replacement) =>
+	{
+		check(va, expected, 'hook bytes');
+		Exe.SetHex(Exe.Vir2Phy(va), hex(replacement));
+	};
+	const relative = (opcode, site, target, padding = []) =>
+	{
+		const delta = (target - site - 5) >>> 0;
+		return [opcode, ...[0, 8, 16, 24].map(n => (delta >>> n) & 255), ...padding];
+	};
+	write(0x008B3557, '6a00', [0x6A, 0x01]);
+	write(0x00974E9E, '8b8524ffffff',
+		relative(0xE9, 0x00974E9E, vir + blob.exports.NativeActSkillBridge, [0x90]));
+	write(0x007ACEF9, 'e8c2e82600',
+		relative(0xE8, 0x007ACEF9, vir + blob.exports['@NativeActEquipmentDraw@52']));
+	return true;
+};
+NativeActJobPreviews.validate = () => Exe.BuildDate === 20250716;

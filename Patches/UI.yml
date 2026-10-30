@@ -513,11 +513,11 @@ ChatPerformance:
         - ChatMeasurementCache:
             title : Native Chat Measurement Cache
             recommend : no
-            author : YlenXWalker
+            author : Louis T Steinhil
             desc : Caches native glyph and fragment widths on the fixed-base 2025-07-16 client. Preserves native wrapping, colors and item-link routing. Includes independent runtime switches and bounded aggregate diagnostics. Based on research by SCIEL and ICE; no runtime DLL or receive hook.
 
         - ChatStutterFix:
             title : Native Chat Preprocessing Stutter Fix
             recommend : no
-            author : YlenXWalker
+            author : Louis T Steinhil
             desc : Avoids the temporary string used for native chat tag classification on the fixed-base 2025-07-16 client. Retains the original four tag searches and native direct/wrapped continuations. Based on research by SCIEL and ICE; no byte-length wrapping bypass.

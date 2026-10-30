@@ -1,0 +1,11 @@
+# WARP source files require CRLF; extracted payloads are binary.
+Scripts/Patches/ChatDiagnosticsStatic.qjs text eol=crlf
+Scripts/Patches/ChatMeasurementCache.qjs text eol=crlf
+Scripts/Patches/ChatStutterFix.qjs text eol=crlf
+Scripts/Runtime/ChatDiagnostics/* text eol=crlf
+Scripts/Runtime/ChatMeasurementCache/* text eol=crlf
+Inputs/ChatDiagnostics/*.bin binary
+Inputs/ChatMeasurementCache/*.bin binary
+Inputs/ChatDiagnostics/*.json text eol=lf
+Inputs/ChatMeasurementCache/*.json text eol=lf
+Inputs/ChatDiagnostics/*.ini text eol=crlf

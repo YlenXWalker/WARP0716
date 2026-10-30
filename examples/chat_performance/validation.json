@@ -1,0 +1,119 @@
+{
+  "target": "fixed-base 2025-07-16 Ragexe",
+  "original_input_sha256": "ead7c0a316bc6c27705a5a6876daf5093abec31677f3c1af7525c1709b201bff",
+  "implementation": "YlenXWalker (Louis T Steinhil in code headers)",
+  "research_credit": [
+    "SCIEL",
+    "ICE"
+  ],
+  "source_information": [
+    "Cache_Fix.txt",
+    "Stutter_Fix.txt"
+  ],
+  "local_integration_tests": {
+    "classifier_vectors": 305,
+    "native_append_wrapping_vectors": 172,
+    "native_splitter_vectors": 192,
+    "four_runtime_state_wrapping_vectors": 96,
+    "win32_worker_four_states": true,
+    "logging_off_and_cold_fragment_bootstrap": true
+  },
+  "historical_live_benchmark": {
+    "date": "2026-10-30",
+    "scope": "Local integration profile including ChatItemIcons and other fixed UI patches; these are historical local measurements, not unmodified upstream FPS claims.",
+    "source_client_sha256": "e17feb6e08d2fd8cee880c762b5e37ae2a3190e800d5275619c0977a0e7f765a",
+    "method": "PresentMon 2.6.0 ETW, two 30-second samples per state in mirrored order; chat spam and all ten dummies taking AoE damage.",
+    "summary": [
+      {
+        "state": "Both off",
+        "average_fps": 139.94807101982067,
+        "one_percent_low_fps": 48.498458693793424,
+        "worst_frame_ms": 53.3351,
+        "frames_over_33_333_ms": 18
+      },
+      {
+        "state": "Stutter only",
+        "average_fps": 138.10617350630673,
+        "one_percent_low_fps": 48.097434276064504,
+        "worst_frame_ms": 51.7897,
+        "frames_over_33_333_ms": 17
+      },
+      {
+        "state": "Cache only",
+        "average_fps": 140.92085162804696,
+        "one_percent_low_fps": 70.6690674964571,
+        "worst_frame_ms": 40.4506,
+        "frames_over_33_333_ms": 1
+      },
+      {
+        "state": "Both on",
+        "average_fps": 140.71666991818853,
+        "one_percent_low_fps": 69.57677156458433,
+        "worst_frame_ms": 35.4999,
+        "frames_over_33_333_ms": 1
+      }
+    ],
+    "limitations": [
+      "Single local client/session; weather/OS activity not frozen.",
+      "Small average-FPS differences are not a significance test.",
+      "Stutter-only did not show an independent frame-time improvement in this workload."
+    ]
+  },
+  "upstream_validation": {
+    "base_commit": "48dde104",
+    "builds": {
+      "both": {
+        "passed": true,
+        "exe_sha256": "3cf6fb99c37d015651622bbdb72a363419fba3298ea8890bf5a0a44c3f1d6b1f",
+        "patches": [
+          "ChatMeasurementCache",
+          "ChatStutterFix"
+        ]
+      },
+      "cache": {
+        "passed": true,
+        "exe_sha256": "a87b3c1a3ac1e4952e3e0c7d2303836ff48cedb3e1269b20647603d1b1067e76",
+        "patches": [
+          "ChatMeasurementCache"
+        ]
+      },
+      "stutter": {
+        "passed": true,
+        "exe_sha256": "f9dc630f36d05385d7dfeb40b83e6340afc55de264263dad4c831ae6778313f0",
+        "patches": [
+          "ChatStutterFix"
+        ]
+      },
+      "reverse": {
+        "passed": true,
+        "exe_sha256": "3cf6fb99c37d015651622bbdb72a363419fba3298ea8890bf5a0a44c3f1d6b1f",
+        "patches": [
+          "ChatMeasurementCache",
+          "ChatStutterFix"
+        ]
+      },
+      "reverse-invocation": {
+        "passed": true,
+        "exe_sha256": "3cf6fb99c37d015651622bbdb72a363419fba3298ea8890bf5a0a44c3f1d6b1f",
+        "patches": [
+          "ChatMeasurementCache",
+          "ChatStutterFix"
+        ]
+      },
+      "recommended": {
+        "passed": true,
+        "exe_sha256": "1e3f7df89ea2fd4e8e438857ac212da9736ee6728f3071d67681fe40cee85258",
+        "patches": [
+          "ChatMeasurementCache",
+          "ChatStutterFix"
+        ]
+      }
+    },
+    "native_classifier_vectors": 305,
+    "native_append_wrapping_vectors": 172,
+    "native_splitter_vectors": 192,
+    "runtime_state_wrapping_vectors": 96,
+    "win32_worker_four_states": true,
+    "payloads_identical_to_local_validated_build": true
+  }
+}

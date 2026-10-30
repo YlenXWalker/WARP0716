@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "client": 20250716,
+  "size": 17368,
+  "exports": {
+    "ChatDiagnosticsConfig": 12456,
+    "ChatDiagnosticsLayout": 8192,
+    "ChatDiagnosticsLinkData": 12288,
+    "ChatDiagnosticsPhase": 12472,
+    "_ChatAppendBegin@8": 5520,
+    "_ChatAppendEnd@4": 5824,
+    "_ChatDiagnosticsBootstrap@0": 5968,
+    "_ChatDiagnosticsStop@0": 5984,
+    "_ChatRoute@8": 6000
+  },
+  "layout": [
+    160,
+    12,
+    28,
+    128,
+    144,
+    152,
+    16
+  ],
+  "source_sha256": "930b990d4c583ee7e72c3a8a510c8a8a8d06c758734239416fd721aaca57601a",
+  "payload_sha256": "d1996aab96ff2bcdde9a9ab233c4ee1152b2938bee9f20204f89ec7072e8ee78",
+  "imports": [],
+  "compiler": "MSVC x86",
+  "compiler_version": "14.51.36231",
+  "exception_policy": "Native SEH unchanged; sampled stale frames are discarded by frame identity",
+  "shared_api_sha256": "a969b25bd013581931946c548762a324ceca1e9db2f0c6d06541f8bd7f6ae5b7"
+}

@@ -1,0 +1,318 @@
+/**************************************************************************\
+*                                                                          *
+*   Copyright (C) 2026 Louis T Steinhil                                    *
+*                                                                          *
+*   This file is a part of WARP project (specific to RO clients)           *
+*                                                                          *
+*   WARP is free software: you can redistribute it and/or modify           *
+*   it under the terms of the GNU General Public License as published by   *
+*   the Free Software Foundation, either version 3 of the License, or      *
+*   (at your option) any later version.                                    *
+*                                                                          *
+*   This program is distributed in the hope that it will be useful,        *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+*   GNU General Public License for more details.                           *
+*                                                                          *
+*   You should have received a copy of the GNU General Public License      *
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.  *
+*                                                                          *
+|**************************************************************************|
+*                                                                          *
+*   Author(s)     : Louis T Steinhil                                       *
+*   Created Date  : 2026-10-30                                             *
+*   Last Modified : 2026-10-30                                             *
+*   Description   : Shared 2025-07-16 chat telemetry and runtime switches. *
+*                   Replays native preprocessing when disabled; preserves  *
+*                   tag routing, native wrapping and ChatItemIcons. Logs   *
+*                   bounded aggregate counters from a Win32 worker thread. *
+*   Evidence      : examples/chat_performance/validation.json              *
+*   Verifier      : tools/verify_chat_performance.py                       *
+*                                                                          *
+\**************************************************************************/
+
+
+ChatPerformanceNative = {};
+
+ChatPerformanceNative.bytesToHex = function(bytes)
+{
+	return bytes.map(value =>
+		(value & 0xFF).toString(16).padStart(2, "0")
+	).join(" ");
+};
+
+ChatPerformanceNative.asm = function()
+{
+	const bytes = [];
+	const labels = {};
+	const fixups = [];
+	const put32 = function(out, pos, value)
+	{
+		const v = value >>> 0;
+		out[pos] = v & 0xFF;
+		out[pos + 1] = (v >>> 8) & 0xFF;
+		out[pos + 2] = (v >>> 16) & 0xFF;
+		out[pos + 3] = (v >>> 24) & 0xFF;
+	};
+	return {
+		bytes,
+		emit: function(...values)
+		{
+			for (const value of values)
+				bytes.push(value & 0xFF);
+		},
+		dword: function(value)
+		{
+			const pos = bytes.length;
+			bytes.push(0, 0, 0, 0);
+			put32(bytes, pos, value);
+		},
+		label: function(name)
+		{
+			if (Object.prototype.hasOwnProperty.call(labels, name))
+				throw Error(`Chat performance: duplicate label ${name}`);
+			labels[name] = bytes.length;
+		},
+		rel32: function(opcode, target)
+		{
+			bytes.push(opcode);
+			const pos = bytes.length;
+			bytes.push(0, 0, 0, 0);
+			fixups.push({pos, target});
+		},
+		call: function(target) { this.rel32(0xE8, target); },
+		jmp: function(target) { this.rel32(0xE9, target); },
+		jcc: function(opcode, target)
+		{
+			bytes.push(0x0F, opcode);
+			const pos = bytes.length;
+			bytes.push(0, 0, 0, 0);
+			fixups.push({pos, target});
+		},
+		finish: function(baseVir)
+		{
+			const out = bytes.slice();
+			for (const fixup of fixups)
+			{
+				if (typeof fixup.target === "string" &&
+					!Object.prototype.hasOwnProperty.call(labels, fixup.target))
+					throw Error(`Chat performance: unresolved label ${fixup.target}`);
+				const targetVir = typeof fixup.target === "string"
+					? baseVir + labels[fixup.target]
+					: fixup.target;
+				put32(out, fixup.pos, targetVir - (baseVir + fixup.pos + 4));
+			}
+			return ChatPerformanceNative.bytesToHex(out);
+		}
+	};
+};
+
+ChatPerformanceNative.allocateBytes = function(bytes, alignment = 1)
+{
+	const [phy, vir] = Exe.Allocate(bytes.length, alignment);
+	Exe.SetHex(phy, ChatPerformanceNative.bytesToHex(bytes));
+	return {phy, vir, size: bytes.length};
+};
+
+ChatPerformanceNative.asciiBytes = function(text, nulTerminate = true)
+{
+	const bytes = [];
+	for (let i = 0; i < text.length; i++)
+		bytes.push(text.charCodeAt(i) & 0xFF);
+	if (nulTerminate)
+		bytes.push(0);
+	return bytes;
+};
+
+ChatPerformanceNative.allocateString = function(text)
+{
+	return ChatPerformanceNative.allocateBytes(
+		ChatPerformanceNative.asciiBytes(text)
+	);
+};
+
+ChatPerformanceNative.assertCode = function(label, virAddr, expectedBytes)
+{
+	const phy = Exe.Vir2Phy(virAddr, CODE);
+	if (phy < 0)
+		throw Error(`Chat performance: ${label} is not mapped`);
+	const expected = expectedBytes.replace(/\s+/g, " ").trim().toUpperCase();
+	const actual = Exe.GetHex(phy, expected.split(" ").length)
+		.replace(/\s+/g, " ").trim().toUpperCase();
+	if (actual !== expected)
+		throw Error(`Chat performance: ${label} mismatch, got ${actual}`);
+	return phy;
+};
+
+ChatDiagnosticsStatic = {
+	Key: "ChatDiagnostics.Runtime.v1",
+	Tags: [0x01202C28, 0x01202C40, 0x01202B50, 0x01202B68],
+	Capacity: 128
+};
+
+ChatDiagnosticsStatic.read = function(path)
+{
+	const f = new BinFile(path, "r");
+	if (!f.Valid) throw Error("Chat diagnostics: missing " + path);
+	const hex = f.ReadHex(); f.Close();
+	return (hex.match(/[0-9a-fA-F]{2}/g) || []).map(v => parseInt(v, 16));
+};
+
+ChatDiagnosticsStatic.u32 = (b, p) => (b[p] | b[p + 1] << 8 | b[p + 2] << 16 | b[p + 3] << 24) >>> 0;
+ChatDiagnosticsStatic.put = function(b, p, value)
+{
+	for (let i = 0; i < 4; ++i) b[p + i] = value >>> (i * 8) & 255;
+};
+
+ChatDiagnosticsStatic.payload = function()
+{
+	const c = ChatDiagnosticsStatic;
+	const root = Warp.Path + "/Inputs/ChatDiagnostics/runtime";
+	const raw = c.read(root + ".bin"), meta = JSON.parse(String.fromCharCode(...c.read(root + ".json")));
+	const size = c.u32(raw, 8), count = c.u32(raw, 12), start = 32 + count * 4;
+	let crc = 0xFFFFFFFF;
+	for (let i = 32; i < raw.length; ++i)
+	{
+		crc ^= raw[i];
+		for (let j = 0; j < 8; ++j) crc = (crc >>> 1) ^ ((crc & 1) ? 0xEDB88320 : 0);
+	}
+	if (c.u32(raw, 0) !== 0x44474843 || c.u32(raw, 4) !== 1 || c.u32(raw, 24) !== 20250716 ||
+		meta.version !== 1 || meta.client !== 20250716 || size !== meta.size || size > 65536 ||
+		count > 1024 || raw.length !== start + size || ((crc ^ 0xFFFFFFFF) >>> 0) !== c.u32(raw, 28) ||
+		JSON.stringify(meta.layout) !== JSON.stringify([160, 12, 28, 128, 144, 152, 16]))
+		throw Error("Chat diagnostics: invalid runtime payload");
+	for (const name of ["ChatDiagnosticsConfig", "ChatDiagnosticsLinkData", "ChatDiagnosticsPhase",
+		"_ChatAppendBegin@8", "_ChatRoute@8", "_ChatAppendEnd@4", "_ChatDiagnosticsBootstrap@0", "ChatDiagnosticsLayout"])
+		if (!Number.isInteger(meta.exports[name]) || meta.exports[name] < 0 || meta.exports[name] >= size)
+			throw Error("Chat diagnostics: missing runtime export " + name);
+	if (c.u32(raw, 16) !== meta.exports.ChatDiagnosticsConfig || c.u32(raw, 20) !== meta.exports.ChatDiagnosticsLinkData)
+		throw Error("Chat diagnostics: export header mismatch");
+	return {raw, meta, size, count, start};
+};
+
+ChatDiagnosticsStatic.matcher = function()
+{
+	const a = ChatPerformanceNative.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57, 0x8B, 0x75, 8, 0x8B, 0xFE);
+	a.label("length"); a.emit(0x80, 0x3F, 0); a.jcc(0x84, "length_done");
+	a.emit(0x47); a.jmp("length");
+	a.label("length_done"); a.emit(0x2B, 0xFE);
+	for (const tag of ChatDiagnosticsStatic.Tags)
+	{
+		a.emit(0xBB); a.dword(tag);
+		a.emit(0x83, 0x7B, 20, 16); a.jcc(0x82, "inline_" + tag);
+		a.emit(0x8B, 0x1B);
+		a.label("inline_" + tag);
+		a.emit(0xFF, 0x35); a.dword(tag + 16);
+		a.emit(0x53, 0x6A, 0, 0x57, 0x56); a.call(0x575780);
+		a.emit(0x83, 0xC4, 20, 0x83, 0xF8, 0xFF); a.jcc(0x85, "hit");
+	}
+	a.emit(0x33, 0xC0); a.jmp("done");
+	a.label("hit"); a.emit(0xB8); a.dword(1);
+	a.label("done"); a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 4, 0);
+	return a;
+};
+
+ChatDiagnosticsStatic.refresh = function()
+{
+	const c = ChatDiagnosticsStatic, n = ChatPerformanceNative;
+	const p = c.payload(), owner = Exe.ActivePatch;
+	const registry = CACHE.get(c.Key + ".Registry") || {};
+	const available = Object.values(registry).reduce((a, b) => a | b, 0);
+	Exe.ActivateGlobal(); Exe.BeginTag(CACHE.getTag(c.Key), true);
+	try
+	{
+		const [phy, vir] = CACHE.allocate(c.Key, "payload", "00 ".repeat(p.size), 16);
+		const code = p.raw.slice(p.start);
+		for (let i = 0; i < p.count; ++i)
+		{
+			const off = c.u32(p.raw, 32 + i * 4);
+			if (off + 4 > p.size || c.u32(code, off) >= p.size) throw Error("Chat diagnostics: bad relocation");
+			c.put(code, off, c.u32(code, off) + vir);
+		}
+		const matcherCode = c.matcher();
+		const [matcherPhy, matcherVir] = CACHE.allocate(c.Key, "matcher", "90 ".repeat(256), 16);
+		if (matcherCode.bytes.length > 256) throw Error("Chat diagnostics: matcher capacity exceeded");
+		Exe.SetHex(matcherPhy, matcherCode.finish(matcherVir) + " 90".repeat(256 - matcherCode.bytes.length));
+		const config = p.meta.exports.ChatDiagnosticsConfig, link = p.meta.exports.ChatDiagnosticsLinkData;
+		// Bootstrap through the original native kernel thunks. Lazy export slots
+		// may belong to another optional patch and must not outlive that owner.
+		ROC.findImports();
+		const moduleIat = ROC.GetModHandle, procIat = ROC.GetProcAddr;
+		if (moduleIat <= 0 || procIat <= 0) throw Error("Chat diagnostics: native kernel imports unavailable");
+		for (const [off, value] of [[0, moduleIat], [4, procIat], [8, matcherVir], [12, available]]) c.put(code, config + off, value);
+		c.put(code, link, 0x10000 | available | 4);
+		for (let i = 0; i < code.length; i += 4096) Exe.SetHex(phy + i, n.bytesToHex(code.slice(i, i + 4096)));
+		const begin = vir + p.meta.exports["_ChatAppendBegin@8"], route = vir + p.meta.exports["_ChatRoute@8"];
+		const end = vir + p.meta.exports["_ChatAppendEnd@4"];
+		const emit = (key, site, size, a) =>
+		{
+			const [address, target] = CACHE.allocate(c.Key, key, "90 ".repeat(c.Capacity), 16);
+			if (a.bytes.length > c.Capacity) throw Error("Chat diagnostics: bridge capacity exceeded");
+			Exe.SetHex(address, a.finish(target) + " 90".repeat(c.Capacity - a.bytes.length));
+			Exe.SetJMP(Exe.Vir2Phy(site), target, size - 5);
+			return target;
+		};
+		let a = n.asm();
+		a.emit(0x9C, 0x60, 0x55, 0x56); a.call(begin);
+		a.emit(0x83, 0xF8, 2); a.jcc(0x84, "stock");
+		a.emit(0x85, 0xC0); a.jcc(0x84, "wrap");
+		a.emit(0x61, 0x9D, 0x8B, 0x4D, 0xF0); a.jmp(0x83D49B);
+		a.label("wrap"); a.emit(0x61, 0x9D, 0x8B, 0x4D, 0xF0); a.jmp(0x83D4AF);
+		a.label("stock"); a.emit(0x61, 0x9D, 0x83, 0xEC, 0x18, 0x8B, 0xCC); a.jmp(0x83D457);
+		const bridge = emit("begin", 0x83D452, 5, a);
+		a = n.asm(); a.emit(0x9C, 0x60, 0x6A, 1, 0x55); a.call(route);
+		a.emit(0x61, 0x9D, 0xFF, 0x75, 0x10, 0x8B, 1); a.jmp(0x83D4A0);
+		const direct = emit("direct", 0x83D49B, 5, a);
+		a = n.asm(); a.emit(0x9C, 0x60, 0x6A, 0, 0x55); a.call(route);
+		a.emit(0x61, 0x9D, 0x57, 0x8D, 0x45, 0xE0, 0x50); a.jmp(0x83D4B4);
+		const wrap = emit("wrap", 0x83D4AF, 5, a);
+		a = n.asm(); a.emit(0x9C, 0x60, 0x55); a.call(end);
+		a.emit(0x61, 0x9D, 0x59, 0x5F, 0x5E, 0x5B, 0x8B, 0xE5); a.jmp(0x83D60C);
+		const finish = emit("end", 0x83D606, 6, a);
+		const tagHex = n.bytesToHex(Array.from("ChatDiagnostics.v1\0").map(ch => ch.charCodeAt(0)));
+		const [tagPhy, tagVir] = CACHE.allocate(c.Key, "tag", tagHex, 4); Exe.SetHex(tagPhy, tagHex);
+		const values = [tagVir, 1, vir, p.size, vir + link, vir + p.meta.exports.ChatDiagnosticsPhase,
+			vir + config, bridge, matcherVir, direct, wrap, finish, vir + p.meta.exports.ChatDiagnosticsLayout];
+		const bytes = []; for (const value of values) for (let i = 0; i < 4; ++i) bytes.push(value >>> (8 * i) & 255);
+		const hex = n.bytesToHex(bytes), [recordPhy] = CACHE.allocate(c.Key, "record", hex, 4); Exe.SetHex(recordPhy, hex);
+		const result = {vir, size: p.size, link: vir + link, phase: vir + p.meta.exports.ChatDiagnosticsPhase,
+			config: vir + config, bridge, matcher: matcherVir, direct, wrap, finish, available,
+			bootstrap: vir + p.meta.exports["_ChatDiagnosticsBootstrap@0"]};
+		CACHE.put(c.Key + ".State", result);
+		return result;
+	}
+	finally { Exe.EndTag(); Exe.ActivePatch = owner; }
+};
+
+ChatDiagnosticsStatic.register = function(owner, flag)
+{
+	const c = ChatDiagnosticsStatic, n = ChatPerformanceNative;
+	if (Exe.BuildDate !== 20250716 || Exe.GetUint32(Exe.GetUint32(0x3C) + 52) !== 0x400000)
+		throw Error("Chat diagnostics require the fixed-base 2025-07-16 profile");
+	n.assertCode("Chat diagnostics preprocessing", 0x83D452, "83 EC 18 8B CC");
+	n.assertCode("Chat diagnostics direct continuation", 0x83D49B, "FF 75 10 8B 01");
+	n.assertCode("Chat diagnostics wrap continuation", 0x83D4AF, "57 8D 45 E0 50");
+	n.assertCode("Chat diagnostics cleanup", 0x83D5FC, "8B 4D F4 64 89 0D 00 00 00 00 59 5F 5E 5B 8B E5 5D C2 0C 00");
+	if (!CACHE.getTag(c.Key)) CACHE.setup(c.Key, c.Key, {cleanTag_after_userDel: false});
+	const registry = CACHE.get(c.Key + ".Registry") || {}; registry[owner] = flag;
+	CACHE.put(c.Key + ".Registry", registry); CACHE.addUser(c.Key, owner);
+	return c.refresh();
+};
+
+ChatDiagnosticsStatic.unregister = function(owner)
+{
+	const c = ChatDiagnosticsStatic, registry = CACHE.get(c.Key + ".Registry") || {};
+	if (!Object.prototype.hasOwnProperty.call(registry, owner)) return;
+	delete registry[owner]; CACHE.put(c.Key + ".Registry", registry); CACHE.delUser(c.Key, owner);
+	if (CACHE.hasUsers(c.Key)) c.refresh(); else CACHE.put(c.Key + ".State", null);
+};
+
+ChatDiagnosticsStatic.installConfig = function()
+{
+	if (Warp.TestMode) return;
+	const target = System.DirPath(Warp.TgtExe) + "/ChatPerformance.ini";
+	const f = new BinFile(target, "r"), present = f.Valid; f.Close();
+	if (!present && !System.Copy(Warp.Path + "/Inputs/ChatDiagnostics/ChatPerformance.ini", target, false))
+		throw Error("Chat diagnostics: cannot install " + target);
+};

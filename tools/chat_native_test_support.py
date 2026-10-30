@@ -1,13 +1,12 @@
 """Bounded x86/CRT/font test boundaries; native classifiers and splitters execute.
 
 No renderer, image assets, private UI patch or OS thread runs in Unicorn.
-The separate Win32 integration host tests the actual OS worker and file I/O.
+The separate Win32 host tests production cache code on the real x86 ABI.
 """
 
 import struct
 
 import pefile
-from chat_diagnostics_test_support import isolate_os
 from unicorn import UC_ARCH_X86, UC_HOOK_CODE, UC_MODE_32, Uc
 from unicorn.x86_const import *
 
@@ -24,7 +23,6 @@ class Machine:
         self.u.mem_map(0, 0x1000)
         self.u.mem_map(self.base, (self.pe.OPTIONAL_HEADER.SizeOfImage + 4095) & ~4095)
         self.u.mem_write(self.base, self.pe.get_memory_mapped_image())
-        self.chat_diagnostics = isolate_os(self)
         self.u.mem_map(0x20000000, 0x08000000)
         self.u.mem_map(0x30000000, 0x10000)
         self.heap, self.stop = 0x20000000, 0x30000000
@@ -67,28 +65,10 @@ class Machine:
         data = obj if self.r(obj + 20) < 16 else self.r(obj)
         return bytes(self.u.mem_read(data, self.r(obj + 16))).decode("latin1")
 
-    def text_buffer(self, value):
-        address = self.alloc(len(value) + 1)
-        self.u.mem_write(address, value.encode("latin1") + b"\0")
-        return address
-
     def iat(self, address, fn):
         stub = self.alloc(16)
         self.stub(stub, fn)
         self.w(address, stub)
-
-    def strcpy_s(self):
-        dest, cap, src = self.args(3)
-        data = self.cstr(src).encode("latin1") + b"\0"
-        assert len(data) <= cap
-        self.u.mem_write(dest, data)
-        self.ret(0)
-
-    def assign(self):
-        text, count = self.args(2)
-        obj = self.u.reg_read(UC_X86_REG_ECX)
-        self.string(bytes(self.u.mem_read(text, count)), obj)
-        self.ret(8, obj)
 
     def alloc(self, size):
         address = self.heap

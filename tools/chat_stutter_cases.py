@@ -8,17 +8,16 @@ import argparse
 import hashlib
 import json
 import random
-import struct
 from pathlib import Path
 
 import pefile
 from chat_cache_cases import CacheMachine
-from chat_native_test_support import Machine, native_crt, pack
+from chat_native_test_support import Machine, native_crt
 from chat_native_test_support import Machine as IconMachine
+from chat_patch_layout import installed_stutter
 from unicorn import UC_HOOK_CODE
 from unicorn.x86_const import *
 
-ROOT = Path(__file__).resolve().parents[1]
 SOURCE = None  # Supplied by the public test runner after validating the original input.
 TAGS = [0x1202C28, 0x1202C40, 0x1202B50, 0x1202B68]
 NORMAL = [b"<ITEM>", b"</ITEM>", b"<ITEML>", b"</ITEML>"]
@@ -88,16 +87,7 @@ class StutterMachine(IconMachine):
             self.u.ctl_remove_cache(0x83D452, 0x83D457)
 
     def descriptor(self):
-        raw = self.pe.__data__
-        pos = raw.find(b"ChatStutterFix.v1\0")
-        assert pos >= 0
-        marker = self.base + self.pe.get_rva_from_offset(pos)
-        data = self.pe.get_memory_mapped_image()
-        record = data.find(pack(marker))
-        assert record >= 0 and data.find(pack(marker), record + 1) < 0
-        values = struct.unpack_from("<8I", data, record + 4)
-        assert values[2:] == (0x83D452, 0x575780, *TAGS)
-        return dict(bridge=values[0], matcher=values[1])
+        return installed_stutter(self.pe)
 
     def observe(self, address, callback):
         self.u.hook_add(

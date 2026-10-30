@@ -146,10 +146,6 @@ def main():
         compiler_version=version,
         exception_policy="Native exception dispatch unchanged; an unwound miss disables caching until restart",
     )
-    header = ROOT / "Scripts/Runtime/ChatDiagnostics/api.h"
-    meta["shared_api_sha256"] = hashlib.sha256(
-        header.read_bytes().replace(b"\r\n", b"\n")
-    ).hexdigest()
     out.with_suffix(".json").write_text(json.dumps(meta, indent=2) + "\n")
     print(json.dumps(meta, indent=2))
 

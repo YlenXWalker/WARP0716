@@ -1,13 +1,12 @@
 {
   "version": 1,
   "client": 20250716,
-  "size": 8212,
+  "size": 8196,
   "exports": {
-    "@ChatFragmentWidth@32": 336,
+    "@ChatFragmentWidth@32": 240,
     "ChatCacheApi": 8192,
-    "ChatCacheDiagnostics": 8196,
     "ChatCacheLayout": 4096,
-    "_ChatGlyphWidth@16": 1360
+    "_ChatGlyphWidth@16": 976
   },
   "layout": [
     38596,
@@ -25,11 +24,10 @@
     116,
     1140
   ],
-  "source_sha256": "faac1247fa70c09775420d9b849857f9ed19648d996e335f6b43b5f08f7e77d3",
-  "payload_sha256": "97d288736a9defe03bf02a0d5823905d58e3e4929e7a1e0f89a098b5129af69e",
+  "source_sha256": "de90d867ae270d70ce7d8b0206cbe3ce943c0a5eefe2fe180c7ac6ba4707fe33",
+  "payload_sha256": "b6cd569a722cd4796f79dd171dcdf3a85b8b34fa58a183e36f28ffa9c9056768",
   "imports": [],
   "compiler": "MSVC x86",
   "compiler_version": "14.51.36231",
-  "exception_policy": "Native exception dispatch unchanged; an unwound miss disables caching until restart",
-  "shared_api_sha256": "a969b25bd013581931946c548762a324ceca1e9db2f0c6d06541f8bd7f6ae5b7"
+  "exception_policy": "Native exception dispatch unchanged; an unwound miss disables caching until restart"
 }

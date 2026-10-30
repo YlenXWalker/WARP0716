@@ -86,7 +86,7 @@ ChatMeasurementCache = function(_)
 		stateSize !== layout[0] || JSON.stringify(layout) !== JSON.stringify(meta.layout) ||
 		api !== meta.exports.ChatCacheApi || api + 4 > size || ((crc ^ 0xFFFFFFFF) >>> 0) !== u32(bytes, 28))
 		throw Error("ChatMeasurementCache: invalid payload");
-	for (const name of ["ChatCacheLayout", "_ChatGlyphWidth@16", "@ChatFragmentWidth@32", "ChatCacheDiagnostics"])
+	for (const name of ["ChatCacheLayout", "_ChatGlyphWidth@16", "@ChatFragmentWidth@32"])
 		if (!Number.isInteger(meta.exports[name]) || meta.exports[name] < 0 || meta.exports[name] >= size)
 			throw Error("ChatMeasurementCache: missing export " + name);
 	if (meta.exports.ChatCacheLayout + 56 > size) throw Error("ChatMeasurementCache: invalid layout export");
@@ -97,18 +97,14 @@ ChatMeasurementCache = function(_)
 	// Complete, independently owned state reservation. No borrowed native slack,
 	// per-draw allocation or retained pointers to temporary text buffers.
 	const [phy, vir] = Exe.Allocate(size, 0x1000);
-	const state = n.allocateBytes(new Array((stateSize + 4095) & ~4095).fill(0), 0x1000);
+	const stateVir = n.allocateBytes(new Array((stateSize + 4095) & ~4095).fill(0), 0x1000);
 	for (let i = 0; i < count; ++i)
 	{
 		const offset = u32(bytes, 32 + i * 4);
 		if (offset + 4 > size || u32(code, offset) >= size) throw Error("ChatMeasurementCache: invalid relocation");
 		put(code, offset, u32(code, offset) + vir);
 	}
-	const diagnostics = ChatDiagnosticsStatic.register("ChatMeasurementCache", 2);
-	put(code, api, state.vir);
-	put(code, meta.exports.ChatCacheDiagnostics, diagnostics.link);
-	put(code, meta.exports.ChatCacheDiagnostics + 8, diagnostics.bootstrap);
-	put(code, meta.exports.ChatCacheDiagnostics + 12, diagnostics.phase);
+	put(code, api, stateVir);
 	for (let i = 0; i < code.length; i += 4096)
 		Exe.SetHex(phy + i, n.bytesToHex(code.slice(i, i + 4096)));
 	const glyph = vir + meta.exports["_ChatGlyphWidth@16"], fragment = vir + meta.exports["@ChatFragmentWidth@32"];
@@ -125,19 +121,10 @@ ChatMeasurementCache = function(_)
 	a.jmp(0xA23BB5);
 	// AutoHook owns allocation and all rel32 transfers. The preceding full-byte
 	// guards reject conflicting inputs before either native hook is written.
-	const bridge = AutoHook(Exe.Vir2Phy(0xA23BA9), n.bytesToHex(a.bytes),
-		{postProc: (unused, address) => a.finish(address), nops: 7, snap: 0x1000});
+	AutoHook(Exe.Vir2Phy(0xA23BA9), n.bytesToHex(a.bytes),
+		{postProc: (_, address) => a.finish(address), nops: 7, snap: 0x1000});
 	Exe.SetCALL(Exe.Vir2Phy(0x83DEB7), fragment, 0);
-	const record = [];
-	for (const value of [n.allocateString("ChatMeasurementCache.v1").vir, vir, size, state.vir,
-		state.size, bridge[1], glyph, fragment, vir + meta.exports.ChatCacheLayout])
-		record.push(value & 255, value >>> 8 & 255, value >>> 16 & 255, value >>> 24);
-	n.allocateBytes(record, 4);
-	CACHE.put("ChatMeasurementCache.Runtime", {vir, state, bridge, glyph, fragment});
 	return true;
 };
 
-ChatMeasurementCache.cleanup = () => ChatDiagnosticsStatic.unregister("ChatMeasurementCache");
 ChatMeasurementCache.validate = () => Exe.BuildDate === 20250716;
-
-ChatMeasurementCache.onApplied = () => ChatDiagnosticsStatic.installConfig();

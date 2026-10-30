@@ -10,14 +10,6 @@
     "Cache_Fix.txt",
     "Stutter_Fix.txt"
   ],
-  "local_integration_tests": {
-    "classifier_vectors": 305,
-    "native_append_wrapping_vectors": 172,
-    "native_splitter_vectors": 192,
-    "four_runtime_state_wrapping_vectors": 96,
-    "win32_worker_four_states": true,
-    "logging_off_and_cold_fragment_bootstrap": true
-  },
   "historical_live_benchmark": {
     "date": "2026-10-30",
     "scope": "Local integration profile including ChatItemIcons and other fixed UI patches; these are historical local measurements, not unmodified upstream FPS claims.",
@@ -59,51 +51,103 @@
       "Stutter-only did not show an independent frame-time improvement in this workload."
     ]
   },
+  "historical_instrumented_local_tests": {
+    "classifier_vectors": 305,
+    "native_append_wrapping_vectors": 172,
+    "native_splitter_vectors": 192,
+    "four_runtime_state_wrapping_vectors": 96,
+    "win32_worker_four_states": true,
+    "logging_off_and_cold_fragment_bootstrap": true
+  },
+  "production_scope": {
+    "runtime_logging": false,
+    "runtime_counters": false,
+    "timing_probes": false,
+    "config_polling": false,
+    "worker_thread": false,
+    "runtime_debug_controls": false,
+    "diagnostic_descriptors": false,
+    "selection": "Select each fix independently in WARP"
+  },
   "upstream_validation": {
-    "base_commit": "48dde104",
+    "base_commit": "48dde104ea4e7487eb4c1cc52ded7d2abe433966",
     "builds": {
-      "both": {
-        "passed": true,
-        "exe_sha256": "3cf6fb99c37d015651622bbdb72a363419fba3298ea8890bf5a0a44c3f1d6b1f",
+      "baseline": {
+        "exe": "baseline/Ragnarok.exe",
+        "sha256": "ead7c0a316bc6c27705a5a6876daf5093abec31677f3c1af7525c1709b201bff",
+        "patches": []
+      },
+      "stutter": {
+        "exe": "stutter/Ragnarok.exe",
+        "sha256": "ba1e9482c6a7b185e80d5c492bb69ae30455398a685095ba349dfe45fc41ce8a",
         "patches": [
-          "ChatMeasurementCache",
           "ChatStutterFix"
         ]
       },
       "cache": {
-        "passed": true,
-        "exe_sha256": "a87b3c1a3ac1e4952e3e0c7d2303836ff48cedb3e1269b20647603d1b1067e76",
+        "exe": "cache/Ragnarok.exe",
+        "sha256": "d2f3fbc9c0a4f1a9d59a033f47b674f225bdef133586eb022341a503675cd503",
         "patches": [
           "ChatMeasurementCache"
         ]
       },
-      "stutter": {
-        "passed": true,
-        "exe_sha256": "f9dc630f36d05385d7dfeb40b83e6340afc55de264263dad4c831ae6778313f0",
-        "patches": [
-          "ChatStutterFix"
-        ]
-      },
-      "reverse": {
-        "passed": true,
-        "exe_sha256": "3cf6fb99c37d015651622bbdb72a363419fba3298ea8890bf5a0a44c3f1d6b1f",
+      "both": {
+        "exe": "both/Ragnarok.exe",
+        "sha256": "d285ef9adb75f7033cba790827ce04cc309f398bfc37099a78a94b89907b997e",
         "patches": [
           "ChatMeasurementCache",
           "ChatStutterFix"
         ]
       },
       "reverse-invocation": {
-        "passed": true,
-        "exe_sha256": "3cf6fb99c37d015651622bbdb72a363419fba3298ea8890bf5a0a44c3f1d6b1f",
+        "exe": "reverse-invocation/Ragnarok.exe",
+        "sha256": "d285ef9adb75f7033cba790827ce04cc309f398bfc37099a78a94b89907b997e",
         "patches": [
-          "ChatMeasurementCache",
-          "ChatStutterFix"
+          "ChatStutterFix",
+          "ChatMeasurementCache"
         ]
       },
       "recommended": {
-        "passed": true,
-        "exe_sha256": "1e3f7df89ea2fd4e8e438857ac212da9736ee6728f3071d67681fe40cee85258",
+        "exe": "recommended/Ragnarok.exe",
+        "sha256": "bd88e0198512eb9a2852fdb7a0642bbc64409e677ef94cdb9d705045f438ae63",
         "patches": [
+          "EnableWho",
+          "EnableShowName",
+          "MediumCamAngle",
+          "UseOldLogin",
+          "AlwaysAscii",
+          "CallKoreaClientInfo",
+          "DataFolderFirst",
+          "PlainTextDesc",
+          "LoadKrExtSettings",
+          "HideBuildInfo",
+          "FixArrowsCharset",
+          "TranslateClient",
+          "NoGGuard",
+          "CustomItemInfoLub",
+          "CustomAchieveLub",
+          "CustomTownInfoLub",
+          "CustomTipboxLub",
+          "CustomMapInfoLub",
+          "CustomOngQuestInfoLub",
+          "CustomRcmdQuestInfoLub",
+          "CustomspopupLub",
+          "CustomQuestQualiLub",
+          "GRFsFromIni",
+          "EnableSysMenu",
+          "No1and1Arg",
+          "RestoreIcon",
+          "NoNagle",
+          "NoPassEncr",
+          "OpenToServiceSelect",
+          "GuildBrackets",
+          "FixChatAt",
+          "NoHourly",
+          "NoHelpMsg",
+          "FixSkillbarReset",
+          "NoGravityAds",
+          "NoGravityLogo",
+          "FixLatestNCWin",
           "ChatMeasurementCache",
           "ChatStutterFix"
         ]
@@ -112,8 +156,13 @@
     "native_classifier_vectors": 305,
     "native_append_wrapping_vectors": 172,
     "native_splitter_vectors": 192,
-    "runtime_state_wrapping_vectors": 96,
-    "win32_worker_four_states": true,
-    "payloads_identical_to_local_validated_build": true
+    "four_independent_build_state_vectors": 96,
+    "native_splitter_measurements": {
+      "original": 4400,
+      "cache": 21
+    },
+    "win32_cache_host": "PASS native Win32 cache: identical widths, cold fragment, invalidation, busy fallback, SEH unwind; native calls cache-on=13 cache-off=4400",
+    "runtime_diagnostics_present": false,
+    "new_live_gameplay_acceptance": false
   }
 }

@@ -11,6 +11,7 @@ from pathlib import Path
 
 from chat_native_test_support import Machine, native_crt, pack
 from chat_native_test_support import Machine as IconMachine
+from chat_patch_layout import installed_cache
 from unicorn.x86_const import *
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,18 +27,8 @@ class CacheMachine(IconMachine):
             for e in mod.imports
             if e.name
         }
-        tag = self.pe.__data__.find(b"ChatMeasurementCache.v1\0")
-        assert tag >= 0
-        tagva = self.base + self.pe.get_rva_from_offset(tag)
-        refs = []
-        for s in self.pe.sections:
-            data = s.get_data()
-            pos = -1
-            while (pos := data.find(pack(tagva), pos + 1)) >= 0:
-                refs.append(self.base + s.VirtualAddress + pos)
-        assert len(refs) == 1
-        names = "code code_size state state_size bridge glyph fragment layout".split()
-        self.c = dict(zip(names, [self.r(refs[0] + 4 + i * 4) for i in range(8)]))
+        self.c = installed_cache(self.pe)
+        assert self.c
         self.layout = [self.r(self.c["layout"] + 4 * i) for i in range(14)]
         self.native_calls = 0
         self.contexts = {}
@@ -300,7 +291,7 @@ def test_invalidation_and_storage(m):
     before = m.native_calls
     m.glyph(b"\x81\x01")
     assert m.native_calls == before + 1
-    # Contention/recursion and deliberately disabled cache keep native fallback.
+    # Contention and abandoned measurements keep the native fallback.
     m.w(state, 1)
     assert m.glyph()[0] == 0
     before = m.native_calls
@@ -498,14 +489,8 @@ def main():
     ]:
         m.clear_cache()
         test(m)
-    current = bytearray(m.u.mem_read(m.c["code"], m.c["code_size"]))
-    expected = bytearray(original_code)
-    meta = json.loads((ROOT / "Inputs/ChatMeasurementCache/runtime.json").read_text())
-    if "ChatCacheDiagnostics" in meta["exports"]:
-        off = meta["exports"]["ChatCacheDiagnostics"] + 4
-        current[off : off + 4] = expected[off : off + 4]
-    assert current == expected, (
-        "Only the declared epoch data may change; emitted code stays immutable"
+    assert bytes(m.u.mem_read(m.c["code"], m.c["code_size"])) == original_code, (
+        "Emitted code changed"
     )
     assert bytes(m.u.mem_read(tail, 32)) == b"Z" * 32, "State extent exceeded"
     result = test_native_splitter(args.exe)

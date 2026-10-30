@@ -78,18 +78,45 @@ ChatStutterFix = function(_)
 		"FF 75 10 8B 01 FF 75 0C 56 FF 90 E4 00 00 00 E9 C7 00 00 00");
 	n.assertCode("Chat native-wrap continuation", 0x83D4AF, "57 8D 45 E0 50 56 E8 66 65 1E 00");
 	n.assertCode("Chat append cleanup ABI", 0x83D60D, "C2 0C 00");
-	const diagnostics = ChatDiagnosticsStatic.register("ChatStutterFix", 1);
-	const matcher = {vir: diagnostics.matcher}, bridge = [0, diagnostics.bridge];
-	const record = [];
-	for (const value of [n.allocateString("ChatStutterFix.v1").vir, bridge[1], matcher.vir,
-		0x83D452, 0x575780, ...ChatDiagnosticsStatic.Tags])
-		record.push(value & 255, value >>> 8 & 255, value >>> 16 & 255, value >>> 24);
-	n.allocateBytes(record, 4);
-	CACHE.put("ChatStutterFix.Runtime", {bridge, matcher});
+	const matcherCode = ChatStutterFix.matcher();
+	const [matcherPhy, matcherVir] = Exe.Allocate(matcherCode.bytes.length, 16);
+	Exe.SetHex(matcherPhy, matcherCode.finish(matcherVir));
+	const a = n.asm();
+	a.emit(0x9C, 0x60, 0x85, 0xF6); // Preserve flags/registers; null replays stock.
+	a.jcc(0x84, "stock");
+	a.emit(0x56); a.call(matcherVir);
+	a.emit(0x85, 0xC0); a.jcc(0x84, "wrap");
+	a.emit(0x61, 0x9D, 0x8B, 0x4D, 0xF0); a.jmp(0x83D49B);
+	a.label("wrap");
+	a.emit(0x61, 0x9D, 0x8B, 0x4D, 0xF0); a.jmp(0x83D4AF);
+	a.label("stock");
+	a.emit(0x61, 0x9D, 0x83, 0xEC, 0x18, 0x8B, 0xCC); a.jmp(0x83D457);
+	AutoHook(Exe.Vir2Phy(0x83D452), n.bytesToHex(a.bytes),
+		{postProc: (_, address) => a.finish(address)});
 	return true;
 };
 
-ChatStutterFix.cleanup = () => ChatDiagnosticsStatic.unregister("ChatStutterFix");
-ChatStutterFix.validate = () => Exe.BuildDate === 20250716;
+ChatStutterFix.matcher = function()
+{
+	const a = ChatPerformanceNative.asm();
+	a.emit(0x55, 0x8B, 0xEC, 0x53, 0x56, 0x57, 0x8B, 0x75, 8, 0x8B, 0xFE);
+	a.label("length"); a.emit(0x80, 0x3F, 0); a.jcc(0x84, "length_done");
+	a.emit(0x47); a.jmp("length");
+	a.label("length_done"); a.emit(0x2B, 0xFE);
+	for (const tag of [0x01202C28, 0x01202C40, 0x01202B50, 0x01202B68])
+	{
+		a.emit(0xBB); a.dword(tag);
+		a.emit(0x83, 0x7B, 20, 16); a.jcc(0x82, "inline_" + tag);
+		a.emit(0x8B, 0x1B);
+		a.label("inline_" + tag);
+		a.emit(0xFF, 0x35); a.dword(tag + 16);
+		a.emit(0x53, 0x6A, 0, 0x57, 0x56); a.call(0x575780);
+		a.emit(0x83, 0xC4, 20, 0x83, 0xF8, 0xFF); a.jcc(0x85, "hit");
+	}
+	a.emit(0x33, 0xC0); a.jmp("done");
+	a.label("hit"); a.emit(0xB8); a.dword(1);
+	a.label("done"); a.emit(0x5F, 0x5E, 0x5B, 0x8B, 0xE5, 0x5D, 0xC2, 4, 0);
+	return a;
+};
 
-ChatStutterFix.onApplied = () => ChatDiagnosticsStatic.installConfig();
+ChatStutterFix.validate = () => Exe.BuildDate === 20250716;

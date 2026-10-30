@@ -3,7 +3,9 @@
 
 // Native measurement caching for 2025-07-16; no wrapping or tag decisions.
 // Reference design: SCIEL & ICE, Cache_Fix.txt.
-#include "../ChatDiagnostics/api.h"
+extern "C" long __cdecl _InterlockedCompareExchange(volatile long*, long, long);
+#pragma intrinsic(_InterlockedCompareExchange)
+#define CHAT_OFFSET(type, field) ((u32) & (((type*)0)->field))
 
 // Profile constants remain fixed in the emitted client. The native Win32 host
 // substitutes only its font boundary and backing globals at compile time.
@@ -52,23 +54,11 @@ static_assert(sizeof(State) == 38596, "Native chat cache ABI changed");
 extern "C" __declspec(dllexport) struct Api {
 	State* state;
 } ChatCacheApi = {};
-extern "C" __declspec(dllexport) struct Diagnostics {
-	ChatDiagLink* link;
-	u32 epoch;
-	void(__stdcall* bootstrap)();
-	volatile long* phase;
-} ChatCacheDiagnostics = {};
-
-static void initializeDiagnostics() {
-	if (ChatCacheDiagnostics.phase && !*ChatCacheDiagnostics.phase &&
-		ChatCacheDiagnostics.bootstrap)
-		ChatCacheDiagnostics.bootstrap();
-}
 extern "C" __declspec(dllexport) const u32 ChatCacheLayout[] = {sizeof(State), sizeof(Key),
 	sizeof(GlyphOwner), sizeof(AsciiEntry), sizeof(TextEntry), sizeof(FragmentEntry),
-	CD_OFFSET(State, owners), CD_OFFSET(State, fragmentOwner), CD_OFFSET(State, fragmentKey),
-	CD_OFFSET(State, fragments), CD_OFFSET(GlyphOwner, generation), CD_OFFSET(GlyphOwner, nextText),
-	CD_OFFSET(GlyphOwner, ascii), CD_OFFSET(GlyphOwner, text)};
+	CHAT_OFFSET(State, owners), CHAT_OFFSET(State, fragmentOwner), CHAT_OFFSET(State, fragmentKey),
+	CHAT_OFFSET(State, fragments), CHAT_OFFSET(GlyphOwner, generation), CHAT_OFFSET(GlyphOwner, nextText),
+	CHAT_OFFSET(GlyphOwner, ascii), CHAT_OFFSET(GlyphOwner, text)};
 
 static bool eligible(const void* owner) {
 	if (!owner)
@@ -133,42 +123,15 @@ static void advance(GlyphOwner* context) {
 	context->generation = 1;
 }
 
-// The worker publishes a new epoch before enabling a previously disabled cache.
-// Only the measurement owner, while holding busy, touches cached entries.
-static void synchronize(State* state, ChatDiagLink* link) {
-	if (!link || ChatCacheDiagnostics.epoch == link->cacheEpoch)
-		return;
-	for (u32 i = 0; i < 4; ++i)
-		state->owners[i].owner = 0;
-	state->fragmentOwner = 0;
-	ChatCacheDiagnostics.epoch = link->cacheEpoch;
-	chat_count(link, CD_INVALIDATE);
-}
-
 // Returns zero only when the adapter must execute the displaced native block.
 // The output is separate so zero/negative native widths keep their exact value.
 extern "C" __declspec(dllexport) int __stdcall ChatGlyphWidth(
 	const void* owner, const u8* text, u32 length, int* output) {
-	initializeDiagnostics();
-	ChatDiagLink* diagnostics = ChatCacheDiagnostics.link;
-	chat_count(diagnostics, CD_GLYPH_REQUEST);
-	if (!(chat_control(diagnostics) & CD_CACHE)) {
-		chat_count(diagnostics, CD_GLYPH_DISABLED);
-		chat_count(diagnostics, CD_GLYPH_NATIVE);
-		return 0;
-	}
 	State* state = ChatCacheApi.state;
-	if (!state || !text || !output || length == 0 || length > 255 || !eligible(owner)) {
-		chat_count(diagnostics, CD_GLYPH_FALLBACK);
-		chat_count(diagnostics, CD_GLYPH_NATIVE);
+	if (!state || !text || !output || length == 0 || length > 255 || !eligible(owner))
 		return 0;
-	}
-	if (_InterlockedCompareExchange(&state->busy, 1, 0)) {
-		chat_count(diagnostics, CD_GLYPH_BUSY);
-		chat_count(diagnostics, CD_GLYPH_NATIVE);
+	if (_InterlockedCompareExchange(&state->busy, 1, 0))
 		return 0;
-	}
-	synchronize(state, diagnostics);
 	Key key;
 	capture(owner, &key);
 	GlyphOwner* context = 0;
@@ -197,7 +160,6 @@ extern "C" __declspec(dllexport) int __stdcall ChatGlyphWidth(
 	if (length == 1 && text[0] < 128) {
 		ascii = &context->ascii[text[0]];
 		if (ascii->generation == context->generation) {
-			chat_count(diagnostics, CD_GLYPH_HIT);
 			*output = ascii->width;
 			state->busy = 0;
 			return 1;
@@ -207,15 +169,12 @@ extern "C" __declspec(dllexport) int __stdcall ChatGlyphWidth(
 			TextEntry* entry = &context->text[i];
 			if (entry->generation == context->generation && entry->length == length &&
 				sameText(entry->text, text, length)) {
-				chat_count(diagnostics, CD_GLYPH_HIT);
 				*output = entry->width;
 				state->busy = 0;
 				return 1;
 			}
 		}
 	}
-	chat_count(diagnostics, CD_GLYPH_MISS);
-	chat_count(diagnostics, CD_GLYPH_NATIVE);
 	int width = native(owner, text, length, 0, 12, 0, 0);
 	Key after;
 	capture(owner, &after);
@@ -240,34 +199,16 @@ extern "C" __declspec(dllexport) int __stdcall ChatGlyphWidth(
 // Fastcall's ECX receiver and six stack arguments match the original thiscall.
 extern "C" __declspec(dllexport) int __fastcall ChatFragmentWidth(const void* owner, void*,
 	const u8* text, u32 length, u32 style, u32 font, u32 bold, u32 options) {
-	initializeDiagnostics();
-	ChatDiagLink* diagnostics = ChatCacheDiagnostics.link;
-	chat_count(diagnostics, CD_FRAGMENT_REQUEST);
-	if (!(chat_control(diagnostics) & CD_CACHE)) {
-		chat_count(diagnostics, CD_FRAGMENT_DISABLED);
-		chat_count(diagnostics, CD_FRAGMENT_NATIVE);
-		return native(owner, text, length, style, font, bold, options);
-	}
 	State* state = ChatCacheApi.state;
-	if (!state || !text || length || style || font != 12 || bold || options || !eligible(owner)) {
-		chat_count(diagnostics, CD_FRAGMENT_FALLBACK);
-		chat_count(diagnostics, CD_FRAGMENT_NATIVE);
+	if (!state || !text || length || style || font != 12 || bold || options || !eligible(owner))
 		return native(owner, text, length, style, font, bold, options);
-	}
 	u32 size = 0, hash = 2166136261u;
 	for (; size < 512 && text[size]; ++size)
 		hash = (hash ^ text[size]) * 16777619u;
-	if (!size || size == 512) {
-		chat_count(diagnostics, CD_FRAGMENT_FALLBACK);
-		chat_count(diagnostics, CD_FRAGMENT_NATIVE);
+	if (!size || size == 512)
 		return native(owner, text, length, style, font, bold, options);
-	}
-	if (_InterlockedCompareExchange(&state->busy, 1, 0)) {
-		chat_count(diagnostics, CD_FRAGMENT_BUSY);
-		chat_count(diagnostics, CD_FRAGMENT_NATIVE);
+	if (_InterlockedCompareExchange(&state->busy, 1, 0))
 		return native(owner, text, length, style, font, bold, options);
-	}
-	synchronize(state, diagnostics);
 	Key key;
 	capture(owner, &key);
 	if (state->fragmentOwner != (u32)owner || !sameKey(&state->fragmentKey, &key)) {
@@ -279,13 +220,10 @@ extern "C" __declspec(dllexport) int __fastcall ChatFragmentWidth(const void* ow
 	FragmentEntry* entry = &state->fragments[hash & 31];
 	if (entry->width > 0 && entry->hash == hash && entry->length == size &&
 		sameText(entry->text, text, size)) {
-		chat_count(diagnostics, CD_FRAGMENT_HIT);
 		int width = entry->width;
 		state->busy = 0;
 		return width;
 	}
-	chat_count(diagnostics, CD_FRAGMENT_MISS);
-	chat_count(diagnostics, CD_FRAGMENT_NATIVE);
 	int width = native(owner, text, length, style, font, bold, options);
 	Key after;
 	capture(owner, &after);

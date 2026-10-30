@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULTS = [
-    "Scripts/Patches/ChatDiagnosticsStatic.qjs",
+    "Scripts/Patches/ChatPerformanceNative.qjs",
     "Scripts/Patches/ChatMeasurementCache.qjs",
     "Scripts/Patches/ChatStutterFix.qjs",
 ]

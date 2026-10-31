@@ -8,12 +8,12 @@ import zlib
 from pathlib import Path
 
 import pefile
-from chat_patch_layout import ROOT, installed_cache, installed_stutter
+from chat_patch_layout import ROOT, installed_cache, installed_histories, installed_stutter
 
 SOURCE_SHA256 = "ead7c0a316bc6c27705a5a6876daf5093abec31677f3c1af7525c1709b201bff"
 
 
-def verify(exe, source_path, stutter=True, cache=True):
+def verify(exe, source_path, stutter=True, cache=True, history_sites=None):
     assert hashlib.sha256(source_path.read_bytes()).hexdigest() == SOURCE_SHA256
     pe = pefile.PE(str(exe))
     source = pefile.PE(str(source_path))
@@ -22,6 +22,14 @@ def verify(exe, source_path, stutter=True, cache=True):
     assert not pe.OPTIONAL_HEADER.DllCharacteristics & 0x40
     s, c = installed_stutter(pe), installed_cache(pe)
     assert bool(s) == stutter and bool(c) == cache
+    histories = installed_histories(pe)
+    if history_sites is not None:
+        assert len(histories) == history_sites
+    if not stutter:
+        assert not histories
+    assert pe.get_data(0x866340 - base, 0x360) == source.get_data(
+        0x866340 - base, 0x360
+    ), "Native rich-text parser/fallback changed"
     # Neither production patch writes the append entry, route or cleanup hooks.
     for va, size in [
         (0x83D3F0, 0x62),
@@ -86,15 +94,16 @@ def verify(exe, source_path, stutter=True, cache=True):
             b".log",
         ]:
             assert word not in code, word
-    return dict(stutter=s, cache=c, no_runtime_diagnostics=True)
+    return dict(stutter=s, cache=c, history_sites=len(histories), no_runtime_diagnostics=True)
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("exe", type=Path)
     p.add_argument("--source", type=Path, required=True)
+    p.add_argument("--history-sites", type=int, choices=[0, 2])
     a = p.parse_args()
-    print(json.dumps(verify(a.exe, a.source), indent=2))
+    print(json.dumps(verify(a.exe, a.source, history_sites=a.history_sites), indent=2))
 
 
 if __name__ == "__main__":

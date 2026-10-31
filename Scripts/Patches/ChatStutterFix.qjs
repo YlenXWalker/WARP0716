@@ -21,12 +21,12 @@
 *                                                                          *
 *   Author(s)     : Louis T Steinhil                                       *
 *   Created Date  : 2026-10-29                                             *
-*   Last Modified : 2026-10-30                                             *
-*   Description   : Remove the 2025-07-16 chat tag-check temporary copy.   *
-*                   Use native byte search and runtime tag strings; retain *
-*                   stock wrapping and ChatItemIcons. SCIEL & ICE design.  *
-*   Research      : SCIEL and ICE supplied the chat performance            *
-*                   research and design information used by this port.     *
+*   Last Modified : 2026-10-31                                             *
+*   Description   : Remove pre-wrap and both history tag-check copies.     *
+*                   Guard native tag grammar; retain native wrapping,      *
+*                   ITEML/NAVIL routing and ChatItemIcons on 2025-07-16.   *
+*   Research      : SCIEL and ICE research; gidzdlcrz history-site         *
+*                   proposal derived from ICE (PR #75 comment).            *
 *   Evidence      : examples/chat_performance/validation.json              *
 *   Verifier      : tools/verify_chat_performance.py                       *
 *                                                                          *
@@ -78,6 +78,10 @@ ChatStutterFix = function(_)
 		"FF 75 10 8B 01 FF 75 0C 56 FF 90 E4 00 00 00 E9 C7 00 00 00");
 	n.assertCode("Chat native-wrap continuation", 0x83D4AF, "57 8D 45 E0 50 56 E8 66 65 1E 00");
 	n.assertCode("Chat append cleanup ABI", 0x83D60D, "C2 0C 00");
+	// Complete preflight: no hook is written unless all three sites match.
+	for (const site of ChatStutterFix.HistorySites)
+		n.assertCode("Chat history " + site.name, site.address, site.original);
+	n.assertCode("History tag-aware fallback", 0x8663C4, "E8 A7 4B F9 FF 84 C0 75 0D 56 8B CF E8 BB 79 FD FF E9 C2 02 00 00");
 	const matcherCode = ChatStutterFix.matcher();
 	const [matcherPhy, matcherVir] = Exe.Allocate(matcherCode.bytes.length, 16);
 	Exe.SetHex(matcherPhy, matcherCode.finish(matcherVir));
@@ -93,6 +97,25 @@ ChatStutterFix = function(_)
 	a.emit(0x61, 0x9D, 0x83, 0xEC, 0x18, 0x8B, 0xCC); a.jmp(0x83D457);
 	AutoHook(Exe.Vir2Phy(0x83D452), n.bytesToHex(a.bytes),
 		{postProc: (_, address) => a.finish(address)});
+	const historyCode = ChatStutterFix.historyProbe(matcherVir);
+	const [historyPhy, historyVir] = Exe.Allocate(historyCode.bytes.length, 16);
+	Exe.SetHex(historyPhy, historyCode.finish(historyVir));
+	for (const site of ChatStutterFix.HistorySites)
+	{
+		const h = n.asm();
+		// Replay the original callee-saved global receiver load, then omit
+		// only the by-value temporary and its consumed EH ownership state.
+		h.emit(0x8B, site.globalLoad); h.dword(0x131ED60);
+		h.emit(0xC7, 0x45, 0xFC, 0xFF, 0xFF, 0xFF, 0xFF, 0x9C, 0x60);
+		h.emit(site.messagePush); h.call(historyVir);
+		h.emit(0x85, 0xC0); h.jcc(0x84, "plain");
+		h.emit(0x61, 0x9D, 0x8B, 0xCF); h.jmp(site.tagged);
+		h.label("plain");
+		h.emit(0x61, 0x9D, 0x8B, 0xCF); h.jmp(site.plain);
+		const length = site.original.split(" ").length;
+		if (h.bytes.length > length) throw Error("Chat history bridge exceeds its owned block");
+		Exe.SetHex(Exe.Vir2Phy(site.address, CODE), h.finish(site.address) + " 90".repeat(length - h.bytes.length));
+	}
 	return true;
 };
 
@@ -119,4 +142,55 @@ ChatStutterFix.matcher = function()
 	return a;
 };
 
+ChatStutterFix.historyProbe = function(exactMatcher)
+{
+	const a = ChatPerformanceNative.asm();
+	a.emit(0x55, 0x8B, 0xEC);
+	for (const tag of [0x01202C28, 0x01202C40, 0x01202B50, 0x01202B68])
+	{
+		a.emit(0x83, 0x3D); a.dword(tag + 16); a.emit(0);
+		a.jcc(0x84, "exact");
+		a.emit(0xB9); a.dword(tag);
+		a.emit(0x83, 0x79, 20, 16); a.jcc(0x82, "inline_" + tag);
+		a.emit(0x8B, 0x09);
+		a.label("inline_" + tag);
+		a.emit(0x80, 0x39, 0x3C); a.jcc(0x85, "exact");
+	}
+	a.emit(0x8B, 0x55, 8);
+	a.label("scan"); a.emit(0x8A, 0x02, 0x42, 0x84, 0xC0);
+	a.jcc(0x84, "plain");
+	a.emit(0x3C, 0x3C); a.jcc(0x85, "scan");
+	a.emit(0xB8); a.dword(1); a.jmp("done");
+	a.label("plain"); a.emit(0x33, 0xC0); a.jmp("done");
+	a.label("exact"); a.emit(0xFF, 0x75, 8); a.call(exactMatcher);
+	a.label("done"); a.emit(0x8B, 0xE5, 0x5D, 0xC2, 4, 0);
+	return a;
+};
+
 ChatStutterFix.validate = () => Exe.BuildDate === 20250716;
+
+ChatStutterFix.HistorySites = [
+	{
+		name: "site1", address: 0x83D73A,
+		globalLoad: 0x1D, messagePush: 0x56,
+		tagged: 0x83D78C, plain: 0x83D79C,
+		original:
+			"8B 1D 60 ED 31 01 83 EC 18 8B CC 89 65 E8 8B D6 " +
+			"89 01 89 41 10 8D 42 01 C7 41 14 0F 00 00 00 89 " +
+			"45 08 0F 1F 40 00 8A 02 42 84 C0 75 F9 2B 55 08 " +
+			"52 56 E8 CF 41 CB FF C7 45 FC 00 00 00 00 C7 45 " +
+			"FC FF FF FF FF 8B CB E8 EA D7 FB FF 8B CF 84 C0 " +
+			"74 10"
+	},
+	{
+		name: "site2", address: 0x83DA71,
+		globalLoad: 0x35, messagePush: 0x53,
+		tagged: 0x83DAC1, plain: 0x83DAD8,
+		original:
+			"8B 35 60 ED 31 01 83 EC 18 8B D4 89 65 CC 8B CB " +
+			"89 02 89 42 10 8D 41 01 C7 42 14 0F 00 00 00 89 " +
+			"45 D0 8A 01 41 84 C0 75 F9 2B 4D D0 51 53 8B CA " +
+			"E8 9A 3E CB FF C7 45 FC 02 00 00 00 C7 45 FC FF " +
+			"FF FF FF 8B CE E8 B5 D4 FB FF 8B CF 84 C0 74 17"
+	}
+];

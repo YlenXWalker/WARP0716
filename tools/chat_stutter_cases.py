@@ -20,7 +20,7 @@ from unicorn.x86_const import *
 
 SOURCE = None  # Supplied by the public test runner after validating the original input.
 TAGS = [0x1202C28, 0x1202C40, 0x1202B50, 0x1202B68]
-NORMAL = [b"<ITEM>", b"</ITEM>", b"<ITEML>", b"</ITEML>"]
+NORMAL = [b"<NAVIL>", b"</NAVIL>", b"<ITEML>", b"</ITEML>"]
 
 
 class StutterMachine(IconMachine):
@@ -210,7 +210,7 @@ def append_parity(exe):
         b"x" * 1100 + b"<ITEML>late</ITEML>",
         b"<ITEML>one</ITEML> and <ITEML>two</ITEML>",
         b"Alice: ^i[501]Red Potion and ^i[1201,0]Dagger",
-        b"<NAVI>prontera,1,2</NAVI>",
+        b"<NAVIL>prontera,1,2</NAVIL>",
         b"near\r" + b"x" * 62 + b": tail",
         b"x" * 63 + b": tail",
     ]

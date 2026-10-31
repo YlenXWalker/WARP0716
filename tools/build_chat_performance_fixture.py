@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 
 import yaml
+import pefile
 from verify_chat_performance import ROOT, SOURCE_SHA256, verify
 
 
@@ -42,6 +43,8 @@ def build(source, output):
             profile = arm / "profile.yml"
             profile.write_text(yaml.safe_dump(recipe, sort_keys=False))
             if name == "reverse-invocation":
+                assert saved[table].count(b"365 : ChatMeasurementCache") == 1
+                assert saved[table].count(b"366 : ChatStutterFix") == 1
                 table.write_bytes(
                     saved[table]
                     .replace(
@@ -75,7 +78,8 @@ def build(source, output):
                 "ChatStutterFix" in patches,
                 "ChatMeasurementCache" in patches,
             )
-            verify(target, source, stutter=stutter, cache=cache)
+            verify(target, source, stutter=stutter, cache=cache,
+                   history_sites=2 if stutter else 0)
             results[name] = dict(
                 exe=target.relative_to(output).as_posix(),
                 sha256=hashlib.sha256(target.read_bytes()).hexdigest(),
@@ -89,6 +93,30 @@ def build(source, output):
                     p.unlink()
             else:
                 p.write_bytes(contents)
+    # Isolate the two history hooks without changing allocation or other bytes.
+    candidate = output / results["both"]["exe"]
+    emitted, original = pefile.PE(str(candidate)), pefile.PE(str(source))
+    data = bytearray(candidate.read_bytes())
+    ranges = []
+    for address, size in [(0x83D73A, 82), (0x83DA71, 80)]:
+        offset = emitted.get_offset_from_rva(address - 0x400000)
+        data[offset:offset + size] = original.get_data(address - 0x400000, size)
+        ranges.append([offset, offset + size])
+    target = output / "prewrap-control/Ragnarok.exe"
+    target.parent.mkdir()
+    target.write_bytes(data)
+    assert len(data) == candidate.stat().st_size
+    assert all(x == y or any(lo <= i < hi for lo, hi in ranges)
+               for i, (x, y) in enumerate(zip(candidate.read_bytes(), data)))
+    verify(target, source, history_sites=0)
+    results["prewrap-control"] = dict(
+        exe=target.relative_to(output).as_posix(),
+        sha256=hashlib.sha256(data).hexdigest(),
+        patches=cases["both"],
+        history_hooks_restored=True,
+        changed_ranges=ranges,
+        all_other_bytes_identical=True,
+    )
     (output / "builds.json").write_text(json.dumps(results, indent=2) + "\n")
     return results
 

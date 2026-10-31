@@ -12,6 +12,7 @@ from pathlib import Path
 
 import chat_cache_cases
 import chat_stutter_cases
+from test_chat_history_stutter import run as history_cases
 from verify_chat_performance import verify
 
 
@@ -68,13 +69,15 @@ def main():
         hashlib.sha256(a.source.read_bytes()).hexdigest()
         == "ead7c0a316bc6c27705a5a6876daf5093abec31677f3c1af7525c1709b201bff"
     )
-    verify(a.exe, a.source)
+    verify(a.exe, a.source, history_sites=2)
     chat_cache_cases.SOURCE = chat_stutter_cases.SOURCE = a.source
     for module, name in [(chat_stutter_cases, "stutter"), (chat_cache_cases, "cache")]:
         sys.argv = [name, str(a.exe), "--report", str(a.output / (name + ".json"))]
         module.main()
+    history = history_cases(a.exe, a.source, a.output / "history")
     result = dict(
         passed=True,
+        history_cases=history["standard_grammar_vectors"] + history["guarded_runtime_tag_vectors"],
         states=states(
             {
                 name: a.matrix.parent / case["exe"]
